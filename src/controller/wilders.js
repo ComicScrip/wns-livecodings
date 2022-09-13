@@ -3,11 +3,18 @@ const Wilder = require('../entity/Wilder');
 
 module.exports = {
   create: (req, res) => {
+    const { name } = req.body;
+    if (name.length > 100 || name.length === 0) {
+      return res
+        .status(422)
+        .send('the name should have a length between 1 and 100 characters');
+    }
+
     datasource
       .getRepository(Wilder)
-      .save(req.body)
-      .then(() => {
-        res.send('wilder created');
+      .save({ name })
+      .then((created) => {
+        res.status(201).send(created);
       })
       .catch(() => {
         res.send('error while creating wilder');
@@ -25,11 +32,22 @@ module.exports = {
       });
   },
   update: (req, res) => {
+    const { name } = req.body;
+    if (name.length > 100 || name.length === 0) {
+      return res
+        .status(422)
+        .send('the name should have a length between 1 and 100 characters');
+    }
+
     datasource
       .getRepository(Wilder)
-      .update(req.body.id, req.body)
-      .then(() => {
-        res.send('wilder updated');
+      .update(req.params.id, req.body)
+      .then(({ affected }) => {
+        if (affected) {
+          res.send('wilder updated');
+        } else {
+          res.sendStatus(404);
+        }
       })
       .catch(() => {
         res.send('error while updating wilder');
@@ -38,9 +56,10 @@ module.exports = {
   delete: (req, res) => {
     datasource
       .getRepository(Wilder)
-      .delete(req.body.id)
-      .then(() => {
-        res.send('wilder deleted');
+      .delete(req.params.id)
+      .then(({ affected }) => {
+        if (affected) res.send('wilder deleted');
+        else res.sendStatus(404);
       })
       .catch(() => {
         res.send('error while deleting wilder');
