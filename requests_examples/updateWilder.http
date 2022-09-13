@@ -1,0 +1,7 @@
+PATCH http://localhost:3000/api/wilder
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "Jane doe"
+}

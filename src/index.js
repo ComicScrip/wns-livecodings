@@ -8,6 +8,9 @@ const app = express();
 app.use(express.json());
 
 app.post('/api/wilder', wildersController.create);
+app.get('/api/wilder', wildersController.read);
+app.patch('/api/wilder', wildersController.update);
+app.delete('/api/wilder', wildersController.delete);
 
 const start = async () => {
   await datasource.initialize();
