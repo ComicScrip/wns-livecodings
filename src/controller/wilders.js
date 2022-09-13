@@ -2,7 +2,7 @@ const datasource = require('../db');
 const Wilder = require('../entity/Wilder');
 
 module.exports = {
-  create: (req, res) => {
+  create: async (req, res) => {
     const { name } = req.body;
     if (name.length > 100 || name.length === 0) {
       return res
@@ -10,6 +10,15 @@ module.exports = {
         .send('the name should have a length between 1 and 100 characters');
     }
 
+    try {
+      const created = await datasource.getRepository(Wilder).save({ name });
+      res.status(201).send(created);
+    } catch (err) {
+      console.error(err);
+      res.send('error while creating wilder');
+    }
+
+    /*
     datasource
       .getRepository(Wilder)
       .save({ name })
@@ -19,19 +28,20 @@ module.exports = {
       .catch(() => {
         res.send('error while creating wilder');
       });
+      */
   },
-  read: (req, res) => {
-    datasource
-      .getRepository(Wilder)
-      .find()
-      .then((wilders) => {
-        res.send(wilders);
-      })
-      .catch(() => {
-        res.send('error while reading wilders');
-      });
+  read: async (req, res) => {
+    try {
+      const wilders = await datasource.getRepository(Wilder).find();
+      // const wilders = await datasource.getRepository(Wilder).query('SELECT * FROM wilder');
+
+      res.send(wilders);
+    } catch (err) {
+      console.error(err);
+      res.send('error while reading wilders');
+    }
   },
-  update: (req, res) => {
+  update: async (req, res) => {
     const { name } = req.body;
     if (name.length > 100 || name.length === 0) {
       return res
@@ -39,30 +49,26 @@ module.exports = {
         .send('the name should have a length between 1 and 100 characters');
     }
 
-    datasource
-      .getRepository(Wilder)
-      .update(req.params.id, req.body)
-      .then(({ affected }) => {
-        if (affected) {
-          res.send('wilder updated');
-        } else {
-          res.sendStatus(404);
-        }
-      })
-      .catch(() => {
-        res.send('error while updating wilder');
-      });
+    try {
+      const { affected } = await datasource
+        .getRepository(Wilder)
+        .update(req.params.id, req.body);
+      if (affected) return res.send('wilder updated');
+      res.sendStatus(404);
+    } catch (err) {
+      console.error(err);
+      res.send('error while updating wilder');
+    }
   },
-  delete: (req, res) => {
-    datasource
-      .getRepository(Wilder)
-      .delete(req.params.id)
-      .then(({ affected }) => {
-        if (affected) res.send('wilder deleted');
-        else res.sendStatus(404);
-      })
-      .catch(() => {
-        res.send('error while deleting wilder');
-      });
+  delete: async (req, res) => {
+    try {
+      const { affected } = await datasource
+        .getRepository(Wilder)
+        .delete(req.params.id);
+      if (affected) return res.send('wilder deleted');
+      res.sendStatus(404);
+    } catch (err) {
+      console.error(err);
+    }
   },
 };
