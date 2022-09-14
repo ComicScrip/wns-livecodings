@@ -12,6 +12,7 @@ app.post('/wilders', wildersController.create);
 app.get('/wilders', wildersController.read);
 app.patch('/wilders/:id', wildersController.update);
 app.delete('/wilders/:id', wildersController.delete);
+app.post('/wilders/:wilderId/skills', wildersController.addSkill);
 
 app.post('/skills', skillsController.create);
 app.get('/skills', skillsController.read);

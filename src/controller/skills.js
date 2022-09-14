@@ -10,9 +10,9 @@ module.exports = {
         .send('the name should have a length between 1 and 100 characters');
     }
 
-    const [existingSkill] = await datasource
+    const existingSkill = await datasource
       .getRepository(Skill)
-      .findBy({ name });
+      .findOneBy({ name });
 
     if (existingSkill)
       return res.status(409).send('a skill with this name already exists');
