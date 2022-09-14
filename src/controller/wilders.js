@@ -91,4 +91,20 @@ module.exports = {
 
     res.send('skill added to wilder');
   },
+  removeSkill: async (req, res) => {
+    const wilderToUpdate = await datasource
+      .getRepository(Wilder)
+      .findOneBy({ id: req.params.wilderId });
+
+    if (!wilderToUpdate) return res.status(404).send('wilder not found');
+
+    const skillToDeleteId = parseInt(req.params.skillId, 10);
+
+    wilderToUpdate.skills = wilderToUpdate.skills.filter(
+      (s) => s.id !== skillToDeleteId
+    );
+
+    await datasource.getRepository(Wilder).save(wilderToUpdate);
+    res.send('skill deleted from wilder');
+  },
 };
