@@ -1,0 +1,6 @@
+POST http://localhost:3000/wilders/10/skills
+Content-Type: application/json
+
+{
+  "skillId": 1
+}

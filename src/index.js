@@ -1,24 +1,27 @@
 const express = require('express');
-const typeorm = require('typeorm');
-const Wilder = require('./entity/Wilder');
+const wildersController = require('./controller/wilders');
+const skillsController = require('./controller/skills');
 
-const datasource = new typeorm.DataSource({
-  type: 'sqlite',
-  database: './wildersdb.sqlite',
-  synchronize: true,
-  entities: [Wilder],
-});
+const datasource = require('./db');
 
 const app = express();
 
-app.get('/hello', (req, res) => {
-  console.log('hello');
-  res.send('hello !');
-});
+app.use(express.json());
+
+app.post('/wilders', wildersController.create);
+app.get('/wilders', wildersController.read);
+app.patch('/wilders/:id', wildersController.update);
+app.delete('/wilders/:id', wildersController.delete);
+app.post('/wilders/:wilderId/skills', wildersController.addSkill);
+app.delete('/wilders/:wilderId/skills/:skillId', wildersController.removeSkill);
+
+app.post('/skills', skillsController.create);
+app.get('/skills', skillsController.read);
+app.patch('/skills/:id', skillsController.update);
+app.delete('/skills/:id', skillsController.delete);
 
 const start = async () => {
   await datasource.initialize();
-  datasource.getRepository(Wilder).save({ name: 'First Wilder' });
 
   app.listen(3000, () => {
     console.log('listening on port 3000');
