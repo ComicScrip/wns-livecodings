@@ -1,9 +1,10 @@
 import blank_profile from '../assets/avatar.png';
 import Skill from './Skill';
+import styles from './Wilder.module.css';
 
 const Wilder = ({ name, city, skills }) => {
   return (
-    <article className='card'>
+    <article className={styles.card}>
       <img src={blank_profile} alt='Jane Doe Profile' />
       <h3>{name[0].toUpperCase() + name.split('').splice(1).join('')}</h3>
       <h4>{city}</h4>
@@ -14,7 +15,7 @@ const Wilder = ({ name, city, skills }) => {
         commodo consequat.
       </p>
       <h4>Wild Skills</h4>
-      <ul className='skills'>
+      <ul className={styles.skills}>
         {skills.map((skill, index) => (
           <Skill key={index} title={skill.title} votes={skill.votes} />
         ))}

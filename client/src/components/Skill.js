@@ -1,8 +1,10 @@
+import styles from './Skill.module.css';
+
 const Skill = ({ title, votes }) => {
   return (
-    <li>
+    <li className={styles.skill}>
       {title}
-      <span className='votes'>{votes}</span>
+      <span className={styles.votes}>{votes}</span>
     </li>
   );
 };

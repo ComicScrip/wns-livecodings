@@ -1,5 +1,6 @@
 import Wilder from './components/Wilder';
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   const wilders = [
@@ -34,6 +35,7 @@ function App() {
           ))}
         </section>
       </main>
+      <Footer />
     </>
   );
 }
