@@ -1,33 +1,37 @@
 import Wilder from './components/Wilder';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import WilderForm from './components/WilderForm';
 
 function App() {
-  const wilders = [
-    {
-      id: 1,
-      name: 'john',
-      skills: [
-        { id: 1, title: 'JS', votes: 4 },
-        { id: 2, title: 'Python', votes: 3 },
-        { id: 3, title: 'PHP', votes: 2 },
-      ],
-    },
-    { id: 2, name: 'marc', skills: [{ id: 3, title: 'PHP', votes: 1 }] },
-    {
-      id: 3,
-      name: 'lisa',
-      skills: [
-        { id: 3, title: 'PHP', votes: 5 },
-        { id: 2, title: 'Python', votes: 2 },
-      ],
-    },
-  ];
+  const [wilders, setWilders] = useState([]);
+
+  const fetchWilders = async () => {
+    /*
+    const res = await axios.get(
+      'http://localhost:5000/wilders'
+    );
+    const wilders = res.data
+    console.log(wilders);
+    */
+
+    const { data: wilderList } = await axios.get(
+      'http://localhost:5000/wilders'
+    );
+    setWilders(wilderList);
+  };
+
+  useEffect(() => {
+    fetchWilders();
+  }, []);
 
   return (
     <>
       <Header />
       <main className='container'>
+        <WilderForm fetchWilders={fetchWilders} setWilders={setWilders} />
         <h2>Wilders</h2>
         <section className='card-row'>
           {wilders.map((wilder) => (

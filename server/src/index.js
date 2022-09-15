@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const wildersController = require('./controller/wilders');
 const skillsController = require('./controller/skills');
 
@@ -7,6 +8,7 @@ const datasource = require('./db');
 const app = express();
 
 app.use(express.json());
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.post('/wilders', wildersController.create);
 app.get('/wilders', wildersController.read);
@@ -23,8 +25,8 @@ app.delete('/skills/:id', skillsController.delete);
 const start = async () => {
   await datasource.initialize();
 
-  app.listen(3000, () => {
-    console.log('listening on port 3000');
+  app.listen(5000, () => {
+    console.log('listening on port 5000');
   });
 };
 
