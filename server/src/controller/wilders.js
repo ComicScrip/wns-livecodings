@@ -35,7 +35,6 @@ module.exports = {
     try {
       const wilders = await datasource.getRepository(Wilder).find();
       // const wilders = await datasource.getRepository(Wilder).query('SELECT * FROM wilder');
-
       res.send(wilders);
     } catch (err) {
       console.error(err);

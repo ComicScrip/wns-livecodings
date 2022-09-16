@@ -4,7 +4,7 @@ const Skill = ({ title, votes }) => {
   return (
     <li className={styles.skill}>
       {title}
-      <span className={styles.votes}>{votes}</span>
+      {/* <span className={styles.votes}>{votes}</span> */}
     </li>
   );
 };
