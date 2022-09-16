@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { createWilder } from '../services/wilders';
 
@@ -36,6 +35,8 @@ export default function WilderForm({ loadWildersIntoState, setWilders }) {
       <button type='submit' disabled={processing}>
         Ajouter
       </button>
+      <br />
+      <br />
     </form>
   );
 }

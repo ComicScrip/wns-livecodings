@@ -2,13 +2,14 @@ import Wilder from './components/Wilder';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import WilderForm from './components/WilderForm';
 import { getAllWilders } from './services/wilders';
+import { getAllSkills } from './services/skills';
 
 function App() {
   const [wilders, setWilders] = useState([]);
   const [loadingWilders, setLoadingWilders] = useState(false);
+  const [availableSkills, setAvailableSkills] = useState([]);
 
   const loadWildersIntoState = async () => {
     /*
@@ -28,8 +29,17 @@ function App() {
     }
   };
 
+  const loadAvailableSkillsIntoState = async () => {
+    try {
+      setAvailableSkills(await getAllSkills());
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     loadWildersIntoState();
+    loadAvailableSkillsIntoState();
   }, []);
 
   return (
@@ -47,8 +57,9 @@ function App() {
             : wilders.map((wilder) => (
                 <Wilder
                   key={wilder.id}
-                  name={wilder.name}
-                  skills={wilder.skills}
+                  setWilders={setWilders}
+                  wilder={wilder}
+                  availableSkills={availableSkills}
                 />
               ))}
         </section>
