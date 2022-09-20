@@ -1,2 +1,2 @@
-DELETE http://localhost:3000/wilders/12
+DELETE http://localhost:5000/wilders/6
 Content-Type: application/json
