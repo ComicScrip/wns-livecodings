@@ -1,6 +1,6 @@
-PATCH http://localhost:3000/wilders/1
+PATCH http://localhost:5000/wilders/4
 Content-Type: application/json
 
 {
-  "name": "modif"
+  "city": "modifcity"
 }
