@@ -1,6 +1,8 @@
-PATCH http://localhost:5000/wilders/4
+PATCH http://localhost:5000/wilders/3
 Content-Type: application/json
 
 {
-  "city": "modifcity"
+  "name": "Jean",
+  "city": "Montpellier",
+  "bio": "Jean est Montpelliérain"
 }

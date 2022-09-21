@@ -1,7 +1,6 @@
-import { IController } from '../types/IController';
-
 import datasource from '../db';
-import Skill from '../entity/Skill';
+import Skill from'../entity/Skill';
+import { IController } from "./../types/IController";
 
 const skillsController: IController = {
   create: async (req, res) => {
@@ -16,7 +15,7 @@ const skillsController: IController = {
       .getRepository(Skill)
       .findOneBy({ name });
 
-    if (existingSkill !== null)
+    if (existingSkill !== null )
       return res.status(409).send('a skill with this name already exists');
 
     try {
@@ -67,5 +66,4 @@ const skillsController: IController = {
     }
   },
 };
-
-export default skillsController;
+export default skillsController
