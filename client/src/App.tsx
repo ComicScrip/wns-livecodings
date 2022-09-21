@@ -1,24 +1,16 @@
-import Wilder from './components/Wilder';
-import Header from './components/Header';
-import Footer from './components/Footer';
 import { useEffect, useState } from 'react';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Wilder from './components/Wilder';
 import WilderForm from './components/WilderForm';
 import { getAllWilders } from './services/wilders';
-import { getAllSkills } from './services/skills';
+import { IWilder } from './types/IWilder';
 
 function App() {
-  const [wilders, setWilders] = useState([]);
+  const [wilders, setWilders] = useState<IWilder[]>([]);
   const [loadingWilders, setLoadingWilders] = useState(false);
-  const [availableSkills, setAvailableSkills] = useState([]);
 
   const loadWildersIntoState = async () => {
-    /*
-    const res = await axios.get(
-      'http://localhost:5000/wilders'
-    );
-    const wilders = res.data
-    console.log(wilders);
-    */
     setLoadingWilders(true);
     try {
       setWilders(await getAllWilders());
@@ -29,27 +21,15 @@ function App() {
     }
   };
 
-  const loadAvailableSkillsIntoState = async () => {
-    try {
-      setAvailableSkills(await getAllSkills());
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
     loadWildersIntoState();
-    loadAvailableSkillsIntoState();
   }, []);
 
   return (
     <>
       <Header />
       <main className='container'>
-        <WilderForm
-          loadWildersIntoState={loadWildersIntoState}
-          setWilders={setWilders}
-        />
+        <WilderForm loadWildersIntoState={loadWildersIntoState} />
         <h2>Wilders</h2>
         <section className='card-row'>
           {loadingWilders
@@ -59,7 +39,6 @@ function App() {
                   key={wilder.id}
                   setWilders={setWilders}
                   wilder={wilder}
-                  availableSkills={availableSkills}
                 />
               ))}
         </section>
