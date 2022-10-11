@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { createWilder } from '../services/wilders';
+import { IWilderInput } from '../types/IWilder';
 
-export default function WilderForm({ loadWildersIntoState, setWilders }) {
-  const [name, setName] = useState('');
+interface WilderFormProps {
+  loadWildersIntoState: () => void;
+}
+
+export default function WilderForm({ loadWildersIntoState }: WilderFormProps) {
+  const [name, setName] = useState<IWilderInput['name']>('');
   const [processing, setProcessing] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setProcessing(true);
     try {
-      const res = await createWilder({ name });
-      console.log('wilder created', res.data);
-      // setWilders((oldList) => [...oldList, res.data]);
+      await createWilder({ name });
       loadWildersIntoState();
     } catch (err) {
       console.error(err);
