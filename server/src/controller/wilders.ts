@@ -17,7 +17,7 @@ const wilderController: IController = {
       .getRepository(Wilder)
       .findOne({ where: { name } });
 
-    if (exisitingWithName) return res.sendStatus(409);
+    if (exisitingWithName === null) return res.sendStatus(409);
 
     try {
       const created = await datasource
@@ -57,7 +57,7 @@ const wilderController: IController = {
         where: { id: parseInt(req.params.id, 10) },
         relations: { grades: { skill: true } },
       });
-      if (!wilder) return res.sendStatus(404);
+      if (wilder === null) return res.sendStatus(404);
       res.send({
         ...wilder,
         grades: undefined,
@@ -97,7 +97,9 @@ const wilderController: IController = {
       await datasource.getRepository(Wilder).save(wilderToUpdate);
 
       const existingSkillIds = wilderToUpdate.grades.map((g) => g.skill.id);
-      const newSkillIds = ((skills || []) as Skill[]).map((s: Skill) => s.id);
+      const newSkillIds = (
+        (typeof skills === "undefined" ? [] : skills) as Skill[]
+      ).map((s: Skill) => s.id);
       const skillIdsToAdd = newSkillIds.filter(
         (newId) => !existingSkillIds.includes(newId)
       );
@@ -113,10 +115,11 @@ const wilderController: IController = {
       );
 
       await Promise.all(
-        skillsToRemove.map((skillId) =>
-          datasource
-            .getRepository(Grade)
-            .delete({ wilderId: wilderToUpdate.id, skillId })
+        skillsToRemove.map(
+          async (skillId: number) =>
+            await datasource
+              .getRepository(Grade)
+              .delete({ wilderId: wilderToUpdate.id, skillId })
         )
       );
 
