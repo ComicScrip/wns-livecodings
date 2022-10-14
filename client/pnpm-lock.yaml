@@ -4,7 +4,6 @@ specifiers:
   '@emotion/react': ^11.10.4
   '@emotion/styled': ^11.10.4
   '@formkit/auto-animate': 1.0.0-beta.3
-  '@impulse.dev/runtime': ^0.3.0
   '@material-ui/core': ^4.12.4
   '@mui/material': ^5.10.9
   '@testing-library/jest-dom': ^5.16.5
@@ -28,7 +27,6 @@ specifiers:
   react-select: ^5.4.0
   tailwindcss: ^3.1.8
   typescript: ^4.8.4
-  uniqid: ^5.4.0
   use-persisted-state: ^0.3.3
   web-vitals: ^2.1.4
 
@@ -56,12 +54,10 @@ dependencies:
   react-scripts: 5.0.1_mojkb66nrb35nkdmirjres5uq4
   react-select: 5.4.0_eat7hc23gfabdflnphmz6xfchm
   typescript: 4.8.4
-  uniqid: 5.4.0
   use-persisted-state: 0.3.3_react@18.2.0
   web-vitals: 2.1.4
 
 devDependencies:
-  '@impulse.dev/runtime': 0.3.1
   autoprefixer: 10.4.12_postcss@8.4.17
   postcss: 8.4.17
   tailwindcss: 3.1.8_postcss@8.4.17
@@ -1789,10 +1785,6 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: false
-
-  /@impulse.dev/runtime/0.3.1:
-    resolution: {integrity: sha512-han+5irrvGktgV2RFIsrXLa9+DhzqOHU9WB/KLjQkrjcHMow0k1DDVU71qhGn24XVETBla39EHdZwQS3L9gTYA==}
-    dev: true
 
   /@istanbuljs/load-nyc-config/1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
@@ -9895,10 +9887,6 @@ packages:
   /unicode-property-aliases-ecmascript/2.1.0:
     resolution: {integrity: sha512-6t3foTQI9qne+OZoVQB/8x8rk2k1eVy1gRXhV3oFQ5T6R1dqQ1xtin3XqSlx3+ATBkliTaR/hHyJBm+LVPNM8w==}
     engines: {node: '>=4'}
-    dev: false
-
-  /uniqid/5.4.0:
-    resolution: {integrity: sha512-38JRbJ4Fj94VmnC7G/J/5n5SC7Ab46OM5iNtSstB/ko3l1b5g7ALt4qzHFgGciFkyiRNtDXtLNb+VsxtMSE77A==}
     dev: false
 
   /unique-string/2.0.0:
