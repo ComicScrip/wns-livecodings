@@ -61,7 +61,6 @@ export default function SkillsAdmin() {
           ))
         )}
       </ul>
-      <div></div>
     </div>
   );
 }
