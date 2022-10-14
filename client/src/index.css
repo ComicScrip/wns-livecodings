@@ -1,10 +1,23 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body, #root {
+  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  @apply bg-cream
+}
+
+main {
+  flex-grow: 1;
 }
 
 code {
@@ -45,27 +58,21 @@ p {
 }
 
 .container {
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 24px;
+  @apply pr-4 pl-4 m-auto max-w-[800px]
 }
 
-header {
-  background-color: #f76c6c;
-  color: #fff;
+header, footer {
+  @apply bg-pink text-white
 }
 
-footer {
-  border-top: 2px solid #f76c6c;
+button, button[type="submit"] {
+  @apply cursor-pointer bg-pink font-semibold border border-pink hover:bg-pinkIntense text-white p-2 pr-3 pl-3 rounded-2xl outline-none hover:scale-[102%] max-h-11
 }
 
-.card-row {
-  display: grid;
-  grid-template-columns: repeat(3, 32%);
-  justify-content: space-between;
+input, textarea {
+  @apply p-2 outline-none border border-gray-200 rounded-2xl
 }
 
-button {
-  cursor: pointer;
+label {
+  cursor: pointer
 }

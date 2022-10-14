@@ -1,9 +1,10 @@
-import blank_profile from '../assets/avatar.png';
-import { deleteWilder } from '../services/wilders';
-import styles from './Wilder.module.css';
-import Skill from './Skill';
-import { IWilder } from '../types/IWilder';
-import { Dispatch, SetStateAction } from 'react';
+import React from "react";
+import blank_profile from "../assets/avatar.png";
+import { deleteWilder } from "../services/wilders";
+import Skill from "./Skill";
+import { IWilder } from "../types/IWilder";
+import { Dispatch, SetStateAction } from "react";
+import { Link } from "react-router-dom";
 
 interface WilderProps {
   wilder: IWilder;
@@ -11,33 +12,61 @@ interface WilderProps {
 }
 
 const Wilder = ({
-  wilder: { id, name, skills = [] },
+  wilder: { id, name, skills = [], avatarUrl },
   setWilders,
 }: WilderProps) => {
   const handleDelete = async () => {
-    try {
-      setWilders((oldList) => oldList.filter((wilder) => wilder.id !== id));
-      await deleteWilder(id);
-    } catch (err) {
-      console.error(err);
-    }
+    if (window.confirm("are you sure ?"))
+      try {
+        setWilders((oldList) => oldList.filter((wilder) => wilder.id !== id));
+        await deleteWilder(id);
+      } catch (err) {
+        console.error(err);
+      }
   };
 
   return (
-    <article className={styles.card}>
-      <img src={blank_profile} alt={name} />
-      <h3>{name[0].toUpperCase() + name.split('').splice(1).join('')}</h3>
-      <h4>Wild Skills</h4>
+    <>
+      <div className="flex bg-white p-4 rounded-2xl mb-4 shadow-md">
+        <Link to={`/wilders/${id}`}>
+          <img
+            src={avatarUrl || blank_profile}
+            alt={name}
+            className="h-16 w-16 rounded-full mr-6"
+          />
+        </Link>
 
-      <ul className={styles.skills}>
-        {skills.map((skill, index) => (
-          <Skill key={index} title={skill.name} votes={skill.votes} />
-        ))}
-      </ul>
+        <div className="flex justify-between w-full  min-w-[200px]">
+          <div className="flex flex-col">
+            <Link to={`/wilders/${id}`}>
+              <h3 className="font-semibold">
+                {name[0].toUpperCase() + name.split("").splice(1).join("")}
+              </h3>
+            </Link>
 
-      <br />
-      <button onClick={handleDelete}>Delete</button>
-    </article>
+            <ul className="flex flex-wrap">
+              {skills
+                .sort((a, b) => b.votes - a.votes)
+                .map((skill, index) => (
+                  <Skill
+                    key={index}
+                    title={skill.name}
+                    votes={skill.votes}
+                    wilderId={id}
+                    skillId={skill.id}
+                  />
+                ))}
+            </ul>
+          </div>
+          <div className="flex flex-col min-w-[40px]">
+            <Link to={`/wilders/${id}/edit`}>
+              <button className="mb-2 w-full">✏️</button>
+            </Link>
+            <button onClick={handleDelete}>x</button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
