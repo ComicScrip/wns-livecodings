@@ -1,5 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import Grade from './Grade';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Grade from "./Grade";
 
 @Entity()
 class Wilder {
@@ -9,10 +9,13 @@ class Wilder {
   @Column()
   name?: string;
 
-  @Column({ nullable: true, length: 100, type: 'varchar' })
+  @Column({ nullable: true, length: 100, type: "varchar" })
   city: string | null;
 
-  @Column({ length: 500, nullable: true, type: 'text' })
+  @Column({ nullable: true, length: 100, type: "varchar" })
+  avatarUrl: string | null;
+
+  @Column({ length: 500, nullable: true, type: "text" })
   bio: string | null;
 
   @OneToMany(() => Grade, (g) => g.wilder)

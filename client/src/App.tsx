@@ -1,47 +1,25 @@
-import { useEffect, useState } from 'react';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Wilder from './components/Wilder';
-import WilderForm from './components/WilderForm';
-import { getAllWilders } from './services/wilders';
-import { IWilder } from './types/IWilder';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Home from "./screens/Home";
+import SkillsAdmin from "./screens/SkillsAdmin";
+import { Toaster } from "react-hot-toast";
+import WilderDetails from "./screens/WilderDetails";
+import EditWilder from "./components/EditWilder";
 
 function App() {
-  const [wilders, setWilders] = useState<IWilder[]>([]);
-  const [loadingWilders, setLoadingWilders] = useState(false);
-
-  const loadWildersIntoState = async () => {
-    setLoadingWilders(true);
-    try {
-      setWilders(await getAllWilders());
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoadingWilders(false);
-    }
-  };
-
-  useEffect(() => {
-    loadWildersIntoState();
-  }, []);
-
   return (
     <>
+      <Toaster position="bottom-center" />
       <Header />
-      <main className='container'>
-        <WilderForm loadWildersIntoState={loadWildersIntoState} />
-        <h2>Wilders</h2>
-        <section className='card-row'>
-          {loadingWilders
-            ? 'Loading...'
-            : wilders.map((wilder) => (
-                <Wilder
-                  key={wilder.id}
-                  setWilders={setWilders}
-                  wilder={wilder}
-                />
-              ))}
-        </section>
+      <main className="container pb-8 bg-cream">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/skills" element={<SkillsAdmin />} />
+          <Route path="/wilders/:id" element={<WilderDetails />} />
+          <Route path="/wilders/:id/edit" element={<EditWilder />} />
+        </Routes>
       </main>
       <Footer />
     </>

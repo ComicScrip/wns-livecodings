@@ -1,5 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import Grade from './Grade';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Grade from "./Grade";
 
 @Entity()
 class Skill {
