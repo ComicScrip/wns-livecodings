@@ -46,6 +46,7 @@ const Wilder = ({
 
             <ul className="flex flex-wrap">
               {skills
+                .slice()
                 .sort((a, b) => b.votes - a.votes)
                 .map((skill, index) => (
                   <Skill

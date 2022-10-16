@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const theme = createTheme({
   palette: {
@@ -14,16 +15,23 @@ const theme = createTheme({
   },
 });
 
+const client = new ApolloClient({
+  uri: "http://localhost:5001/graphql",
+  cache: new InMemoryCache(),
+});
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <MuiThemeProvider theme={theme}>
-        <App />
-      </MuiThemeProvider>
-    </BrowserRouter>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <MuiThemeProvider theme={theme}>
+          <App />
+        </MuiThemeProvider>
+      </BrowserRouter>
+    </ApolloProvider>
   </React.StrictMode>
 );
 
