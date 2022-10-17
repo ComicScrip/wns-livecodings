@@ -41,6 +41,7 @@ export default function Home() {
           <Loader />
         ) : (
           wilders
+            .slice()
             .sort((a, b) => b.id - a.id)
             .map((wilder) => (
               <Wilder key={wilder.id} setWilders={setWilders} wilder={wilder} />

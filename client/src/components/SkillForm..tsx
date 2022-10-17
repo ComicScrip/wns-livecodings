@@ -26,7 +26,10 @@ export default function SkillForm({ setSkills }: SkillFormProps) {
       await createSkill({ name });
       setSkills((old) => [
         ...old,
-        { id: (old.sort((a, b) => b.id - a.id)?.[0]?.id || 0) + 1, name },
+        {
+          id: (old.slice().sort((a, b) => b.id - a.id)?.[0]?.id || 0) + 1,
+          name,
+        },
       ]);
       setName("");
     } catch (err) {

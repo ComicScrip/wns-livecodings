@@ -1,4 +1,5 @@
 import React, { useState, FormEvent, useRef } from "react";
+import toast from "react-hot-toast";
 import { createWilder } from "../services/wilders";
 import { IWilderInput } from "../types/IWilder";
 
@@ -21,6 +22,9 @@ export default function WilderForm({ loadWildersIntoState }: WilderFormProps) {
       setTimeout(() => inputRef.current?.focus(), 100);
     } catch (err) {
       console.error(err);
+      if ((err as any)?.response?.status === 409) {
+        toast.error("Duplicate name");
+      }
     } finally {
       setProcessing(false);
     }

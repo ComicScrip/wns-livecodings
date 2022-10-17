@@ -37,8 +37,6 @@ export default function EditWilder() {
         toast.error("error while saving wilder");
       });
 
-  console.log({ state: editedWilder.skills });
-
   return (
     <div className="flex flex-col items-center p-4 pt-10 mb-48">
       <img
