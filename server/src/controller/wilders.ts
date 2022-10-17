@@ -17,7 +17,7 @@ const wilderController: IController = {
       .getRepository(Wilder)
       .findOne({ where: { name } });
 
-    if (exisitingWithName === null) return res.sendStatus(409);
+    if (exisitingWithName !== null) return res.sendStatus(409);
 
     try {
       const created = await datasource
