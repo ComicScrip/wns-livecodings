@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import express from "express";
 import cors from "cors";
 import wildersController from "./controller/wilders";
@@ -6,6 +7,8 @@ import { ApolloServer, gql } from "apollo-server";
 import datasource from "./db";
 import Wilder from "./entity/Wilder";
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
+import { buildSchema } from "type-graphql";
+import { WilderResolver } from "./resolver/wilderResolver";
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -84,10 +87,12 @@ app.delete("/skills/:id", skillsController.delete);
 
 const start = async (): Promise<void> => {
   await datasource.initialize();
+  const schema = await buildSchema({
+    resolvers: [WilderResolver],
+  });
 
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema,
     csrfPrevention: true,
     cache: "bounded",
     plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
