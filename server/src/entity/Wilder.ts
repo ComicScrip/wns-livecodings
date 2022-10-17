@@ -1,3 +1,4 @@
+import { MaxLength } from "class-validator";
 import { Field, InputType, ObjectType } from "type-graphql";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Grade from "./Grade";
@@ -26,15 +27,15 @@ class Wilder {
   name?: string;
 
   @Column({ nullable: true, length: 100, type: "varchar" })
-  @Field()
+  @Field({ nullable: true })
   city?: string;
 
   @Column({ nullable: true, length: 100, type: "varchar" })
-  @Field()
+  @Field({ nullable: true })
   avatarUrl?: string;
 
   @Column({ length: 500, nullable: true, type: "text" })
-  @Field()
+  @Field({ nullable: true })
   bio?: string;
 
   @OneToMany(() => Grade, (g) => g.wilder)
@@ -45,15 +46,31 @@ class Wilder {
 }
 
 @InputType()
-export class WilderInput implements Partial<Wilder> {
+export class SkillId {
+  @Field()
+  id: number;
+}
+
+@InputType()
+export class WilderInput {
+  @MaxLength(100)
   @Field()
   name: string;
 
-  @Field()
-  city: string;
+  @MaxLength(100)
+  @Field({ nullable: true })
+  city?: string;
 
-  @Field()
+  @MaxLength(100)
+  @Field({ nullable: true })
   avatarUrl?: string;
+
+  @MaxLength(500)
+  @Field({ nullable: true })
+  bio?: string;
+
+  @Field(() => [SkillId], { nullable: true })
+  skills?: SkillId[];
 }
 
 export default Wilder;
