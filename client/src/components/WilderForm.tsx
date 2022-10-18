@@ -1,7 +1,7 @@
 import React, { useState, FormEvent, useRef } from "react";
-import toast from "react-hot-toast";
-import { createWilder } from "../services/wilders";
+import { CREATE_WILDER } from "../services/wilders";
 import { IWilderInput } from "../types/IWilder";
+import { useMutation } from "@apollo/client";
 
 interface WilderFormProps {
   loadWildersIntoState: () => void;
@@ -9,25 +9,16 @@ interface WilderFormProps {
 
 export default function WilderForm({ loadWildersIntoState }: WilderFormProps) {
   const [name, setName] = useState<IWilderInput["name"]>("");
-  const [processing, setProcessing] = useState(false);
   const inputRef = useRef<any>();
+
+  const [createWilder, { loading: processing }] = useMutation(CREATE_WILDER);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setProcessing(true);
-    try {
-      await createWilder({ name });
-      setName("");
-      loadWildersIntoState();
-      setTimeout(() => inputRef.current?.focus(), 100);
-    } catch (err) {
-      console.error(err);
-      if ((err as any)?.response?.status === 409) {
-        toast.error("Duplicate name");
-      }
-    } finally {
-      setProcessing(false);
-    }
+    await createWilder({ variables: { name } });
+    loadWildersIntoState();
+    setName("");
+    setTimeout(() => inputRef.current?.focus(), 100);
   };
 
   return (

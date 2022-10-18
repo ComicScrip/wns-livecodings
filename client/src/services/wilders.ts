@@ -1,6 +1,7 @@
 import { GenericAbortSignal } from "axios";
 import { IWilder, IWilderInput } from "../types/IWilder";
 import API from "./APIClient";
+import { gql } from "@apollo/client";
 
 export async function getAllWilders({
   signal,
@@ -46,3 +47,25 @@ export async function updateGrade(
 ) {
   return API.patch(`/wilders/${wilderId}/skills/${skillId}`, { votes });
 }
+
+export const GET_WILDERS = gql`
+  query GetWilders {
+    wilders {
+      id
+      name
+      skills {
+        id
+        name
+        votes
+      }
+    }
+  }
+`;
+
+export const CREATE_WILDER = gql`
+  mutation CreateWilder($name: String!) {
+    createWilder(name: $name) {
+      id
+    }
+  }
+`;
