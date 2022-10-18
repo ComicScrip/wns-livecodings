@@ -15,7 +15,7 @@ export default function WilderForm({ loadWildersIntoState }: WilderFormProps) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await createWilder({ variables: { name } });
+    await createWilder({ variables: { data: { name } } });
     loadWildersIntoState();
     setName("");
     setTimeout(() => inputRef.current?.focus(), 100);

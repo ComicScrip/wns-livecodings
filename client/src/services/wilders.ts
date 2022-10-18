@@ -63,8 +63,22 @@ export const GET_WILDERS = gql`
 `;
 
 export const CREATE_WILDER = gql`
-  mutation CreateWilder($name: String!) {
-    createWilder(name: $name) {
+  mutation CreateWilder($data: WilderInput!) {
+    createWilder(data: $data) {
+      id
+    }
+  }
+`;
+
+export const DELETE_WILDER = gql`
+  mutation DeleteWilder($id: String!) {
+    deleteWilder(id: $id)
+  }
+`;
+
+export const UPDATE_WILDER = gql`
+  mutation UpdateWilder($id: String!, $data: WilderInput!) {
+    updateWilder(id: $id, data: $data) {
       id
     }
   }
