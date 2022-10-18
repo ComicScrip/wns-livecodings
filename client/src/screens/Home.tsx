@@ -29,9 +29,7 @@ export default function Home() {
           wilders
             .slice()
             .sort((a, b) => b.id - a.id)
-            .map((wilder) => (
-              <Wilder key={wilder.id} setWilders={() => {}} wilder={wilder} />
-            ))
+            .map((wilder) => <Wilder key={wilder.id} wilder={wilder} />)
         )}
       </div>
     </div>
