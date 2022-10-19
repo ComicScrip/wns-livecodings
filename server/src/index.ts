@@ -3,12 +3,12 @@ import express from "express";
 import cors from "cors";
 import wildersController from "./controller/wilders";
 import skillsController from "./controller/skills";
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer } from "apollo-server";
 import datasource from "./db";
-import Wilder from "./entity/Wilder";
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import { buildSchema } from "type-graphql";
 import { WilderResolver } from "./resolver/WilderResolver";
+import { SkillResolver } from "./resolver/SkillResolver";
 
 const app = express();
 
@@ -33,7 +33,7 @@ const start = async (): Promise<void> => {
   await datasource.initialize();
 
   const schema = await buildSchema({
-    resolvers: [WilderResolver],
+    resolvers: [WilderResolver, SkillResolver],
   });
 
   const server = new ApolloServer({

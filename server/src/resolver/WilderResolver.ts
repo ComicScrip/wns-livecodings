@@ -24,8 +24,6 @@ export class WilderResolver {
 
   @Mutation(() => Wilder)
   async createWilder(@Arg("data") data: WilderInput): Promise<Wilder> {
-    console.log({ data });
-
     const { raw: id } = await datasource.getRepository(Wilder).insert(data);
     return { id, grades: [], ...data, skills: [] };
   }
@@ -42,53 +40,49 @@ export class WilderResolver {
     @Arg("id") id: string,
     @Arg("data") data: WilderInput
   ): Promise<Wilder | undefined> {
-    try {
-      const { name, bio, avatarUrl, city, skills } = data;
-      const wilderToUpdate = await datasource.getRepository(Wilder).findOne({
-        where: { id: parseInt(id, 10) },
-        relations: { grades: { skill: true } },
-      });
+    const { name, bio, avatarUrl, city, skills } = data;
+    const wilderToUpdate = await datasource.getRepository(Wilder).findOne({
+      where: { id: parseInt(id, 10) },
+      relations: { grades: { skill: true } },
+    });
 
-      if (wilderToUpdate === null)
-        throw new ApolloError("wilder not found", "NOT_FOUND");
+    if (wilderToUpdate === null)
+      throw new ApolloError("wilder not found", "NOT_FOUND");
 
-      wilderToUpdate.name = name;
-      wilderToUpdate.bio = bio;
-      wilderToUpdate.city = city;
-      wilderToUpdate.avatarUrl = avatarUrl;
+    wilderToUpdate.name = name;
+    wilderToUpdate.bio = bio;
+    wilderToUpdate.city = city;
+    wilderToUpdate.avatarUrl = avatarUrl;
 
-      await datasource.getRepository(Wilder).save(wilderToUpdate);
+    await datasource.getRepository(Wilder).save(wilderToUpdate);
 
-      const existingSkillIds = wilderToUpdate.grades.map((g) => g.skill.id);
-      const newSkillIds = (typeof skills === "undefined" ? [] : skills).map(
-        (s: SkillId) => s.id
-      );
-      const skillIdsToAdd = newSkillIds.filter(
-        (newId) => !existingSkillIds.includes(newId)
-      );
-      const skillsToRemove = existingSkillIds.filter(
-        (existingId) => !newSkillIds.includes(existingId)
-      );
+    const existingSkillIds = wilderToUpdate.grades.map((g) => g.skill.id);
+    const newSkillIds = (typeof skills === "undefined" ? [] : skills).map(
+      (s: SkillId) => s.id
+    );
+    const skillIdsToAdd = newSkillIds.filter(
+      (newId) => !existingSkillIds.includes(newId)
+    );
+    const skillsToRemove = existingSkillIds.filter(
+      (existingId) => !newSkillIds.includes(existingId)
+    );
 
-      await datasource.getRepository(Grade).save(
-        skillIdsToAdd.map((skillId) => ({
-          skillId,
-          wilderId: wilderToUpdate.id,
-        }))
-      );
+    await datasource.getRepository(Grade).save(
+      skillIdsToAdd.map((skillId) => ({
+        skillId,
+        wilderId: wilderToUpdate.id,
+      }))
+    );
 
-      await Promise.all(
-        skillsToRemove.map(
-          async (skillId: number) =>
-            await datasource
-              .getRepository(Grade)
-              .delete({ wilderId: wilderToUpdate.id, skillId })
-        )
-      );
+    await Promise.all(
+      skillsToRemove.map(
+        async (skillId: number) =>
+          await datasource
+            .getRepository(Grade)
+            .delete({ wilderId: wilderToUpdate.id, skillId })
+      )
+    );
 
-      return wilderToUpdate;
-    } catch (err) {
-      console.error(err);
-    }
+    return wilderToUpdate;
   }
 }
