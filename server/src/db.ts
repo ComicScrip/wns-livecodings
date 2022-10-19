@@ -9,7 +9,7 @@ export default new DataSource({
   port: 5432,
   username: "postgres",
   password: "postgres",
-  database: "wilders-book",
+  database: "postgres",
   synchronize: true,
   entities: [Wilder, Skill, Grade],
   logging: ["query", "error"],

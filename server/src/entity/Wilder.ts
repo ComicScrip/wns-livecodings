@@ -35,7 +35,7 @@ class Wilder {
   avatarUrl?: string;
 
   @Field({ nullable: true })
-  @Column({ length: 500, nullable: true, type: "text" })
+  @Column({ nullable: true, type: "text" })
   bio?: string;
 
   @Field(() => [SkillOfWilder])
