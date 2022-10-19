@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { IWilderInput } from "../types/IWilder";
 import blank_profile from "../assets/avatar.png";
-import { getOneWilder, updateWilder, UPDATE_WILDER } from "../services/wilders";
+import { getOneWilder, UPDATE_WILDER } from "../services/wilders";
 import toast from "react-hot-toast";
 import { ISkill } from "../types/ISkill";
-import { createSkill, getAllSkills } from "../services/skills";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "./Loader";
 import CreatableSelect from "react-select/creatable";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { CREATE_SKILL, GET_SKILLS } from "../services/skills";
 
 export default function EditWilder() {
   const { id } = useParams();
@@ -20,12 +20,11 @@ export default function EditWilder() {
       getOneWilder(parseInt(id, 10)).then(setEditedWilder).catch(console.error);
   }, [id]);
 
-  const [availableSkills, setSkills] = useState<ISkill[]>([]);
-  useEffect(() => {
-    getAllSkills().then(setSkills).catch(console.error);
-  }, []);
+  const { data } = useQuery(GET_SKILLS);
+  const availableSkills: ISkill[] = data?.skills || [];
 
   const [updateWilder] = useMutation(UPDATE_WILDER);
+  const [createSkill] = useMutation(CREATE_SKILL);
 
   if (!editedWilder || !id) return <Loader />;
 
@@ -128,16 +127,16 @@ export default function EditWilder() {
           closeMenuOnSelect={false}
           onChange={(skills, meta) => {
             if (meta.action === "create-option") {
-              createSkill({ name: (meta.option as any).value }).then(
-                (created) => {
-                  console.log({ skills });
+              createSkill({
+                variables: { data: { name: (meta.option as any).value } },
+              }).then(({ data: { createSkill: created } }) => {
+                console.log({ skills, created });
 
-                  setEditedWilder({
-                    ...editedWilder,
-                    skills: skills.map((s: any) => (s.__isNew__ ? created : s)),
-                  });
-                }
-              );
+                setEditedWilder({
+                  ...editedWilder,
+                  skills: skills.map((s: any) => (s.__isNew__ ? created : s)),
+                });
+              });
             } else
               setEditedWilder({
                 ...editedWilder,
