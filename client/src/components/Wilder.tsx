@@ -1,6 +1,6 @@
 import React from "react";
 import blank_profile from "../assets/avatar.png";
-import { DELETE_WILDER, GET_WILDERS } from "../services/wilders";
+import { DELETE_WILDER, GET_WILDERS } from "../gql/wilders";
 import Skill from "./Skill";
 import { IWilder } from "../types/IWilder";
 import { Link } from "react-router-dom";

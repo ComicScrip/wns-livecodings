@@ -5,12 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-
-const client = new ApolloClient({
-  uri: "http://localhost:4000",
-  cache: new InMemoryCache(),
-});
+import { ApolloProvider } from "@apollo/client";
+import client from "./gql/client";
 
 const theme = createTheme({
   palette: {

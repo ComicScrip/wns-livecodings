@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, useRef } from "react";
-import { CREATE_WILDER } from "../services/wilders";
+import { CREATE_WILDER } from "../gql/wilders";
 import { IWilderInput } from "../types/IWilder";
 import { useMutation } from "@apollo/client";
 

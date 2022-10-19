@@ -1,7 +1,7 @@
 import React, { useState, FormEvent, useRef } from "react";
 import { ISkillInput } from "../types/ISkill";
 import { useMutation } from "@apollo/client";
-import { CREATE_SKILL } from "../services/skills";
+import { CREATE_SKILL } from "../gql/skills";
 
 interface SkillFormProps {
   onCreated: () => any;

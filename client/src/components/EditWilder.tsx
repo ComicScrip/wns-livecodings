@@ -1,29 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { IWilderInput } from "../types/IWilder";
+import { IWilder, IWilderInput } from "../types/IWilder";
 import blank_profile from "../assets/avatar.png";
-import { getOneWilder, UPDATE_WILDER } from "../services/wilders";
+import { GET_ONE_WILDER, UPDATE_WILDER } from "../gql/wilders";
 import toast from "react-hot-toast";
 import { ISkill } from "../types/ISkill";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "./Loader";
 import CreatableSelect from "react-select/creatable";
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_SKILL, GET_SKILLS } from "../services/skills";
+import { CREATE_SKILL, GET_SKILLS } from "../gql/skills";
+import client from "../gql/client";
 
 export default function EditWilder() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [editedWilder, setEditedWilder] = useState<IWilderInput>();
+
   useEffect(() => {
     if (id)
-      getOneWilder(parseInt(id, 10)).then(setEditedWilder).catch(console.error);
+      client
+        .query(GET_ONE_WILDER)
+        .then(({ wilder }) => w && setEditedWilder(w))
+        .catch(console.error);
   }, [id]);
+
+  const { data: wilderData } = useQuery(GET_ONE_WILDER);
 
   const { data } = useQuery(GET_SKILLS);
   const availableSkills: ISkill[] = data?.skills || [];
 
-  const [updateWilder] = useMutation(UPDATE_WILDER);
+  const [updateWilder] = useMutation<
+    IWilder,
+    { id: number; data: IWilderInput }
+  >(UPDATE_WILDER);
   const [createSkill] = useMutation(CREATE_SKILL);
 
   if (!editedWilder || !id) return <Loader />;
@@ -33,7 +43,7 @@ export default function EditWilder() {
   const save = () =>
     updateWilder({
       variables: {
-        id,
+        id: parseInt(id, 10),
         data: {
           skills: skills?.map((s) => ({ id: s.id })),
           name,

@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { ApolloError } from "apollo-server-errors";
 import Wilder, { SkillId, WilderInput } from "../entity/Wilder";
 import datasource from "../db";
@@ -22,6 +22,24 @@ export class WilderResolver {
     }));
   }
 
+  @Query(() => Wilder)
+  async wilder(@Arg("id", () => Int) id: number): Promise<Wilder> {
+    const wilder = await datasource
+      .getRepository(Wilder)
+      .findOne({ where: { id }, relations: { grades: { skill: true } } });
+
+    if (wilder === null) throw new ApolloError("wilder not found", "NOT_FOUND");
+
+    return {
+      ...wilder,
+      skills: wilder.grades.map((g) => ({
+        id: g.skill.id,
+        name: g.skill.name,
+        votes: g.votes,
+      })),
+    };
+  }
+
   @Mutation(() => Wilder)
   async createWilder(@Arg("data") data: WilderInput): Promise<Wilder> {
     const { raw: id } = await datasource.getRepository(Wilder).insert(data);
@@ -29,7 +47,7 @@ export class WilderResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteWilder(@Arg("id") id: string): Promise<boolean> {
+  async deleteWilder(@Arg("id", () => Int) id: number): Promise<boolean> {
     const { affected } = await datasource.getRepository(Wilder).delete(id);
     if (affected === 0) throw new ApolloError("wilder not found", "NOT_FOUND");
     return true;
@@ -39,7 +57,7 @@ export class WilderResolver {
   async updateWilder(
     @Arg("id") id: string,
     @Arg("data") data: WilderInput
-  ): Promise<Wilder | undefined> {
+  ): Promise<Wilder> {
     const { name, bio, avatarUrl, city, skills } = data;
     const wilderToUpdate = await datasource.getRepository(Wilder).findOne({
       where: { id: parseInt(id, 10) },

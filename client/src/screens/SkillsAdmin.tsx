@@ -4,7 +4,7 @@ import SkillForm from "../components/SkillForm.";
 import { ISkill } from "../types/ISkill";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useMutation, useQuery } from "@apollo/client";
-import { DELETE_SKILL, GET_SKILLS, UPDATE_SKILL } from "../services/skills";
+import { DELETE_SKILL, GET_SKILLS, UPDATE_SKILL } from "../gql/skills";
 
 export default function SkillsAdmin() {
   const [parent] = useAutoAnimate<any>();

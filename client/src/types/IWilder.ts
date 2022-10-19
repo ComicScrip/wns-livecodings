@@ -1,5 +1,3 @@
-import { ISkill } from "./ISkill";
-
 export interface SkillOfWilder {
   id: number;
   name: string;
@@ -11,7 +9,7 @@ export interface IWilderInput {
   city?: string | null;
   bio?: string | null;
   avatarUrl?: string | null;
-  skills?: ISkill[];
+  skills?: { id: number }[];
 }
 
 export interface IWilder extends IWilderInput {
