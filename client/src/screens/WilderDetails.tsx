@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-import { getOneWilder } from "../services/wilders";
-import { IWilder } from "../types/IWilder";
 import blank_profile from "../assets/avatar.png";
 import Skill from "../components/Skill";
+import { useWilderQuery } from "../gql/generated/schema";
 
 export default function WilderDetails() {
-  const { id } = useParams();
+  const { id = "" } = useParams();
 
-  const [wilder, setWilder] = useState<IWilder>();
-  useEffect(() => {
-    if (id) getOneWilder(parseInt(id, 10)).then(setWilder).catch(console.error);
-  }, [id]);
+  const { data } = useWilderQuery({
+    variables: { wilderId: parseInt(id, 10) },
+    skip: typeof id === "undefined",
+  });
+  const wilder = data?.wilder;
 
-  if (!wilder) return <Loader />;
+  if (!wilder)
+    return (
+      <div className="flex items-center justify-center">
+        <Loader />
+      </div>
+    );
 
   const { avatarUrl, name, skills, city, bio } = wilder;
 

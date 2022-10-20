@@ -1,48 +1,25 @@
-import React, {
-  useState,
-  FormEvent,
-  Dispatch,
-  SetStateAction,
-  useRef,
-} from "react";
-import { createSkill } from "../services/skills";
-import { ISkill, ISkillInput } from "../types/ISkill";
-import toast from "react-hot-toast";
+import React, { useState, FormEvent, useRef } from "react";
+import {
+  SkillsDocument,
+  useCreateSkillMutation,
+} from "../gql/generated/schema";
 
-interface SkillFormProps {
-  setSkills: Dispatch<SetStateAction<ISkill[]>>;
-}
-
-export default function SkillForm({ setSkills }: SkillFormProps) {
-  const [name, setName] = useState<ISkillInput["name"]>("");
-  const [processing, setProcessing] = useState(false);
+export default function SkillForm() {
+  const [name, setName] = useState("");
+  const [createSkill, { loading: processing }] = useCreateSkillMutation();
   const nameRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!name) return;
-    setProcessing(true);
-    try {
-      await createSkill({ name });
-      setSkills((old) => [
-        ...old,
-        {
-          id: (old.slice().sort((a, b) => b.id - a.id)?.[0]?.id || 0) + 1,
-          name,
-        },
-      ]);
-      setName("");
-    } catch (err) {
-      console.error(err);
-      if ((err as any)?.response?.status === 409) {
-        toast.error("Duplicate name");
-      }
-    } finally {
-      setProcessing(false);
-      setTimeout(() => {
-        nameRef.current?.focus();
-      }, 50);
-    }
+    await createSkill({
+      variables: { data: { name } },
+      refetchQueries: [{ query: SkillsDocument }],
+    });
+    setName("");
+    setTimeout(() => {
+      nameRef.current?.focus();
+    }, 50);
   };
 
   return (

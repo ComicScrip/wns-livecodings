@@ -1,33 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Loader from "../components/Loader";
 import SkillForm from "../components/SkillForm.";
-import { getAllSkills, deleteSkill, updateSkill } from "../services/skills";
-import { ISkill } from "../types/ISkill";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import {
+  useDeleteSkillMutation,
+  useSkillsQuery,
+  useUpdateSkillMutation,
+} from "../gql/generated/schema";
 
 export default function SkillsAdmin() {
-  const [skills, setSkills] = useState<ISkill[]>([]);
-  const [loading, setLoading] = useState(false);
   const [parent] = useAutoAnimate<any>();
 
-  const fetchSkills = () => {
-    setLoading(true);
-    getAllSkills()
-      .then(setSkills)
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  };
+  const { loading, data, refetch } = useSkillsQuery();
+  const skills = data?.skills || [];
 
-  useEffect(() => {
-    fetchSkills();
-  }, []);
+  const [updateSkill] = useUpdateSkillMutation();
+  const [deleteSkill] = useDeleteSkillMutation();
 
   return (
     <div>
-      <SkillForm setSkills={setSkills} />
+      <SkillForm />
       <ul ref={parent}>
         {loading && !skills.length ? (
-          <Loader />
+          <div className="p-2">
+            <Loader />
+          </div>
         ) : (
           skills.map((s) => (
             <li key={s.id} className="flex justify-between mb-2">
@@ -36,22 +33,26 @@ export default function SkillsAdmin() {
                 type="text"
                 id="name"
                 value={s.name}
-                onChange={(e) => {
+                onChange={async (e) => {
                   const name = e.target.value;
                   if (name) {
-                    updateSkill(s.id, { name });
+                    await updateSkill({
+                      variables: {
+                        data: { name },
+                        updateSkillId: s.id,
+                      },
+                    });
+
+                    refetch();
                   }
-                  setSkills((old) =>
-                    old.map((sk) => (s.id === sk.id ? { ...sk, name } : sk))
-                  );
                 }}
               />
 
               <button
-                onClick={() => {
+                onClick={async () => {
                   if (window.confirm("sure ?")) {
-                    setSkills((old) => old.filter((sk) => s.id !== sk.id));
-                    deleteSkill(s.id);
+                    await deleteSkill({ variables: { deleteSkillId: s.id } });
+                    refetch();
                   }
                 }}
               >

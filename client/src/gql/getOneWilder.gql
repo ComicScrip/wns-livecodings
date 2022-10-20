@@ -1,0 +1,14 @@
+query Wilder($wilderId: Int!) {
+  wilder(id: $wilderId) {
+    id
+    name
+    city
+    avatarUrl
+    bio
+    skills {
+      id
+      name
+      votes
+    }
+  }
+}

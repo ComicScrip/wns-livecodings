@@ -3,20 +3,18 @@ import React from "react";
 import Loader from "../components/Loader";
 import Wilder from "../components/Wilder";
 import WilderForm from "../components/WilderForm";
-import { GET_WILDERS } from "../services/wilders";
-import { IWilder } from "../types/IWilder";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useQuery } from "@apollo/client";
+import { useWildersQuery } from "../gql/generated/schema";
 
 export default function Home() {
   const [parent] = useAutoAnimate<any>();
 
-  const { loading: loadingWilders, data, refetch } = useQuery(GET_WILDERS);
-  const wilders: IWilder[] = data?.wilders || [];
+  const { loading: loadingWilders, data } = useWildersQuery();
+  const wilders = data?.wilders || [];
 
   return (
     <div>
-      <WilderForm loadWildersIntoState={refetch} />
+      <WilderForm />
       <div
         ref={parent}
         className={clsx(

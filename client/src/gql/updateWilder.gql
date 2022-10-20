@@ -1,0 +1,5 @@
+mutation UpdateWilder($data: WilderInput!, $updateWilderId: Int!) {
+  updateWilder(data: $data, id: $updateWilderId) {
+    id
+  }
+}

@@ -1,0 +1,6 @@
+query Skills {
+  skills {
+    id
+    name
+  }
+}

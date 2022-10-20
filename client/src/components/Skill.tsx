@@ -1,13 +1,13 @@
 import clsx from "clsx";
 import { useMemo, useState } from "react";
-import { updateGrade } from "../services/wilders";
 import createPersistedState from "use-persisted-state";
+import { useUpdateGradeMutation } from "../gql/generated/schema";
 
 interface SkillProps {
   title: string;
   votes: number;
-  wilderId: number | string;
-  skillId: number | string;
+  wilderId: number;
+  skillId: number;
 }
 
 const Skill = ({ title, votes, wilderId, skillId }: SkillProps) => {
@@ -16,11 +16,16 @@ const Skill = ({ title, votes, wilderId, skillId }: SkillProps) => {
     [wilderId, skillId]
   );
 
+  const [updateGrade] = useUpdateGradeMutation();
+
   const [currentVotes, setCurrentVotes] = useState(votes);
   const [votedOnce, setVotedOnce] = useVotedOnce(false);
   const [isHovered, setIsHovered] = useState(false);
+
   const onClick = () => {
-    updateGrade(wilderId, skillId, currentVotes + 1).then(() => {
+    updateGrade({
+      variables: { wilderId, skillId, votes: currentVotes + 1 },
+    }).then(() => {
       setVotedOnce(true);
       setCurrentVotes((c) => c + 1);
     });

@@ -1,0 +1,14 @@
+query Wilders {
+  wilders {
+    id
+    name
+    city
+    avatarUrl
+    bio
+    skills {
+      id
+      name
+      votes
+    }
+  }
+}
