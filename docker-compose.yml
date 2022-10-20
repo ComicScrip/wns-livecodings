@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  server:
+    depends_on:
+      db:
+        condition: service_healthy
+    build: './server'
+    ports:
+      - 5001:5001
+      - 4000:4000
+    volumes:
+      - ./server/src:/app/src
+  client:
+    build: './client'
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client/src:/app/src
+
+
