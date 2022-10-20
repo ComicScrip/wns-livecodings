@@ -65,6 +65,9 @@ export default function EditWilder() {
         console.error(err);
         toast.error("error while saving wilder");
       },
+      refetchQueries: [
+        { query: WilderDocument, variables: { wilderId: parseInt(id, 10) } },
+      ],
     });
 
   return (

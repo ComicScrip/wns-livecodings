@@ -19,10 +19,12 @@ export default function SkillsAdmin() {
 
   return (
     <div>
-      <SkillForm onCreated={refetch} />
+      <SkillForm />
       <ul ref={parent}>
         {loading && !skills.length ? (
-          <Loader />
+          <div className="p-2">
+            <Loader />
+          </div>
         ) : (
           skills.map((s) => (
             <li key={s.id} className="flex justify-between mb-2">

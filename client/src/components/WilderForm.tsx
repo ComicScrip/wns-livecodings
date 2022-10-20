@@ -1,5 +1,8 @@
 import React, { useState, FormEvent, useRef } from "react";
-import { useCreateWilderMutation } from "../gql/generated/schema";
+import {
+  useCreateWilderMutation,
+  WildersDocument,
+} from "../gql/generated/schema";
 
 export default function WilderForm() {
   const [name, setName] = useState("");
@@ -9,7 +12,10 @@ export default function WilderForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await createWilder({ variables: { data: { name } } });
+    await createWilder({
+      variables: { data: { name } },
+      refetchQueries: [{ query: WildersDocument }],
+    });
     setName("");
     setTimeout(() => inputRef.current?.focus(), 100);
   };

@@ -43,7 +43,7 @@ export class WilderResolver {
   @Mutation(() => Wilder)
   async createWilder(@Arg("data") data: WilderInput): Promise<Wilder> {
     const { raw: id } = await datasource.getRepository(Wilder).insert(data);
-    return { id, grades: [], ...data, skills: [] };
+    return { ...data, id, grades: [], skills: [] };
   }
 
   @Mutation(() => Boolean)

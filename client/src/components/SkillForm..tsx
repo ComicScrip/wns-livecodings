@@ -1,23 +1,22 @@
 import React, { useState, FormEvent, useRef } from "react";
-import { useCreateSkillMutation } from "../gql/generated/schema";
+import {
+  SkillsDocument,
+  useCreateSkillMutation,
+} from "../gql/generated/schema";
 
-interface SkillFormProps {
-  onCreated: () => any;
-}
-
-export default function SkillForm({ onCreated }: SkillFormProps) {
+export default function SkillForm() {
   const [name, setName] = useState("");
-
   const [createSkill, { loading: processing }] = useCreateSkillMutation();
-
   const nameRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!name) return;
-    await createSkill({ variables: { data: { name } } });
+    await createSkill({
+      variables: { data: { name } },
+      refetchQueries: [{ query: SkillsDocument }],
+    });
     setName("");
-    onCreated();
     setTimeout(() => {
       nameRef.current?.focus();
     }, 50);

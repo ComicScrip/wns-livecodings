@@ -1,24 +1,20 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@types/cors': ^2.8.12
-  '@types/express': ^4.17.14
   '@typescript-eslint/eslint-plugin': ^5.36.1
   apollo-server: ^3.10.3
   apollo-server-core: ^3.10.3
   apollo-server-errors: ^3.3.1
   class-validator: ^0.13.2
-  cors: ^2.8.5
   eslint: ^8.23.0
   eslint-config-prettier: ^8.5.0
   eslint-config-standard-with-typescript: ^22.0.0
   eslint-plugin-import: ^2.26.0
   eslint-plugin-n: ^15.2.5
   eslint-plugin-promise: ^6.0.1
-  express: ^4.18.1
   graphql: ^15.3.0
   reflect-metadata: ^0.1.13
-  sqlite3: ^5.0.11
+  sqlite3: ^5.1.2
   ts-node-dev: ^2.0.0
   type-graphql: ^1.1.1
   typeorm: ^0.3.9
@@ -29,8 +25,6 @@ dependencies:
   apollo-server-core: 3.10.3_graphql@15.8.0
   apollo-server-errors: 3.3.1_graphql@15.8.0
   class-validator: 0.13.2
-  cors: 2.8.5
-  express: 4.18.2
   graphql: 15.8.0
   reflect-metadata: 0.1.13
   sqlite3: 5.1.2
@@ -38,8 +32,6 @@ dependencies:
   typeorm: 0.3.10_sqlite3@5.1.2
 
 devDependencies:
-  '@types/cors': 2.8.12
-  '@types/express': 4.17.14
   '@typescript-eslint/eslint-plugin': 5.40.0_25sstg4uu2sk4pm7xcyzuov7xq
   eslint: 8.25.0
   eslint-config-prettier: 8.5.0_eslint@8.25.0
@@ -438,14 +430,17 @@ packages:
     dependencies:
       '@types/connect': 3.4.35
       '@types/node': 18.8.5
+    dev: false
 
   /@types/connect/3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
       '@types/node': 18.8.5
+    dev: false
 
   /@types/cors/2.8.12:
     resolution: {integrity: sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==}
+    dev: false
 
   /@types/express-serve-static-core/4.17.31:
     resolution: {integrity: sha512-DxMhY+NAsTwMMFHBTtJFNp5qiHKJ7TeqOo23zVEM9alT1Ml27Q3xcTH0xwxn7Q0BbMcVEJOs/7aQtUWupUQN3Q==}
@@ -453,6 +448,7 @@ packages:
       '@types/node': 18.8.5
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
+    dev: false
 
   /@types/express/4.17.14:
     resolution: {integrity: sha512-TEbt+vaPFQ+xpxFLFssxUDXj5cWCxZJjIcB7Yg0k0GMHGtgtQgpvx/MUQUeAkNbA9AAGrwkAsoeItdTgS7FMyg==}
@@ -461,6 +457,7 @@ packages:
       '@types/express-serve-static-core': 4.17.31
       '@types/qs': 6.9.7
       '@types/serve-static': 1.15.0
+    dev: false
 
   /@types/glob/7.2.0:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
@@ -483,6 +480,7 @@ packages:
 
   /@types/mime/3.0.1:
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
+    dev: false
 
   /@types/minimatch/5.1.2:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
@@ -497,9 +495,11 @@ packages:
 
   /@types/qs/6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
+    dev: false
 
   /@types/range-parser/1.2.4:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
+    dev: false
 
   /@types/semver/7.3.12:
     resolution: {integrity: sha512-WwA1MW0++RfXmCr12xeYOOC5baSC9mSb0ZqCquFzKhcoF4TvHu5MKOuXsncgZcpVFhB1pXd5hZmM0ryAoCp12A==}
@@ -510,6 +510,7 @@ packages:
     dependencies:
       '@types/mime': 3.0.1
       '@types/node': 18.8.5
+    dev: false
 
   /@types/strip-bom/3.0.0:
     resolution: {integrity: sha512-xevGOReSYGM7g/kUBZzPqCrR/KYAo+F0yiPc85WFTJa0MSLtyFTVTU6cJu/aV4mid7IffDIWqo69THF2o4JiEQ==}
