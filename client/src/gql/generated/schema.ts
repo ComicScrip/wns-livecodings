@@ -159,7 +159,7 @@ export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: '
 export type WildersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WildersQuery = { __typename?: 'Query', wilders: Array<{ __typename?: 'Wilder', id: number, name: string, skills: Array<{ __typename?: 'SkillOfWilder', id: number, name: string, votes: number }> }> };
+export type WildersQuery = { __typename?: 'Query', wilders: Array<{ __typename?: 'Wilder', id: number, name: string, city?: string | null, avatarUrl?: string | null, bio?: string | null, skills: Array<{ __typename?: 'SkillOfWilder', id: number, name: string, votes: number }> }> };
 
 export type UpdateGradeMutationVariables = Exact<{
   votes: Scalars['Int'];
@@ -400,6 +400,9 @@ export const WildersDocument = gql`
   wilders {
     id
     name
+    city
+    avatarUrl
+    bio
     skills {
       id
       name

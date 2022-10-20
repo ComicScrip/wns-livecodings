@@ -4,7 +4,6 @@ import Loader from "../components/Loader";
 import Wilder from "../components/Wilder";
 import WilderForm from "../components/WilderForm";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-
 import { useWildersQuery } from "../gql/generated/schema";
 
 export default function Home() {

@@ -1,16 +1,11 @@
 import React, { useState, FormEvent, useRef } from "react";
-import {
-  useCreateWilderMutation,
-  WildersDocument,
-} from "../gql/generated/schema";
+import { useCreateWilderMutation } from "../gql/generated/schema";
 
 export default function WilderForm() {
   const [name, setName] = useState("");
   const inputRef = useRef<any>();
 
-  const [createWilder, { loading: processing }] = useCreateWilderMutation({
-    refetchQueries: [{ query: WildersDocument }],
-  });
+  const [createWilder, { loading: processing }] = useCreateWilderMutation();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
