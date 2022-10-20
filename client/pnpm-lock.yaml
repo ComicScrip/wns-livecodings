@@ -8,6 +8,10 @@ specifiers:
   '@graphql-codegen/cli': 2.13.7
   '@graphql-codegen/client-preset': 1.0.7
   '@graphql-codegen/introspection': 2.2.1
+  '@graphql-codegen/typescript': 2.7.4
+  '@graphql-codegen/typescript-operations': 2.5.4
+  '@graphql-codegen/typescript-react-apollo': ^3.3.4
+  '@graphql-typed-document-node/core': ^3.1.1
   '@material-ui/core': ^4.12.4
   '@mui/material': ^5.10.9
   '@testing-library/jest-dom': ^5.16.5
@@ -61,6 +65,10 @@ devDependencies:
   '@graphql-codegen/cli': 2.13.7_7nreksiy4nlgjupajsbye4452u
   '@graphql-codegen/client-preset': 1.0.7_graphql@16.6.0
   '@graphql-codegen/introspection': 2.2.1_graphql@16.6.0
+  '@graphql-codegen/typescript': 2.7.4_graphql@16.6.0
+  '@graphql-codegen/typescript-operations': 2.5.4_graphql@16.6.0
+  '@graphql-codegen/typescript-react-apollo': 3.3.4_sy4knu3obj4ys7pjcqbyfxmqle
+  '@graphql-typed-document-node/core': 3.1.1_graphql@16.6.0
   '@types/jest': 27.5.2
   '@types/node': 16.11.65
   '@types/react': 18.0.21
@@ -1980,6 +1988,24 @@ packages:
       '@graphql-codegen/visitor-plugin-common': 2.12.2_graphql@16.6.0
       auto-bind: 4.0.0
       graphql: 16.6.0
+      tslib: 2.4.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: true
+
+  /@graphql-codegen/typescript-react-apollo/3.3.4_sy4knu3obj4ys7pjcqbyfxmqle:
+    resolution: {integrity: sha512-ATmrj5SJAGqH2bqaYIkHYeHb3Qkvnk8fwFeD5fr8EZqp87pu86xqr5gbjVpS23e01DRRfrHO4vT++j5m/wbdEA==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+      graphql-tag: ^2.0.0
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 2.7.1_graphql@16.6.0
+      '@graphql-codegen/visitor-plugin-common': 2.12.2_graphql@16.6.0
+      auto-bind: 4.0.0
+      change-case-all: 1.0.14
+      graphql: 16.6.0
+      graphql-tag: 2.12.6_graphql@16.6.0
       tslib: 2.4.0
     transitivePeerDependencies:
       - encoding

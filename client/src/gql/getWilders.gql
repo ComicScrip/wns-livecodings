@@ -1,0 +1,11 @@
+query Wilders {
+  wilders {
+    id
+    name
+    skills {
+      id
+      name
+      votes
+    }
+  }
+}

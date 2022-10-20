@@ -3,15 +3,16 @@ import React from "react";
 import Loader from "../components/Loader";
 import Wilder from "../components/Wilder";
 import WilderForm from "../components/WilderForm";
-import { GET_WILDERS } from "../gql/wilders";
 import { IWilder } from "../types/IWilder";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useQuery } from "@apollo/client";
 
+import {} from "../gql/generated/graphql";
+
 export default function Home() {
   const [parent] = useAutoAnimate<any>();
 
-  const { loading: loadingWilders, data, refetch } = useQuery(GET_WILDERS);
+  const { loading: loadingWilders, data, refetch } = useQuery(GET_ALL_WILDERS);
   const wilders: IWilder[] = data?.wilders || [];
 
   return (
