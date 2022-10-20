@@ -12,6 +12,7 @@ COPY postcss.config.js postcss.config.js
 COPY tsconfig.json tsconfig.json
 COPY tailwind.config.js tailwind.config.js
 COPY public public
+COPY codegen.yml codegen.yml
 COPY src src
 
 CMD npm start

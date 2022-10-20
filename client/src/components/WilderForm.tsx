@@ -12,10 +12,16 @@ export default function WilderForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await createWilder({
-      variables: { data: { name } },
-      refetchQueries: [{ query: WildersDocument }],
-    });
+
+    try {
+      await createWilder({
+        variables: { data: { name } },
+        refetchQueries: [{ query: WildersDocument }],
+      });
+    } catch (err) {
+      console.error("eeee");
+    }
+
     setName("");
     setTimeout(() => inputRef.current?.focus(), 100);
   };

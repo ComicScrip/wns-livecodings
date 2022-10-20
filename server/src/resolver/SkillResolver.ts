@@ -11,9 +11,8 @@ export class SkillResolver {
   }
 
   @Mutation(() => Skill)
-  async createSkill(@Arg("data") { name }: SkillInput): Promise<Skill> {
-    const { raw: id } = await datasource.getRepository(Skill).insert({ name });
-    return { id, name };
+  async createSkill(@Arg("data") data: SkillInput): Promise<Skill> {
+    return await datasource.getRepository(Skill).save(data);
   }
 
   @Mutation(() => Boolean)
