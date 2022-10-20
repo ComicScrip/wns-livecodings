@@ -6,6 +6,7 @@ import Loader from "./Loader";
 import CreatableSelect from "react-select/creatable";
 import client from "../gql/client";
 import {
+  SkillsDocument,
   useCreateSkillMutation,
   useSkillsQuery,
   useUpdateWilderMutation,
@@ -23,7 +24,10 @@ export default function EditWilder() {
   useEffect(() => {
     if (id)
       client
-        .query<WilderQuery>({ query: WilderDocument })
+        .query<WilderQuery>({
+          query: WilderDocument,
+          variables: { wilderId: parseInt(id, 10) },
+        })
         .then(({ data }) => data && setEditedWilder(data.wilder))
         .catch(console.error);
   }, [id]);
@@ -33,7 +37,9 @@ export default function EditWilder() {
 
   const [updateWilder] = useUpdateWilderMutation();
 
-  const [createSkill] = useCreateSkillMutation();
+  const [createSkill] = useCreateSkillMutation({
+    refetchQueries: [{ query: SkillsDocument }],
+  });
 
   if (!editedWilder || !id) return <Loader />;
 
