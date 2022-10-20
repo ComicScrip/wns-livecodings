@@ -1,6 +1,0 @@
-POST http://localhost:5000/wilders/1/skills
-Content-Type: application/json
-
-{
-  "skillId": 2
-}

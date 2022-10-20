@@ -1,6 +1,0 @@
-POST http://localhost:5000/skills
-Content-Type: application/json
-
-{
-  "name": "React"
-}

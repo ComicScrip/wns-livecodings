@@ -1,6 +1,0 @@
-POST http://localhost:5000/wilders
-Content-Type: application/json
-
-{
-  "name": "john doe"
-}
