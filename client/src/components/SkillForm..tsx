@@ -1,16 +1,14 @@
 import React, { useState, FormEvent, useRef } from "react";
-import { ISkillInput } from "../types/ISkill";
-import { useMutation } from "@apollo/client";
-import { CREATE_SKILL } from "../gql/skills";
+import { useCreateSkillMutation } from "../gql/generated/schema";
 
 interface SkillFormProps {
   onCreated: () => any;
 }
 
 export default function SkillForm({ onCreated }: SkillFormProps) {
-  const [name, setName] = useState<ISkillInput["name"]>("");
+  const [name, setName] = useState("");
 
-  const [createSkill, { loading: processing }] = useMutation(CREATE_SKILL);
+  const [createSkill, { loading: processing }] = useCreateSkillMutation();
 
   const nameRef = useRef<HTMLInputElement>(null);
 

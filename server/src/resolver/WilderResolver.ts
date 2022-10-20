@@ -55,12 +55,12 @@ export class WilderResolver {
 
   @Mutation(() => Wilder)
   async updateWilder(
-    @Arg("id") id: string,
+    @Arg("id", () => Int) id: number,
     @Arg("data") data: WilderInput
   ): Promise<Wilder> {
     const { name, bio, avatarUrl, city, skills } = data;
     const wilderToUpdate = await datasource.getRepository(Wilder).findOne({
-      where: { id: parseInt(id, 10) },
+      where: { id },
       relations: { grades: { skill: true } },
     });
 

@@ -1,22 +1,20 @@
 import React, { useState, FormEvent, useRef } from "react";
-import { CREATE_WILDER } from "../gql/wilders";
-import { IWilderInput } from "../types/IWilder";
-import { useMutation } from "@apollo/client";
+import {
+  useCreateWilderMutation,
+  WildersDocument,
+} from "../gql/generated/schema";
 
-interface WilderFormProps {
-  loadWildersIntoState: () => void;
-}
-
-export default function WilderForm({ loadWildersIntoState }: WilderFormProps) {
-  const [name, setName] = useState<IWilderInput["name"]>("");
+export default function WilderForm() {
+  const [name, setName] = useState("");
   const inputRef = useRef<any>();
 
-  const [createWilder, { loading: processing }] = useMutation(CREATE_WILDER);
+  const [createWilder, { loading: processing }] = useCreateWilderMutation({
+    refetchQueries: [{ query: WildersDocument }],
+  });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     await createWilder({ variables: { data: { name } } });
-    loadWildersIntoState();
     setName("");
     setTimeout(() => inputRef.current?.focus(), 100);
   };

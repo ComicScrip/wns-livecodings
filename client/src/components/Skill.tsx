@@ -1,9 +1,7 @@
 import clsx from "clsx";
 import { useMemo, useState } from "react";
-import { UPDATE_GRADE } from "../gql/grades";
 import createPersistedState from "use-persisted-state";
-import { useMutation } from "@apollo/client";
-import { UpdateGradeArgs } from "../types/IGrade";
+import { useUpdateGradeMutation } from "../gql/generated/schema";
 
 interface SkillProps {
   title: string;
@@ -18,11 +16,12 @@ const Skill = ({ title, votes, wilderId, skillId }: SkillProps) => {
     [wilderId, skillId]
   );
 
-  const [updateGrade] = useMutation<boolean, UpdateGradeArgs>(UPDATE_GRADE);
+  const [updateGrade] = useUpdateGradeMutation();
 
   const [currentVotes, setCurrentVotes] = useState(votes);
   const [votedOnce, setVotedOnce] = useVotedOnce(false);
   const [isHovered, setIsHovered] = useState(false);
+
   const onClick = () => {
     updateGrade({
       variables: { wilderId, skillId, votes: currentVotes + 1 },

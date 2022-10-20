@@ -1,40 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { IWilder, IWilderInput } from "../types/IWilder";
 import blank_profile from "../assets/avatar.png";
-import { GET_ONE_WILDER, UPDATE_WILDER } from "../gql/wilders";
 import toast from "react-hot-toast";
-import { ISkill } from "../types/ISkill";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "./Loader";
 import CreatableSelect from "react-select/creatable";
-import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_SKILL, GET_SKILLS } from "../gql/skills";
 import client from "../gql/client";
+import {
+  useCreateSkillMutation,
+  useSkillsQuery,
+  useUpdateWilderMutation,
+  WilderDocument,
+  WilderInput,
+  WilderQuery,
+} from "../gql/generated/schema";
 
 export default function EditWilder() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [editedWilder, setEditedWilder] = useState<IWilderInput>();
+  const [editedWilder, setEditedWilder] = useState<WilderInput>();
 
   useEffect(() => {
     if (id)
       client
-        .query(GET_ONE_WILDER)
-        .then(({ wilder }) => w && setEditedWilder(w))
+        .query<WilderQuery>({ query: WilderDocument })
+        .then(({ data }) => data && setEditedWilder(data.wilder))
         .catch(console.error);
   }, [id]);
 
-  const { data: wilderData } = useQuery(GET_ONE_WILDER);
+  const { data } = useSkillsQuery();
+  const availableSkills = data?.skills || [];
 
-  const { data } = useQuery(GET_SKILLS);
-  const availableSkills: ISkill[] = data?.skills || [];
+  const [updateWilder] = useUpdateWilderMutation();
 
-  const [updateWilder] = useMutation<
-    IWilder,
-    { id: number; data: IWilderInput }
-  >(UPDATE_WILDER);
-  const [createSkill] = useMutation(CREATE_SKILL);
+  const [createSkill] = useCreateSkillMutation();
 
   if (!editedWilder || !id) return <Loader />;
 
@@ -43,7 +42,7 @@ export default function EditWilder() {
   const save = () =>
     updateWilder({
       variables: {
-        id: parseInt(id, 10),
+        updateWilderId: parseInt(id, 10),
         data: {
           skills: skills?.map((s) => ({ id: s.id })),
           name,
@@ -133,19 +132,20 @@ export default function EditWilder() {
           options={availableSkills}
           className="w-full"
           classNamePrefix="select"
-          value={editedWilder.skills as (ISkill & { votes?: number })[]}
+          value={editedWilder.skills}
           closeMenuOnSelect={false}
           onChange={(skills, meta) => {
             if (meta.action === "create-option") {
               createSkill({
                 variables: { data: { name: (meta.option as any).value } },
-              }).then(({ data: { createSkill: created } }) => {
-                console.log({ skills, created });
-
-                setEditedWilder({
-                  ...editedWilder,
-                  skills: skills.map((s: any) => (s.__isNew__ ? created : s)),
-                });
+              }).then(({ data }) => {
+                if (data?.createSkill)
+                  setEditedWilder({
+                    ...editedWilder,
+                    skills: skills.map((s: any) =>
+                      s.__isNew__ ? data?.createSkill : s
+                    ),
+                  });
               });
             } else
               setEditedWilder({

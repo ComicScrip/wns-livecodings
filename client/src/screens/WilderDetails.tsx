@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-import { GET_ONE_WILDER } from "../gql/wilders";
-import { IWilder } from "../types/IWilder";
 import blank_profile from "../assets/avatar.png";
 import Skill from "../components/Skill";
-import { useQuery } from "@apollo/client";
+import { useWilderQuery } from "../gql/generated/schema";
 
 export default function WilderDetails() {
-  const { id } = useParams();
+  const { id = "" } = useParams();
 
-  const { data } = useQuery<{ wilder: IWilder }>(GET_ONE_WILDER, {
-    variables: { id },
+  const { data } = useWilderQuery({
+    variables: { wilderId: parseInt(id, 10) },
+    skip: typeof id === "undefined",
   });
   const wilder = data?.wilder;
 

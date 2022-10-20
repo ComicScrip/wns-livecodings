@@ -1,0 +1,3 @@
+mutation DeleteWilder($deleteWilderId: Int!) {
+  deleteWilder(id: $deleteWilderId)
+}

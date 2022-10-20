@@ -1,19 +1,21 @@
 import React from "react";
 import Loader from "../components/Loader";
 import SkillForm from "../components/SkillForm.";
-import { ISkill } from "../types/ISkill";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useMutation, useQuery } from "@apollo/client";
-import { DELETE_SKILL, GET_SKILLS, UPDATE_SKILL } from "../gql/skills";
+import {
+  useDeleteSkillMutation,
+  useSkillsQuery,
+  useUpdateSkillMutation,
+} from "../gql/generated/schema";
 
 export default function SkillsAdmin() {
   const [parent] = useAutoAnimate<any>();
 
-  const { loading, data, refetch } = useQuery(GET_SKILLS);
-  const skills: ISkill[] = data?.skills || [];
+  const { loading, data, refetch } = useSkillsQuery();
+  const skills = data?.skills || [];
 
-  const [updateSkill] = useMutation(UPDATE_SKILL);
-  const [deleteSkill] = useMutation(DELETE_SKILL);
+  const [updateSkill] = useUpdateSkillMutation();
+  const [deleteSkill] = useDeleteSkillMutation();
 
   return (
     <div>
@@ -33,7 +35,10 @@ export default function SkillsAdmin() {
                   const name = e.target.value;
                   if (name) {
                     await updateSkill({
-                      variables: { data: { name }, id: s.id.toString() },
+                      variables: {
+                        data: { name },
+                        updateSkillId: s.id,
+                      },
                     });
 
                     refetch();
@@ -44,7 +49,7 @@ export default function SkillsAdmin() {
               <button
                 onClick={async () => {
                   if (window.confirm("sure ?")) {
-                    await deleteSkill({ variables: { id: s.id.toString() } });
+                    await deleteSkill({ variables: { deleteSkillId: s.id } });
                     refetch();
                   }
                 }}
