@@ -3,10 +3,8 @@ import Loader from "../components/Loader";
 import SkillForm from "../components/SkillForm.";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import {
-  Skill,
   SkillsDocument,
   SkillsQuery,
-  SkillsQueryResult,
   useDeleteSkillMutation,
   useSkillsQuery,
   useUpdateSkillMutation,
@@ -16,7 +14,7 @@ import client from "../gql/client";
 export default function SkillsAdmin() {
   const [parent] = useAutoAnimate<any>();
 
-  const { loading, data, refetch } = useSkillsQuery();
+  const { loading, data } = useSkillsQuery();
   const skills = data?.skills || [];
 
   const [updateSkill] = useUpdateSkillMutation();
