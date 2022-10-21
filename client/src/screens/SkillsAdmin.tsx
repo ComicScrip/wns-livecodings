@@ -3,10 +3,15 @@ import Loader from "../components/Loader";
 import SkillForm from "../components/SkillForm.";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import {
+  Skill,
+  SkillsDocument,
+  SkillsQuery,
+  SkillsQueryResult,
   useDeleteSkillMutation,
   useSkillsQuery,
   useUpdateSkillMutation,
 } from "../gql/generated/schema";
+import client from "../gql/client";
 
 export default function SkillsAdmin() {
   const [parent] = useAutoAnimate<any>();
@@ -36,14 +41,23 @@ export default function SkillsAdmin() {
                 onChange={async (e) => {
                   const name = e.target.value;
                   if (name) {
+                    client.cache.updateQuery(
+                      { query: SkillsDocument },
+                      (query) => {
+                        return {
+                          ...query,
+                          skills: (query as SkillsQuery).skills.map((sk) =>
+                            s.id === sk.id ? { ...sk, name } : sk
+                          ),
+                        };
+                      }
+                    );
                     await updateSkill({
                       variables: {
                         data: { name },
                         updateSkillId: s.id,
                       },
                     });
-
-                    refetch();
                   }
                 }}
               />
@@ -52,7 +66,15 @@ export default function SkillsAdmin() {
                 onClick={async () => {
                   if (window.confirm("sure ?")) {
                     await deleteSkill({ variables: { deleteSkillId: s.id } });
-                    refetch();
+                    client.cache.modify({
+                      fields: {
+                        skills(existing, { readField }) {
+                          return (existing as SkillsQuery["skills"]).filter(
+                            (sk) => readField("id", sk) !== s.id
+                          );
+                        },
+                      },
+                    });
                   }
                 }}
               >
