@@ -6,12 +6,13 @@ import datasource from "./db";
 import { WilderResolver } from "./resolver/WilderResolver";
 import { SkillResolver } from "./resolver/SkillResolver";
 import { GradeResolver } from "./resolver/GradeResolver";
+import { UserResolver } from "./resolver/UserResolver";
 
 const start = async (): Promise<void> => {
   await datasource.initialize();
 
   const schema = await buildSchema({
-    resolvers: [WilderResolver, SkillResolver, GradeResolver],
+    resolvers: [WilderResolver, SkillResolver, GradeResolver, UserResolver],
   });
 
   const server = new ApolloServer({

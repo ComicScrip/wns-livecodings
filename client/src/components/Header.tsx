@@ -37,6 +37,30 @@ export default function Header() {
                 Skills
               </NavLink>
             </li>
+
+            <li className="mr-2 h-8">
+              <NavLink
+                end
+                className={({ isActive }) =>
+                  (isActive ? activeStyle : inactiveStyle) + sharedStyle
+                }
+                to={"/signup"}
+              >
+                Register
+              </NavLink>
+            </li>
+
+            <li className="mr-2 h-8">
+              <NavLink
+                end
+                className={({ isActive }) =>
+                  (isActive ? activeStyle : inactiveStyle) + sharedStyle
+                }
+                to={"/login"}
+              >
+                Login
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </div>
