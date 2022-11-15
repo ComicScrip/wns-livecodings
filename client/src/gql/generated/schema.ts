@@ -18,9 +18,11 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   createSkill: Skill;
+  createUser: User;
   createWilder: Wilder;
   deleteSkill: Scalars['Boolean'];
   deleteWilder: Scalars['Boolean'];
+  login: Scalars['String'];
   updateGrade: Scalars['Boolean'];
   updateSkill: Skill;
   updateWilder: Wilder;
@@ -29,6 +31,11 @@ export type Mutation = {
 
 export type MutationCreateSkillArgs = {
   data: SkillInput;
+};
+
+
+export type MutationCreateUserArgs = {
+  data: UserInput;
 };
 
 
@@ -44,6 +51,11 @@ export type MutationDeleteSkillArgs = {
 
 export type MutationDeleteWilderArgs = {
   id: Scalars['Int'];
+};
+
+
+export type MutationLoginArgs = {
+  data: UserInput;
 };
 
 
@@ -98,6 +110,16 @@ export type SkillOfWilder = {
   votes: Scalars['Float'];
 };
 
+export type User = {
+  __typename?: 'User';
+  id: Scalars['Float'];
+};
+
+export type UserInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type Wilder = {
   __typename?: 'Wilder';
   avatarUrl?: Maybe<Scalars['String']>;
@@ -122,6 +144,13 @@ export type CreateSkillMutationVariables = Exact<{
 
 
 export type CreateSkillMutation = { __typename?: 'Mutation', createSkill: { __typename?: 'Skill', id: number, name: string } };
+
+export type CreateUserMutationVariables = Exact<{
+  data: UserInput;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: number } };
 
 export type CreateWilderMutationVariables = Exact<{
   data: WilderInput;
@@ -160,6 +189,13 @@ export type WildersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WildersQuery = { __typename?: 'Query', wilders: Array<{ __typename?: 'Wilder', id: number, name: string, city?: string | null, avatarUrl?: string | null, bio?: string | null, skills: Array<{ __typename?: 'SkillOfWilder', id: number, name: string, votes: number }> }> };
+
+export type LoginMutationVariables = Exact<{
+  data: UserInput;
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login: string };
 
 export type UpdateGradeMutationVariables = Exact<{
   votes: Scalars['Int'];
@@ -221,6 +257,39 @@ export function useCreateSkillMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateSkillMutationHookResult = ReturnType<typeof useCreateSkillMutation>;
 export type CreateSkillMutationResult = Apollo.MutationResult<CreateSkillMutation>;
 export type CreateSkillMutationOptions = Apollo.BaseMutationOptions<CreateSkillMutation, CreateSkillMutationVariables>;
+export const CreateUserDocument = gql`
+    mutation CreateUser($data: UserInput!) {
+  createUser(data: $data) {
+    id
+  }
+}
+    `;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const CreateWilderDocument = gql`
     mutation CreateWilder($data: WilderInput!) {
   createWilder(data: $data) {
@@ -438,6 +507,37 @@ export function useWildersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Wi
 export type WildersQueryHookResult = ReturnType<typeof useWildersQuery>;
 export type WildersLazyQueryHookResult = ReturnType<typeof useWildersLazyQuery>;
 export type WildersQueryResult = Apollo.QueryResult<WildersQuery, WildersQueryVariables>;
+export const LoginDocument = gql`
+    mutation Login($data: UserInput!) {
+  login(data: $data)
+}
+    `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const UpdateGradeDocument = gql`
     mutation UpdateGrade($votes: Int!, $skillId: Int!, $wilderId: Int!) {
   updateGrade(votes: $votes, skillId: $skillId, wilderId: $wilderId)
