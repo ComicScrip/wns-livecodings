@@ -21,7 +21,8 @@ import cookieParser from "cookie-parser";
 export interface ContextType {
   req: express.Request;
   res: express.Response;
-  currentUser: User | null;
+  currentUser?: User;
+  jwtPayload?: jwt.JwtPayload;
 }
 
 const start = async (): Promise<void> => {
@@ -47,7 +48,14 @@ const start = async (): Promise<void> => {
 
   const schema = await buildSchema({
     resolvers: [WilderResolver, SkillResolver, GradeResolver, UserResolver],
-    authChecker: ({ context }: { context: ContextType }, roles) => {
+    // https://typegraphql.com/docs/authorization.html
+    authChecker: async ({ context }: { context: ContextType }, roles) => {
+      if (context.jwtPayload)
+        context.currentUser = await datasource
+          .getRepository(User)
+          .findOneOrFail({
+            where: { id: context.jwtPayload.userId },
+          });
       if (!context.currentUser) return false;
       return roles.length === 0 || roles.includes(context.currentUser.role);
     },
@@ -67,18 +75,14 @@ const start = async (): Promise<void> => {
       const tokenInCookies: string | undefined = req.cookies?.["token"];
       const tokenInHeaders = req.headers.authorization?.split("Bearer ")?.[1];
       const token = tokenInCookies ?? tokenInHeaders;
-      let currentUser = null;
-
       // https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback
       const verifyToken = (t: string) => jwt.verify(t, env.JWT_PRIVATE_KEY);
+      let decoded, jwtPayload;
       try {
-        const decodedToken = token ? verifyToken(token) : null;
-        if (decodedToken)
-          currentUser = await datasource.getRepository(User).findOneOrFail({
-            where: { id: (decodedToken as any).userId },
-          });
+        if (token) decoded = verifyToken(token);
+        if (typeof decoded === "object") jwtPayload = decoded;
       } catch (err) {}
-      return { req, res, currentUser };
+      return { req, res, jwtPayload };
     },
   });
 

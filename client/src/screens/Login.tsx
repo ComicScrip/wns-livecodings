@@ -3,12 +3,8 @@ import { useLoginMutation, useGetProfileQuery } from "../gql/generated/schema";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-
   const [login] = useLoginMutation();
-
   const { data: currentUser, refetch } = useGetProfileQuery();
-
-  console.log(currentUser?.profile);
 
   return (
     <div className="mt-8">

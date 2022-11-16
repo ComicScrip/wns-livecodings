@@ -32,6 +32,7 @@ export class UserInput {
   password: string;
 }
 
+// https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
 const hashingOptions = {
   memoryCost: 2 ** 16,
   timeCost: 5,

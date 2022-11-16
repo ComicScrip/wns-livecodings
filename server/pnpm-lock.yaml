@@ -6,7 +6,6 @@ specifiers:
   '@types/express': ^4.17.14
   '@types/jsonwebtoken': ^8.5.9
   '@typescript-eslint/eslint-plugin': ^5.36.1
-  apollo-server: ^3.10.3
   apollo-server-core: ^3.10.3
   apollo-server-errors: ^3.3.1
   apollo-server-express: ^3.11.1
@@ -36,7 +35,6 @@ dependencies:
   '@types/cookie-parser': 1.4.3
   '@types/cors': 2.8.12
   '@types/express': 4.17.14
-  apollo-server: 3.11.1_graphql@15.8.0
   apollo-server-core: 3.11.1_graphql@15.8.0
   apollo-server-errors: 3.3.1_graphql@15.8.0
   apollo-server-express: 3.11.1_4mq2c443wwzwcb6dpxnwkfvrzm
@@ -925,21 +923,6 @@ packages:
       graphql: 15.8.0
     transitivePeerDependencies:
       - encoding
-    dev: false
-
-  /apollo-server/3.11.1_graphql@15.8.0:
-    resolution: {integrity: sha512-3RZ/veWGbi0zXy2YVaPkYIAavpbHyEVui91DNYvz6UFS0fZmhJwG7f1VmGheeRiqiV8nFa8GuBejI1niTeAYzA==}
-    peerDependencies:
-      graphql: ^15.3.0 || ^16.0.0
-    dependencies:
-      '@types/express': 4.17.14
-      apollo-server-core: 3.11.1_graphql@15.8.0
-      apollo-server-express: 3.11.1_4mq2c443wwzwcb6dpxnwkfvrzm
-      express: 4.18.2
-      graphql: 15.8.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
     dev: false
 
   /app-root-path/3.1.0:
