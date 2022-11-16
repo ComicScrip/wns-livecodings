@@ -10,10 +10,13 @@ class User {
   id: number;
 
   @Column({ nullable: true })
-  email?: string;
+  email: string;
 
   @Column({ nullable: true })
   hashedPassword: string;
+
+  @Column({ enum: ["visitor", "admin"], default: "visitor" })
+  role: "visitor" | "admin";
 }
 
 @InputType()

@@ -7,7 +7,7 @@ export default function Login() {
   const [login] = useLoginMutation();
 
   return (
-    <div className="mt-2">
+    <div className="mt-8">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -16,7 +16,7 @@ export default function Login() {
             .catch(console.error);
         }}
       >
-        <label htmlFor="email">
+        <label htmlFor="email" className="block mb-2">
           Email
           <input
             type="email"
@@ -30,7 +30,7 @@ export default function Login() {
           />
         </label>
 
-        <label htmlFor="password">
+        <label htmlFor="password" className="block mb-2">
           Password
           <input
             type="password"
