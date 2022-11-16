@@ -2,6 +2,8 @@ import { argon2id, hash, verify } from "argon2";
 import { Field, InputType, ObjectType } from "type-graphql";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
+export type Role = "visitor" | "admin";
+
 @Entity()
 @ObjectType()
 class User {
@@ -18,7 +20,7 @@ class User {
 
   @Field()
   @Column({ enum: ["visitor", "admin"], default: "visitor" })
-  role: "visitor" | "admin";
+  role: Role;
 }
 
 @InputType()

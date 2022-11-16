@@ -4,6 +4,7 @@ import Skill from "./Skill";
 import { Link } from "react-router-dom";
 import {
   useDeleteWilderMutation,
+  useGetProfileQuery,
   Wilder as WilderType,
   WildersDocument,
 } from "../gql/generated/schema";
@@ -27,6 +28,10 @@ const Wilder = ({
         console.error(err);
       }
   };
+
+  const { data: currentUser } = useGetProfileQuery();
+
+  const canDeleteWilder = currentUser && currentUser.profile.role === "admin";
 
   return (
     <>
@@ -66,7 +71,7 @@ const Wilder = ({
             <Link to={`/wilders/${id}/edit`}>
               <button className="mb-2 w-full">✏️</button>
             </Link>
-            <button onClick={handleDelete}>x</button>
+            {canDeleteWilder && <button onClick={handleDelete}>x</button>}
           </div>
         </div>
       </div>

@@ -23,17 +23,17 @@ export class UserResolver {
 
   @Mutation(() => String)
   async login(
-    @Arg("data") data: UserInput,
+    @Arg("data") { email, password }: UserInput,
     @Ctx() ctx: ContextType
   ): Promise<string> {
     const user = await datasource
       .getRepository(User)
-      .findOne({ where: { email: data.email } });
+      .findOne({ where: { email } });
 
     if (
       user === null ||
       !user.hashedPassword ||
-      !(await verifyPassword(data.password, user.hashedPassword))
+      !(await verifyPassword(password, user.hashedPassword))
     )
       throw new ApolloError("invalid credentials");
 

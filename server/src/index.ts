@@ -21,7 +21,7 @@ import cookieParser from "cookie-parser";
 export interface ContextType {
   req: express.Request;
   res: express.Response;
-  currentUser?: User;
+  currentUser: User | null;
 }
 
 const start = async (): Promise<void> => {
@@ -30,6 +30,8 @@ const start = async (): Promise<void> => {
   const app = express();
   const httpServer = http.createServer(app);
   const allowedOrigins = env.CORS_ALLOWED_ORIGINS.split(",");
+
+  // https://www.npmjs.com/package/cors#configuring-cors-w-dynamic-origin
   app.use(
     cors({
       credentials: true,
@@ -46,14 +48,12 @@ const start = async (): Promise<void> => {
   const schema = await buildSchema({
     resolvers: [WilderResolver, SkillResolver, GradeResolver, UserResolver],
     authChecker: ({ context }: { context: ContextType }, roles) => {
-      return (
-        context.currentUser !== null &&
-        typeof context.currentUser !== "undefined" &&
-        (roles.length === 0 || roles.includes(context.currentUser.role))
-      );
+      if (!context.currentUser) return false;
+      return roles.length === 0 || roles.includes(context.currentUser.role);
     },
   });
 
+  // https://www.apollographql.com/docs/apollo-server/v3/integrations/middleware#apollo-server-express
   const server = new ApolloServer({
     schema,
     csrfPrevention: true,
@@ -62,39 +62,33 @@ const start = async (): Promise<void> => {
       ApolloServerPluginDrainHttpServer({ httpServer }),
       ApolloServerPluginLandingPageLocalDefault({ embed: true }),
     ],
-    context: async ({ req, res }) => {
+    // https://www.apollographql.com/docs/apollo-server/v3/security/authentication/#putting-authenticated-user-info-on-the-context
+    context: async ({ req, res }): Promise<ContextType> => {
+      const tokenInCookies: string | undefined = req.cookies?.["token"];
+      const tokenInHeaders = req.headers.authorization?.split("Bearer ")?.[1];
+      const token = tokenInCookies ?? tokenInHeaders;
+      let currentUser = null;
+
+      // https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback
+      const verifyToken = (t: string) => jwt.verify(t, env.JWT_PRIVATE_KEY);
       try {
-        const tokenInCookies: string | undefined =
-          typeof req.cookies !== "undefined" ? req.cookies["token"] : undefined;
-        const tokenInHeaders = req.headers.authorization?.split("Bearer ")?.[1];
-        const token = tokenInCookies ?? tokenInHeaders;
-        const decodedToken =
-          token !== null && typeof token !== "undefined"
-            ? jwt.verify(token, env.JWT_PRIVATE_KEY)
-            : null;
-
-        const currentUser =
-          decodedToken !== null
-            ? await datasource.getRepository(User).findOneOrFail({
-                where: { id: (decodedToken as { userId: number }).userId },
-              })
-            : null;
-
-        return { req, res, currentUser };
-      } catch (err) {
-        console.log(err);
-      }
+        const decodedToken = token ? verifyToken(token) : null;
+        if (decodedToken)
+          currentUser = await datasource.getRepository(User).findOneOrFail({
+            where: { id: (decodedToken as any).userId },
+          });
+      } catch (err) {}
+      return { req, res, currentUser };
     },
   });
 
   await server.start();
-
   server.applyMiddleware({ app, cors: false, path: "/" });
-
-  await new Promise<void>((resolve) =>
-    httpServer.listen({ port: 4000 }, resolve)
+  httpServer.listen({ port: env.SERVER_PORT }, () =>
+    console.log(
+      `🚀 Server ready at ${env.SERVER_HOST}:${env.SERVER_PORT}${server.graphqlPath}`
+    )
   );
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
 };
 
 void start();
