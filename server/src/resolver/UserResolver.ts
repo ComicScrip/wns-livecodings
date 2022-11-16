@@ -7,8 +7,6 @@ import User, {
   UserInput,
   verifyPassword,
 } from "../entity/User";
-import { sign } from "jsonwebtoken";
-import { env } from "../environment";
 import { ContextType } from "../index";
 
 @Resolver(User)
@@ -37,15 +35,10 @@ export class UserResolver {
     )
       throw new ApolloError("invalid credentials");
 
-    const token = sign({ userId: user.id }, env.JWT_PRIVATE_KEY);
+    // TODO: create and send jwt in response body + http only cookie
+    // https://www.npmjs.com/package/jsonwebtoken
 
-    ctx.res.cookie("token", token, {
-      httpOnly: true,
-      secure: env.NODE_ENV === "production",
-      domain: env.SERVER_HOST,
-    });
-
-    return token;
+    return "OK";
   }
 
   @Authorized()

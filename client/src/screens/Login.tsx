@@ -1,22 +1,17 @@
 import React, { useState } from "react";
-import { useLoginMutation, useGetProfileQuery } from "../gql/generated/schema";
+import { useLoginMutation } from "../gql/generated/schema";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [login] = useLoginMutation();
-  const { data: currentUser, refetch } = useGetProfileQuery();
 
   return (
     <div className="mt-8">
-      {currentUser && (
-        <div className="mb-8">Logged in as {currentUser.profile.email}</div>
-      )}
-
       <form
         onSubmit={(e) => {
           e.preventDefault();
           login({ variables: { data: credentials } })
-            .then(() => refetch())
+            .then(console.log)
             .catch(console.error);
         }}
       >
