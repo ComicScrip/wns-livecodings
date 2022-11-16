@@ -9,12 +9,14 @@ class User {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field()
   @Column({ nullable: true })
   email: string;
 
   @Column({ nullable: true })
-  hashedPassword: string;
+  hashedPassword?: string;
 
+  @Field()
   @Column({ enum: ["visitor", "admin"], default: "visitor" })
   role: "visitor" | "admin";
 }
@@ -42,5 +44,10 @@ export const verifyPassword = async (
   hashedPassword: string
 ): Promise<boolean> =>
   await verify(hashedPassword, plainPassword, hashingOptions);
+
+export const getSafeAttributes = (user: User) => ({
+  ...user,
+  hashedPassword: undefined,
+});
 
 export default User;

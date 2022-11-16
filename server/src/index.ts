@@ -1,8 +1,8 @@
 import "reflect-metadata";
-import { ApolloServer } from "apollo-server";
+import { ApolloServer } from "apollo-server-express";
 import {
+  ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
-  Context,
 } from "apollo-server-core";
 import { buildSchema } from "type-graphql";
 import datasource from "./db";
@@ -11,17 +11,37 @@ import { SkillResolver } from "./resolver/SkillResolver";
 import { GradeResolver } from "./resolver/GradeResolver";
 import { UserResolver } from "./resolver/UserResolver";
 import { env } from "./environment";
-import jwt, { decode } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import User from "./entity/User";
+import cors from "cors";
+import express from "express";
+import http from "http";
+import cookieParser from "cookie-parser";
 
 export interface ContextType {
-  req: Express.Request;
-  res: Express.Response;
+  req: express.Request;
+  res: express.Response;
   currentUser?: User;
 }
 
 const start = async (): Promise<void> => {
   await datasource.initialize();
+
+  const app = express();
+  const httpServer = http.createServer(app);
+  const allowedOrigins = env.CORS_ALLOWED_ORIGINS.split(",");
+  app.use(
+    cors({
+      credentials: true,
+      origin: (origin, callback) => {
+        if (typeof origin === "undefined" || allowedOrigins.includes(origin))
+          return callback(null, true);
+        callback(new Error("Not allowed by CORS"));
+      },
+    })
+  );
+
+  app.use(cookieParser());
 
   const schema = await buildSchema({
     resolvers: [WilderResolver, SkillResolver, GradeResolver, UserResolver],
@@ -34,20 +54,18 @@ const start = async (): Promise<void> => {
     },
   });
 
-  const allowedOrigins = env.CORS_ALLOWED_ORIGINS.split(",");
-
-  console.log(allowedOrigins);
-
   const server = new ApolloServer({
     schema,
     csrfPrevention: true,
     cache: "bounded",
-    plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+    ],
     context: async ({ req, res }) => {
       try {
-        console.log({ cookies: req.cookies });
         const tokenInCookies: string | undefined =
-          typeof req.cookies !== "undefined" ? req.cookies("token") : undefined;
+          typeof req.cookies !== "undefined" ? req.cookies["token"] : undefined;
         const tokenInHeaders = req.headers.authorization?.split("Bearer ")?.[1];
         const token = tokenInCookies ?? tokenInHeaders;
         const decodedToken =
@@ -67,26 +85,16 @@ const start = async (): Promise<void> => {
         console.log(err);
       }
     },
-
-    cors: {
-      origin: (origin, callback) => {
-        if (typeof origin === "undefined" || allowedOrigins.includes(origin)) {
-          console.log("ok");
-
-          callback(null, true);
-        } else {
-          console.log("no");
-
-          callback(new Error("Not allowed by CORS"));
-        }
-      },
-      credentials: true,
-    },
   });
 
-  await server.listen().then(({ url }) => {
-    console.log(`🚀  Server ready at ${url}`);
-  });
+  await server.start();
+
+  server.applyMiddleware({ app, cors: false, path: "/" });
+
+  await new Promise<void>((resolve) =>
+    httpServer.listen({ port: 4000 }, resolve)
+  );
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
 };
 
 void start();

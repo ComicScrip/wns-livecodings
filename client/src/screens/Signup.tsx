@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../gql/generated/schema";
 
 export default function Signup() {
@@ -6,13 +7,15 @@ export default function Signup() {
 
   const [createUser] = useCreateUserMutation();
 
+  const navigate = useNavigate();
+
   return (
     <div className="mt-8">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           createUser({ variables: { data: userInfos } })
-            .then(() => console.log("ok"))
+            .then(() => navigate("/login"))
             .catch(console.error);
         }}
       >

@@ -1,9 +1,15 @@
 import { ApolloError } from "apollo-server-errors";
-import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import datasource from "../db";
-import User, { hashPassword, UserInput, verifyPassword } from "../entity/User";
+import User, {
+  getSafeAttributes,
+  hashPassword,
+  UserInput,
+  verifyPassword,
+} from "../entity/User";
 import { sign } from "jsonwebtoken";
 import { env } from "../environment";
+import { ContextType } from "../index";
 
 @Resolver(User)
 export class UserResolver {
@@ -16,13 +22,17 @@ export class UserResolver {
   }
 
   @Mutation(() => String)
-  async login(@Arg("data") data: UserInput, @Ctx() ctx: any): Promise<string> {
+  async login(
+    @Arg("data") data: UserInput,
+    @Ctx() ctx: ContextType
+  ): Promise<string> {
     const user = await datasource
       .getRepository(User)
       .findOne({ where: { email: data.email } });
 
     if (
       user === null ||
+      !user.hashedPassword ||
       !(await verifyPassword(data.password, user.hashedPassword))
     )
       throw new ApolloError("invalid credentials");
@@ -32,18 +42,15 @@ export class UserResolver {
     ctx.res.cookie("token", token, {
       httpOnly: true,
       secure: env.NODE_ENV === "production",
-      domain: env.HOST,
+      domain: env.SERVER_HOST,
     });
 
     return token;
   }
 
+  @Authorized()
   @Query(() => User)
-  async profile(@Ctx() ctx: any): Promise<User> {
-    console.log(ctx.req.cookies);
-
-    return await datasource
-      .getRepository(User)
-      .findOneOrFail({ where: { id: 12 } });
+  async profile(@Ctx() ctx: ContextType): Promise<User> {
+    return getSafeAttributes(ctx.currentUser as User);
   }
 }

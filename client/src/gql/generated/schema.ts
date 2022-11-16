@@ -79,6 +79,7 @@ export type MutationUpdateWilderArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  profile: User;
   skills: Array<Skill>;
   wilder: Wilder;
   wilders: Array<Wilder>;
@@ -112,7 +113,9 @@ export type SkillOfWilder = {
 
 export type User = {
   __typename?: 'User';
+  email: Scalars['String'];
   id: Scalars['Float'];
+  role: Scalars['String'];
 };
 
 export type UserInput = {
@@ -179,6 +182,11 @@ export type WilderQueryVariables = Exact<{
 
 
 export type WilderQuery = { __typename?: 'Query', wilder: { __typename?: 'Wilder', id: number, name: string, city?: string | null, avatarUrl?: string | null, bio?: string | null, skills: Array<{ __typename?: 'SkillOfWilder', id: number, name: string, votes: number }> } };
+
+export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, email: string, role: string } };
 
 export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -429,6 +437,42 @@ export function useWilderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Wil
 export type WilderQueryHookResult = ReturnType<typeof useWilderQuery>;
 export type WilderLazyQueryHookResult = ReturnType<typeof useWilderLazyQuery>;
 export type WilderQueryResult = Apollo.QueryResult<WilderQuery, WilderQueryVariables>;
+export const GetProfileDocument = gql`
+    query GetProfile {
+  profile {
+    id
+    email
+    role
+  }
+}
+    `;
+
+/**
+ * __useGetProfileQuery__
+ *
+ * To run a query within a React component, call `useGetProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetProfileQuery(baseOptions?: Apollo.QueryHookOptions<GetProfileQuery, GetProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, options);
+      }
+export function useGetProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProfileQuery, GetProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, options);
+        }
+export type GetProfileQueryHookResult = ReturnType<typeof useGetProfileQuery>;
+export type GetProfileLazyQueryHookResult = ReturnType<typeof useGetProfileLazyQuery>;
+export type GetProfileQueryResult = Apollo.QueryResult<GetProfileQuery, GetProfileQueryVariables>;
 export const SkillsDocument = gql`
     query Skills {
   skills {
