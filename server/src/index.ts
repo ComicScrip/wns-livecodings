@@ -53,8 +53,10 @@ const start = async (): Promise<void> => {
       // https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback
 
       const tokenInHeaders = context.req.headers.authorization?.split(" ")[1];
-      const token = tokenInHeaders;
-      console.log(tokenInHeaders);
+      const tokenInCookie = context.req.cookies?.["token"];
+      const token = tokenInHeaders || tokenInCookie;
+
+      console.log(tokenInCookie);
 
       // invalid token - synchronous
 

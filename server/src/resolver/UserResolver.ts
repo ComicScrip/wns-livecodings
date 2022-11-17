@@ -42,7 +42,19 @@ export class UserResolver {
 
     const token = jwt.sign({ userId: user.id }, env.JWT_PRIVATE_KEY);
 
+    ctx.res.cookie("token", token, {
+      secure: env.NODE_ENV === "production",
+      domain: env.SERVER_HOST,
+      httpOnly: true,
+    });
+
     return token;
+  }
+
+  @Mutation(() => String)
+  async logout(@Ctx() ctx: ContextType) {
+    ctx.res.clearCookie("token");
+    return "OK";
   }
 
   @Authorized()

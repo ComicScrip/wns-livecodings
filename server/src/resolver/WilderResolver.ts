@@ -46,6 +46,7 @@ export class WilderResolver {
     return await datasource.getRepository(Wilder).save(data);
   }
 
+  @Authorized<Role>(["admin"])
   @Mutation(() => Boolean)
   async deleteWilder(@Arg("id", () => Int) id: number): Promise<boolean> {
     const { affected } = await datasource.getRepository(Wilder).delete(id);
