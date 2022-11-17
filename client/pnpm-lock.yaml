@@ -32,6 +32,7 @@ specifiers:
   react-scripts: ^5.0.1
   react-select: ^5.4.0
   tailwindcss: ^3.1.8
+  ts-dotenv: ^0.9.0
   typescript: ^4.8.4
   use-persisted-state: ^0.3.3
   web-vitals: ^2.1.4
@@ -55,6 +56,7 @@ dependencies:
   react-router-dom: 6.4.2_biqbaboplfbrettd7655fr4n2y
   react-scripts: 5.0.1_z2adtafg6yxj6ioi3ufrlorsri
   react-select: 5.4.0_eat7hc23gfabdflnphmz6xfchm
+  ts-dotenv: 0.9.0
   typescript: 4.8.4
   use-persisted-state: 0.3.3_react@18.2.0
   web-vitals: 2.1.4
@@ -11708,6 +11710,10 @@ packages:
 
   /tryer/1.0.1:
     resolution: {integrity: sha512-c3zayb8/kWWpycWYg87P71E1S1ZL6b6IJxfb5fvsUgsf0S2MVGaDhDXXjDMpdCpfWXqptc+4mXwmiy1ypXqRAA==}
+    dev: false
+
+  /ts-dotenv/0.9.0:
+    resolution: {integrity: sha512-gFzNXERITCU36m0B5bPamsSol6ckdg224ht1E7wMsG41IvqJFSRSsUU17lqHbdGOGC+nplVxWCWBPypau/4x1g==}
     dev: false
 
   /ts-invariant/0.10.3:

@@ -21,6 +21,7 @@
     "react-router-dom": "^6.4.2",
     "react-scripts": "^5.0.1",
     "react-select": "^5.4.0",
+    "ts-dotenv": "^0.9.0",
     "typescript": "^4.8.4",
     "use-persisted-state": "^0.3.3",
     "web-vitals": "^2.1.4"
@@ -51,11 +52,11 @@
     ]
   },
   "devDependencies": {
-    "@graphql-codegen/typescript-react-apollo": "3.2.5",
-    "@graphql-codegen/typescript-operations": "2.3.0",
-    "@graphql-codegen/typescript": "2.4.3",
-    "@graphql-codegen/introspection": "2.1.1",
     "@graphql-codegen/cli": "2.6.1",
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/typescript": "2.4.3",
+    "@graphql-codegen/typescript-operations": "2.3.0",
+    "@graphql-codegen/typescript-react-apollo": "3.2.5",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.59",
     "@types/react": "^18.0.20",

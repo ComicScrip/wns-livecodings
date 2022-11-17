@@ -1,4 +1,5 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import { env } from "../environment";
 
 //https://www.apollographql.com/docs/react/networking/authentication/#cookie
 export default new ApolloClient({
@@ -9,7 +10,7 @@ export default new ApolloClient({
     },
   },
   link: createHttpLink({
-    uri: "http://localhost:4000",
+    uri: env.GRAPHQL_API_URL,
     credentials: "include",
   }),
 });
