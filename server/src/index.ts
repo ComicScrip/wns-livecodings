@@ -52,6 +52,27 @@ const start = async (): Promise<void> => {
     authChecker: async ({ context }: { context: ContextType }, roles) => {
       // https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback
 
+      const tokenInHeaders = context.req.headers.authorization?.split(" ")[1];
+      const token = tokenInHeaders;
+      console.log(tokenInHeaders);
+
+      // invalid token - synchronous
+
+      let decoded;
+
+      try {
+        if (token) decoded = jwt.verify(token, env.JWT_PRIVATE_KEY);
+        if (typeof decoded === "object") context.jwtPayload = decoded;
+      } catch (err) {}
+
+      let user;
+      if (context.jwtPayload)
+        user = await datasource
+          .getRepository(User)
+          .findOne({ where: { id: context.jwtPayload.userId } });
+
+      if (user !== null) context.currentUser = user;
+
       if (!context.currentUser) return false;
       return roles.length === 0 || roles.includes(context.currentUser.role);
     },
@@ -67,6 +88,9 @@ const start = async (): Promise<void> => {
       ApolloServerPluginLandingPageLocalDefault({ embed: true }),
     ],
     // https://www.apollographql.com/docs/apollo-server/v3/security/authentication/#putting-authenticated-user-info-on-the-context
+    context: ({ req, res }) => {
+      return { req, res };
+    },
   });
 
   await server.start();

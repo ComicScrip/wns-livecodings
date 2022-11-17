@@ -8,6 +8,8 @@ import User, {
   verifyPassword,
 } from "../entity/User";
 import { ContextType } from "../index";
+import jwt from "jsonwebtoken";
+import { env } from "../environment";
 
 @Resolver(User)
 export class UserResolver {
@@ -38,7 +40,9 @@ export class UserResolver {
     // TODO: create and send jwt in response body + http only cookie
     // https://www.npmjs.com/package/jsonwebtoken
 
-    return "OK";
+    const token = jwt.sign({ userId: user.id }, env.JWT_PRIVATE_KEY);
+
+    return token;
   }
 
   @Authorized()
