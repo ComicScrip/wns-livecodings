@@ -1,4 +1,5 @@
 import { argon2id, hash, verify } from "argon2";
+import { IsEmail, Matches, Min, MinLength } from "class-validator";
 import { Field, InputType, ObjectType } from "type-graphql";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
@@ -26,9 +27,12 @@ class User {
 @InputType()
 export class UserInput {
   @Field()
+  @IsEmail()
   email: string;
 
   @Field()
+  @MinLength(8)
+  @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
   password: string;
 }
 

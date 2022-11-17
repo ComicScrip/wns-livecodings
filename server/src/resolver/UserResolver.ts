@@ -15,6 +15,12 @@ import { env } from "../environment";
 export class UserResolver {
   @Mutation(() => User)
   async createUser(@Arg("data") data: UserInput): Promise<User> {
+    const exisitingUser = await datasource
+      .getRepository(User)
+      .findOne({ where: { email: data.email } });
+
+    if (exisitingUser) throw new ApolloError("EMAIL_ALREADY_EXISTS");
+
     const hashedPassword = await hashPassword(data.password);
     return await datasource
       .getRepository(User)
@@ -37,11 +43,10 @@ export class UserResolver {
     )
       throw new ApolloError("invalid credentials");
 
-    // TODO: create and send jwt in response body + http only cookie
     // https://www.npmjs.com/package/jsonwebtoken
-
     const token = jwt.sign({ userId: user.id }, env.JWT_PRIVATE_KEY);
 
+    // https://stackoverflow.com/a/40135050
     ctx.res.cookie("token", token, {
       secure: env.NODE_ENV === "production",
       domain: env.SERVER_HOST,

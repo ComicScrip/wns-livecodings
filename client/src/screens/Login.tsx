@@ -4,6 +4,7 @@ import {
   useLoginMutation,
   useLogoutMutation,
 } from "../gql/generated/schema";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -19,12 +20,14 @@ export default function Login() {
     <div className="mt-8">
       {currentUser ? (
         <div className="mb-8">
-          Logged in as {currentUser.profile.email}
+          <div>Logged in as {currentUser.profile.email}</div>
+
           <button
             onClick={async () => {
               await logout();
               await client.resetStore();
             }}
+            className="mt-4"
           >
             Log out
           </button>
@@ -35,7 +38,7 @@ export default function Login() {
             e.preventDefault();
             login({ variables: { data: credentials } })
               .then(() => client.resetStore())
-              .catch(console.error);
+              .catch(() => toast.error("Invalid credentials"));
           }}
         >
           <label htmlFor="email" className="block mb-2">
