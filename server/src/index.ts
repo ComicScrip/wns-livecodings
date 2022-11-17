@@ -1,22 +1,22 @@
 import "reflect-metadata";
+import http from "http";
+import cors from "cors";
+import jwt from "jsonwebtoken";
+import express from "express";
+import cookieParser from "cookie-parser";
 import { ApolloServer } from "apollo-server-express";
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
 } from "apollo-server-core";
 import { buildSchema } from "type-graphql";
+import { env } from "./environment";
 import datasource from "./db";
 import { WilderResolver } from "./resolver/WilderResolver";
 import { SkillResolver } from "./resolver/SkillResolver";
 import { GradeResolver } from "./resolver/GradeResolver";
 import { UserResolver } from "./resolver/UserResolver";
-import { env } from "./environment";
-import jwt from "jsonwebtoken";
 import User from "./entity/User";
-import cors from "cors";
-import express from "express";
-import http from "http";
-import cookieParser from "cookie-parser";
 
 export interface ContextType {
   req: express.Request;
@@ -50,19 +50,13 @@ const start = async (): Promise<void> => {
     resolvers: [WilderResolver, SkillResolver, GradeResolver, UserResolver],
     // https://typegraphql.com/docs/authorization.html
     authChecker: async ({ context }: { context: ContextType }, roles) => {
-      // https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback
-
       const tokenInHeaders = context.req.headers.authorization?.split(" ")[1];
       const tokenInCookie = context.req.cookies?.["token"];
       const token = tokenInHeaders || tokenInCookie;
 
-      console.log(tokenInCookie);
-
-      // invalid token - synchronous
-
-      let decoded;
-
       try {
+        let decoded;
+        // https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback
         if (token) decoded = jwt.verify(token, env.JWT_PRIVATE_KEY);
         if (typeof decoded === "object") context.jwtPayload = decoded;
       } catch (err) {}
