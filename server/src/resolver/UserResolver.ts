@@ -7,9 +7,9 @@ import User, {
   UserInput,
   verifyPassword,
 } from "../entity/User";
-import { sign } from "jsonwebtoken";
-import { env } from "../environment";
 import { ContextType } from "../index";
+import jwt from "jsonwebtoken";
+import { env } from "../environment";
 
 @Resolver(User)
 export class UserResolver {
@@ -37,15 +37,24 @@ export class UserResolver {
     )
       throw new ApolloError("invalid credentials");
 
-    const token = sign({ userId: user.id }, env.JWT_PRIVATE_KEY);
+    // TODO: create and send jwt in response body + http only cookie
+    // https://www.npmjs.com/package/jsonwebtoken
+
+    const token = jwt.sign({ userId: user.id }, env.JWT_PRIVATE_KEY);
 
     ctx.res.cookie("token", token, {
-      httpOnly: true,
       secure: env.NODE_ENV === "production",
       domain: env.SERVER_HOST,
+      httpOnly: true,
     });
 
     return token;
+  }
+
+  @Mutation(() => String)
+  async logout(@Ctx() ctx: ContextType) {
+    ctx.res.clearCookie("token");
+    return "OK";
   }
 
   @Authorized()

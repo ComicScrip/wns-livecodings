@@ -30,8 +30,7 @@ const Wilder = ({
   };
 
   const { data: currentUser } = useGetProfileQuery();
-
-  const canDeleteWilder = currentUser && currentUser.profile.role === "admin";
+  const canDeleteWilder = currentUser?.profile.role === "admin";
 
   return (
     <>
