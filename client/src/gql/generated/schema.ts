@@ -1,10 +1,16 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -16,128 +22,119 @@ export type Scalars = {
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   createSkill: Skill;
   createUser: User;
   createWilder: Wilder;
-  deleteSkill: Scalars['Boolean'];
-  deleteWilder: Scalars['Boolean'];
-  login: Scalars['String'];
-  updateGrade: Scalars['Boolean'];
+  deleteSkill: Scalars["Boolean"];
+  deleteWilder: Scalars["Boolean"];
+  login: Scalars["String"];
+  logout: Scalars["String"];
+  updateGrade: Scalars["Boolean"];
   updateSkill: Skill;
   updateWilder: Wilder;
 };
-
 
 export type MutationCreateSkillArgs = {
   data: SkillInput;
 };
 
-
 export type MutationCreateUserArgs = {
   data: UserInput;
 };
-
 
 export type MutationCreateWilderArgs = {
   data: WilderInput;
 };
 
-
 export type MutationDeleteSkillArgs = {
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
-
 
 export type MutationDeleteWilderArgs = {
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
-
 
 export type MutationLoginArgs = {
   data: UserInput;
 };
 
-
 export type MutationUpdateGradeArgs = {
-  skillId: Scalars['Int'];
-  votes: Scalars['Int'];
-  wilderId: Scalars['Int'];
+  skillId: Scalars["Int"];
+  votes: Scalars["Int"];
+  wilderId: Scalars["Int"];
 };
-
 
 export type MutationUpdateSkillArgs = {
   data: SkillInput;
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
-
 
 export type MutationUpdateWilderArgs = {
   data: WilderInput;
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   profile: User;
   skills: Array<Skill>;
   wilder: Wilder;
   wilders: Array<Wilder>;
 };
 
-
 export type QueryWilderArgs = {
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
 
 export type Skill = {
-  __typename?: 'Skill';
-  id: Scalars['Float'];
-  name: Scalars['String'];
+  __typename?: "Skill";
+  id: Scalars["Float"];
+  name: Scalars["String"];
 };
 
 export type SkillId = {
-  id: Scalars['Float'];
+  id: Scalars["Float"];
 };
 
 export type SkillInput = {
-  name: Scalars['String'];
+  name: Scalars["String"];
 };
 
 export type SkillOfWilder = {
-  __typename?: 'SkillOfWilder';
-  id: Scalars['Float'];
-  name: Scalars['String'];
-  votes: Scalars['Float'];
+  __typename?: "SkillOfWilder";
+  id: Scalars["Float"];
+  name: Scalars["String"];
+  votes: Scalars["Float"];
 };
 
 export type User = {
-  __typename?: 'User';
-  email: Scalars['String'];
-  id: Scalars['Float'];
-  role: Scalars['String'];
+  __typename?: "User";
+  email: Scalars["String"];
+  id: Scalars["Float"];
+  role: Scalars["String"];
 };
 
 export type UserInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type Wilder = {
-  __typename?: 'Wilder';
-  avatarUrl?: Maybe<Scalars['String']>;
-  bio?: Maybe<Scalars['String']>;
-  city?: Maybe<Scalars['String']>;
-  id: Scalars['Float'];
-  name: Scalars['String'];
+  __typename?: "Wilder";
+  avatarUrl?: Maybe<Scalars["String"]>;
+  bio?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+  id: Scalars["Float"];
+  name: Scalars["String"];
   skills: Array<SkillOfWilder>;
 };
 
 export type WilderInput = {
-  avatarUrl?: InputMaybe<Scalars['String']>;
-  bio?: InputMaybe<Scalars['String']>;
-  city?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
+  avatarUrl?: InputMaybe<Scalars["String"]>;
+  bio?: InputMaybe<Scalars["String"]>;
+  city?: InputMaybe<Scalars["String"]>;
+  name: Scalars["String"];
   skills?: InputMaybe<Array<SkillId>>;
 };
 
@@ -145,101 +142,156 @@ export type CreateSkillMutationVariables = Exact<{
   data: SkillInput;
 }>;
 
-
-export type CreateSkillMutation = { __typename?: 'Mutation', createSkill: { __typename?: 'Skill', id: number, name: string } };
+export type CreateSkillMutation = {
+  __typename?: "Mutation";
+  createSkill: { __typename?: "Skill"; id: number; name: string };
+};
 
 export type CreateUserMutationVariables = Exact<{
   data: UserInput;
 }>;
 
-
-export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: number } };
+export type CreateUserMutation = {
+  __typename?: "Mutation";
+  createUser: { __typename?: "User"; id: number };
+};
 
 export type CreateWilderMutationVariables = Exact<{
   data: WilderInput;
 }>;
 
-
-export type CreateWilderMutation = { __typename?: 'Mutation', createWilder: { __typename?: 'Wilder', id: number } };
+export type CreateWilderMutation = {
+  __typename?: "Mutation";
+  createWilder: { __typename?: "Wilder"; id: number };
+};
 
 export type DeleteSkillMutationVariables = Exact<{
-  deleteSkillId: Scalars['Int'];
+  deleteSkillId: Scalars["Int"];
 }>;
 
-
-export type DeleteSkillMutation = { __typename?: 'Mutation', deleteSkill: boolean };
+export type DeleteSkillMutation = {
+  __typename?: "Mutation";
+  deleteSkill: boolean;
+};
 
 export type DeleteWilderMutationVariables = Exact<{
-  deleteWilderId: Scalars['Int'];
+  deleteWilderId: Scalars["Int"];
 }>;
 
-
-export type DeleteWilderMutation = { __typename?: 'Mutation', deleteWilder: boolean };
+export type DeleteWilderMutation = {
+  __typename?: "Mutation";
+  deleteWilder: boolean;
+};
 
 export type WilderQueryVariables = Exact<{
-  wilderId: Scalars['Int'];
+  wilderId: Scalars["Int"];
 }>;
 
+export type WilderQuery = {
+  __typename?: "Query";
+  wilder: {
+    __typename?: "Wilder";
+    id: number;
+    name: string;
+    city?: string | null;
+    avatarUrl?: string | null;
+    bio?: string | null;
+    skills: Array<{
+      __typename?: "SkillOfWilder";
+      id: number;
+      name: string;
+      votes: number;
+    }>;
+  };
+};
 
-export type WilderQuery = { __typename?: 'Query', wilder: { __typename?: 'Wilder', id: number, name: string, city?: string | null, avatarUrl?: string | null, bio?: string | null, skills: Array<{ __typename?: 'SkillOfWilder', id: number, name: string, votes: number }> } };
+export type GetProfileQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetProfileQuery = {
+  __typename?: "Query";
+  profile: { __typename?: "User"; id: number; email: string; role: string };
+};
 
+export type SkillsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, email: string, role: string } };
+export type SkillsQuery = {
+  __typename?: "Query";
+  skills: Array<{ __typename?: "Skill"; id: number; name: string }>;
+};
 
-export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
+export type WildersQueryVariables = Exact<{ [key: string]: never }>;
 
-
-export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', id: number, name: string }> };
-
-export type WildersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type WildersQuery = { __typename?: 'Query', wilders: Array<{ __typename?: 'Wilder', id: number, name: string, city?: string | null, avatarUrl?: string | null, bio?: string | null, skills: Array<{ __typename?: 'SkillOfWilder', id: number, name: string, votes: number }> }> };
+export type WildersQuery = {
+  __typename?: "Query";
+  wilders: Array<{
+    __typename?: "Wilder";
+    id: number;
+    name: string;
+    city?: string | null;
+    avatarUrl?: string | null;
+    bio?: string | null;
+    skills: Array<{
+      __typename?: "SkillOfWilder";
+      id: number;
+      name: string;
+      votes: number;
+    }>;
+  }>;
+};
 
 export type LoginMutationVariables = Exact<{
   data: UserInput;
 }>;
 
+export type LoginMutation = { __typename?: "Mutation"; login: string };
 
-export type LoginMutation = { __typename?: 'Mutation', login: string };
+export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
+
+export type LogoutMutation = { __typename?: "Mutation"; logout: string };
 
 export type UpdateGradeMutationVariables = Exact<{
-  votes: Scalars['Int'];
-  skillId: Scalars['Int'];
-  wilderId: Scalars['Int'];
+  votes: Scalars["Int"];
+  skillId: Scalars["Int"];
+  wilderId: Scalars["Int"];
 }>;
 
-
-export type UpdateGradeMutation = { __typename?: 'Mutation', updateGrade: boolean };
+export type UpdateGradeMutation = {
+  __typename?: "Mutation";
+  updateGrade: boolean;
+};
 
 export type UpdateSkillMutationVariables = Exact<{
   data: SkillInput;
-  updateSkillId: Scalars['Int'];
+  updateSkillId: Scalars["Int"];
 }>;
 
-
-export type UpdateSkillMutation = { __typename?: 'Mutation', updateSkill: { __typename?: 'Skill', id: number } };
+export type UpdateSkillMutation = {
+  __typename?: "Mutation";
+  updateSkill: { __typename?: "Skill"; id: number };
+};
 
 export type UpdateWilderMutationVariables = Exact<{
   data: WilderInput;
-  updateWilderId: Scalars['Int'];
+  updateWilderId: Scalars["Int"];
 }>;
 
-
-export type UpdateWilderMutation = { __typename?: 'Mutation', updateWilder: { __typename?: 'Wilder', id: number } };
-
+export type UpdateWilderMutation = {
+  __typename?: "Mutation";
+  updateWilder: { __typename?: "Wilder"; id: number };
+};
 
 export const CreateSkillDocument = gql`
-    mutation CreateSkill($data: SkillInput!) {
-  createSkill(data: $data) {
-    id
-    name
+  mutation CreateSkill($data: SkillInput!) {
+    createSkill(data: $data) {
+      id
+      name
+    }
   }
-}
-    `;
-export type CreateSkillMutationFn = Apollo.MutationFunction<CreateSkillMutation, CreateSkillMutationVariables>;
+`;
+export type CreateSkillMutationFn = Apollo.MutationFunction<
+  CreateSkillMutation,
+  CreateSkillMutationVariables
+>;
 
 /**
  * __useCreateSkillMutation__
@@ -258,21 +310,38 @@ export type CreateSkillMutationFn = Apollo.MutationFunction<CreateSkillMutation,
  *   },
  * });
  */
-export function useCreateSkillMutation(baseOptions?: Apollo.MutationHookOptions<CreateSkillMutation, CreateSkillMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateSkillMutation, CreateSkillMutationVariables>(CreateSkillDocument, options);
-      }
-export type CreateSkillMutationHookResult = ReturnType<typeof useCreateSkillMutation>;
-export type CreateSkillMutationResult = Apollo.MutationResult<CreateSkillMutation>;
-export type CreateSkillMutationOptions = Apollo.BaseMutationOptions<CreateSkillMutation, CreateSkillMutationVariables>;
-export const CreateUserDocument = gql`
-    mutation CreateUser($data: UserInput!) {
-  createUser(data: $data) {
-    id
-  }
+export function useCreateSkillMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateSkillMutation,
+    CreateSkillMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateSkillMutation, CreateSkillMutationVariables>(
+    CreateSkillDocument,
+    options
+  );
 }
-    `;
-export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+export type CreateSkillMutationHookResult = ReturnType<
+  typeof useCreateSkillMutation
+>;
+export type CreateSkillMutationResult =
+  Apollo.MutationResult<CreateSkillMutation>;
+export type CreateSkillMutationOptions = Apollo.BaseMutationOptions<
+  CreateSkillMutation,
+  CreateSkillMutationVariables
+>;
+export const CreateUserDocument = gql`
+  mutation CreateUser($data: UserInput!) {
+    createUser(data: $data) {
+      id
+    }
+  }
+`;
+export type CreateUserMutationFn = Apollo.MutationFunction<
+  CreateUserMutation,
+  CreateUserMutationVariables
+>;
 
 /**
  * __useCreateUserMutation__
@@ -291,21 +360,38 @@ export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, C
  *   },
  * });
  */
-export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
-      }
-export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
-export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
-export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
-export const CreateWilderDocument = gql`
-    mutation CreateWilder($data: WilderInput!) {
-  createWilder(data: $data) {
-    id
-  }
+export function useCreateUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateUserMutation,
+    CreateUserMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(
+    CreateUserDocument,
+    options
+  );
 }
-    `;
-export type CreateWilderMutationFn = Apollo.MutationFunction<CreateWilderMutation, CreateWilderMutationVariables>;
+export type CreateUserMutationHookResult = ReturnType<
+  typeof useCreateUserMutation
+>;
+export type CreateUserMutationResult =
+  Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<
+  CreateUserMutation,
+  CreateUserMutationVariables
+>;
+export const CreateWilderDocument = gql`
+  mutation CreateWilder($data: WilderInput!) {
+    createWilder(data: $data) {
+      id
+    }
+  }
+`;
+export type CreateWilderMutationFn = Apollo.MutationFunction<
+  CreateWilderMutation,
+  CreateWilderMutationVariables
+>;
 
 /**
  * __useCreateWilderMutation__
@@ -324,19 +410,36 @@ export type CreateWilderMutationFn = Apollo.MutationFunction<CreateWilderMutatio
  *   },
  * });
  */
-export function useCreateWilderMutation(baseOptions?: Apollo.MutationHookOptions<CreateWilderMutation, CreateWilderMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateWilderMutation, CreateWilderMutationVariables>(CreateWilderDocument, options);
-      }
-export type CreateWilderMutationHookResult = ReturnType<typeof useCreateWilderMutation>;
-export type CreateWilderMutationResult = Apollo.MutationResult<CreateWilderMutation>;
-export type CreateWilderMutationOptions = Apollo.BaseMutationOptions<CreateWilderMutation, CreateWilderMutationVariables>;
-export const DeleteSkillDocument = gql`
-    mutation DeleteSkill($deleteSkillId: Int!) {
-  deleteSkill(id: $deleteSkillId)
+export function useCreateWilderMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateWilderMutation,
+    CreateWilderMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateWilderMutation,
+    CreateWilderMutationVariables
+  >(CreateWilderDocument, options);
 }
-    `;
-export type DeleteSkillMutationFn = Apollo.MutationFunction<DeleteSkillMutation, DeleteSkillMutationVariables>;
+export type CreateWilderMutationHookResult = ReturnType<
+  typeof useCreateWilderMutation
+>;
+export type CreateWilderMutationResult =
+  Apollo.MutationResult<CreateWilderMutation>;
+export type CreateWilderMutationOptions = Apollo.BaseMutationOptions<
+  CreateWilderMutation,
+  CreateWilderMutationVariables
+>;
+export const DeleteSkillDocument = gql`
+  mutation DeleteSkill($deleteSkillId: Int!) {
+    deleteSkill(id: $deleteSkillId)
+  }
+`;
+export type DeleteSkillMutationFn = Apollo.MutationFunction<
+  DeleteSkillMutation,
+  DeleteSkillMutationVariables
+>;
 
 /**
  * __useDeleteSkillMutation__
@@ -355,19 +458,36 @@ export type DeleteSkillMutationFn = Apollo.MutationFunction<DeleteSkillMutation,
  *   },
  * });
  */
-export function useDeleteSkillMutation(baseOptions?: Apollo.MutationHookOptions<DeleteSkillMutation, DeleteSkillMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteSkillMutation, DeleteSkillMutationVariables>(DeleteSkillDocument, options);
-      }
-export type DeleteSkillMutationHookResult = ReturnType<typeof useDeleteSkillMutation>;
-export type DeleteSkillMutationResult = Apollo.MutationResult<DeleteSkillMutation>;
-export type DeleteSkillMutationOptions = Apollo.BaseMutationOptions<DeleteSkillMutation, DeleteSkillMutationVariables>;
-export const DeleteWilderDocument = gql`
-    mutation DeleteWilder($deleteWilderId: Int!) {
-  deleteWilder(id: $deleteWilderId)
+export function useDeleteSkillMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteSkillMutation,
+    DeleteSkillMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<DeleteSkillMutation, DeleteSkillMutationVariables>(
+    DeleteSkillDocument,
+    options
+  );
 }
-    `;
-export type DeleteWilderMutationFn = Apollo.MutationFunction<DeleteWilderMutation, DeleteWilderMutationVariables>;
+export type DeleteSkillMutationHookResult = ReturnType<
+  typeof useDeleteSkillMutation
+>;
+export type DeleteSkillMutationResult =
+  Apollo.MutationResult<DeleteSkillMutation>;
+export type DeleteSkillMutationOptions = Apollo.BaseMutationOptions<
+  DeleteSkillMutation,
+  DeleteSkillMutationVariables
+>;
+export const DeleteWilderDocument = gql`
+  mutation DeleteWilder($deleteWilderId: Int!) {
+    deleteWilder(id: $deleteWilderId)
+  }
+`;
+export type DeleteWilderMutationFn = Apollo.MutationFunction<
+  DeleteWilderMutation,
+  DeleteWilderMutationVariables
+>;
 
 /**
  * __useDeleteWilderMutation__
@@ -386,29 +506,43 @@ export type DeleteWilderMutationFn = Apollo.MutationFunction<DeleteWilderMutatio
  *   },
  * });
  */
-export function useDeleteWilderMutation(baseOptions?: Apollo.MutationHookOptions<DeleteWilderMutation, DeleteWilderMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteWilderMutation, DeleteWilderMutationVariables>(DeleteWilderDocument, options);
-      }
-export type DeleteWilderMutationHookResult = ReturnType<typeof useDeleteWilderMutation>;
-export type DeleteWilderMutationResult = Apollo.MutationResult<DeleteWilderMutation>;
-export type DeleteWilderMutationOptions = Apollo.BaseMutationOptions<DeleteWilderMutation, DeleteWilderMutationVariables>;
+export function useDeleteWilderMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteWilderMutation,
+    DeleteWilderMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    DeleteWilderMutation,
+    DeleteWilderMutationVariables
+  >(DeleteWilderDocument, options);
+}
+export type DeleteWilderMutationHookResult = ReturnType<
+  typeof useDeleteWilderMutation
+>;
+export type DeleteWilderMutationResult =
+  Apollo.MutationResult<DeleteWilderMutation>;
+export type DeleteWilderMutationOptions = Apollo.BaseMutationOptions<
+  DeleteWilderMutation,
+  DeleteWilderMutationVariables
+>;
 export const WilderDocument = gql`
-    query Wilder($wilderId: Int!) {
-  wilder(id: $wilderId) {
-    id
-    name
-    city
-    avatarUrl
-    bio
-    skills {
+  query Wilder($wilderId: Int!) {
+    wilder(id: $wilderId) {
       id
       name
-      votes
+      city
+      avatarUrl
+      bio
+      skills {
+        id
+        name
+        votes
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useWilderQuery__
@@ -426,26 +560,39 @@ export const WilderDocument = gql`
  *   },
  * });
  */
-export function useWilderQuery(baseOptions: Apollo.QueryHookOptions<WilderQuery, WilderQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<WilderQuery, WilderQueryVariables>(WilderDocument, options);
-      }
-export function useWilderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WilderQuery, WilderQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<WilderQuery, WilderQueryVariables>(WilderDocument, options);
-        }
+export function useWilderQuery(
+  baseOptions: Apollo.QueryHookOptions<WilderQuery, WilderQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<WilderQuery, WilderQueryVariables>(
+    WilderDocument,
+    options
+  );
+}
+export function useWilderLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<WilderQuery, WilderQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<WilderQuery, WilderQueryVariables>(
+    WilderDocument,
+    options
+  );
+}
 export type WilderQueryHookResult = ReturnType<typeof useWilderQuery>;
 export type WilderLazyQueryHookResult = ReturnType<typeof useWilderLazyQuery>;
-export type WilderQueryResult = Apollo.QueryResult<WilderQuery, WilderQueryVariables>;
+export type WilderQueryResult = Apollo.QueryResult<
+  WilderQuery,
+  WilderQueryVariables
+>;
 export const GetProfileDocument = gql`
-    query GetProfile {
-  profile {
-    id
-    email
-    role
+  query GetProfile {
+    profile {
+      id
+      email
+      role
+    }
   }
-}
-    `;
+`;
 
 /**
  * __useGetProfileQuery__
@@ -462,25 +609,46 @@ export const GetProfileDocument = gql`
  *   },
  * });
  */
-export function useGetProfileQuery(baseOptions?: Apollo.QueryHookOptions<GetProfileQuery, GetProfileQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, options);
-      }
-export function useGetProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProfileQuery, GetProfileQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, options);
-        }
-export type GetProfileQueryHookResult = ReturnType<typeof useGetProfileQuery>;
-export type GetProfileLazyQueryHookResult = ReturnType<typeof useGetProfileLazyQuery>;
-export type GetProfileQueryResult = Apollo.QueryResult<GetProfileQuery, GetProfileQueryVariables>;
-export const SkillsDocument = gql`
-    query Skills {
-  skills {
-    id
-    name
-  }
+export function useGetProfileQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetProfileQuery,
+    GetProfileQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetProfileQuery, GetProfileQueryVariables>(
+    GetProfileDocument,
+    options
+  );
 }
-    `;
+export function useGetProfileLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetProfileQuery,
+    GetProfileQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetProfileQuery, GetProfileQueryVariables>(
+    GetProfileDocument,
+    options
+  );
+}
+export type GetProfileQueryHookResult = ReturnType<typeof useGetProfileQuery>;
+export type GetProfileLazyQueryHookResult = ReturnType<
+  typeof useGetProfileLazyQuery
+>;
+export type GetProfileQueryResult = Apollo.QueryResult<
+  GetProfileQuery,
+  GetProfileQueryVariables
+>;
+export const SkillsDocument = gql`
+  query Skills {
+    skills {
+      id
+      name
+    }
+  }
+`;
 
 /**
  * __useSkillsQuery__
@@ -497,33 +665,46 @@ export const SkillsDocument = gql`
  *   },
  * });
  */
-export function useSkillsQuery(baseOptions?: Apollo.QueryHookOptions<SkillsQuery, SkillsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SkillsQuery, SkillsQueryVariables>(SkillsDocument, options);
-      }
-export function useSkillsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SkillsQuery, SkillsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SkillsQuery, SkillsQueryVariables>(SkillsDocument, options);
-        }
+export function useSkillsQuery(
+  baseOptions?: Apollo.QueryHookOptions<SkillsQuery, SkillsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<SkillsQuery, SkillsQueryVariables>(
+    SkillsDocument,
+    options
+  );
+}
+export function useSkillsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<SkillsQuery, SkillsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<SkillsQuery, SkillsQueryVariables>(
+    SkillsDocument,
+    options
+  );
+}
 export type SkillsQueryHookResult = ReturnType<typeof useSkillsQuery>;
 export type SkillsLazyQueryHookResult = ReturnType<typeof useSkillsLazyQuery>;
-export type SkillsQueryResult = Apollo.QueryResult<SkillsQuery, SkillsQueryVariables>;
+export type SkillsQueryResult = Apollo.QueryResult<
+  SkillsQuery,
+  SkillsQueryVariables
+>;
 export const WildersDocument = gql`
-    query Wilders {
-  wilders {
-    id
-    name
-    city
-    avatarUrl
-    bio
-    skills {
+  query Wilders {
+    wilders {
       id
       name
-      votes
+      city
+      avatarUrl
+      bio
+      skills {
+        id
+        name
+        votes
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useWildersQuery__
@@ -540,23 +721,39 @@ export const WildersDocument = gql`
  *   },
  * });
  */
-export function useWildersQuery(baseOptions?: Apollo.QueryHookOptions<WildersQuery, WildersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<WildersQuery, WildersQueryVariables>(WildersDocument, options);
-      }
-export function useWildersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WildersQuery, WildersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<WildersQuery, WildersQueryVariables>(WildersDocument, options);
-        }
+export function useWildersQuery(
+  baseOptions?: Apollo.QueryHookOptions<WildersQuery, WildersQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<WildersQuery, WildersQueryVariables>(
+    WildersDocument,
+    options
+  );
+}
+export function useWildersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<WildersQuery, WildersQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<WildersQuery, WildersQueryVariables>(
+    WildersDocument,
+    options
+  );
+}
 export type WildersQueryHookResult = ReturnType<typeof useWildersQuery>;
 export type WildersLazyQueryHookResult = ReturnType<typeof useWildersLazyQuery>;
-export type WildersQueryResult = Apollo.QueryResult<WildersQuery, WildersQueryVariables>;
+export type WildersQueryResult = Apollo.QueryResult<
+  WildersQuery,
+  WildersQueryVariables
+>;
 export const LoginDocument = gql`
-    mutation Login($data: UserInput!) {
-  login(data: $data)
-}
-    `;
-export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+  mutation Login($data: UserInput!) {
+    login(data: $data)
+  }
+`;
+export type LoginMutationFn = Apollo.MutationFunction<
+  LoginMutation,
+  LoginMutationVariables
+>;
 
 /**
  * __useLoginMutation__
@@ -575,19 +772,77 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  *   },
  * });
  */
-export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
-      }
+export function useLoginMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LoginMutation,
+    LoginMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
+    LoginDocument,
+    options
+  );
+}
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
-export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
-export const UpdateGradeDocument = gql`
-    mutation UpdateGrade($votes: Int!, $skillId: Int!, $wilderId: Int!) {
-  updateGrade(votes: $votes, skillId: $skillId, wilderId: $wilderId)
+export type LoginMutationOptions = Apollo.BaseMutationOptions<
+  LoginMutation,
+  LoginMutationVariables
+>;
+export const LogoutDocument = gql`
+  mutation Logout {
+    logout
+  }
+`;
+export type LogoutMutationFn = Apollo.MutationFunction<
+  LogoutMutation,
+  LogoutMutationVariables
+>;
+
+/**
+ * __useLogoutMutation__
+ *
+ * To run a mutation, you first call `useLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [logoutMutation, { data, loading, error }] = useLogoutMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLogoutMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LogoutMutation,
+    LogoutMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<LogoutMutation, LogoutMutationVariables>(
+    LogoutDocument,
+    options
+  );
 }
-    `;
-export type UpdateGradeMutationFn = Apollo.MutationFunction<UpdateGradeMutation, UpdateGradeMutationVariables>;
+export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
+export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
+export type LogoutMutationOptions = Apollo.BaseMutationOptions<
+  LogoutMutation,
+  LogoutMutationVariables
+>;
+export const UpdateGradeDocument = gql`
+  mutation UpdateGrade($votes: Int!, $skillId: Int!, $wilderId: Int!) {
+    updateGrade(votes: $votes, skillId: $skillId, wilderId: $wilderId)
+  }
+`;
+export type UpdateGradeMutationFn = Apollo.MutationFunction<
+  UpdateGradeMutation,
+  UpdateGradeMutationVariables
+>;
 
 /**
  * __useUpdateGradeMutation__
@@ -608,21 +863,38 @@ export type UpdateGradeMutationFn = Apollo.MutationFunction<UpdateGradeMutation,
  *   },
  * });
  */
-export function useUpdateGradeMutation(baseOptions?: Apollo.MutationHookOptions<UpdateGradeMutation, UpdateGradeMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateGradeMutation, UpdateGradeMutationVariables>(UpdateGradeDocument, options);
-      }
-export type UpdateGradeMutationHookResult = ReturnType<typeof useUpdateGradeMutation>;
-export type UpdateGradeMutationResult = Apollo.MutationResult<UpdateGradeMutation>;
-export type UpdateGradeMutationOptions = Apollo.BaseMutationOptions<UpdateGradeMutation, UpdateGradeMutationVariables>;
-export const UpdateSkillDocument = gql`
-    mutation UpdateSkill($data: SkillInput!, $updateSkillId: Int!) {
-  updateSkill(data: $data, id: $updateSkillId) {
-    id
-  }
+export function useUpdateGradeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateGradeMutation,
+    UpdateGradeMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateGradeMutation, UpdateGradeMutationVariables>(
+    UpdateGradeDocument,
+    options
+  );
 }
-    `;
-export type UpdateSkillMutationFn = Apollo.MutationFunction<UpdateSkillMutation, UpdateSkillMutationVariables>;
+export type UpdateGradeMutationHookResult = ReturnType<
+  typeof useUpdateGradeMutation
+>;
+export type UpdateGradeMutationResult =
+  Apollo.MutationResult<UpdateGradeMutation>;
+export type UpdateGradeMutationOptions = Apollo.BaseMutationOptions<
+  UpdateGradeMutation,
+  UpdateGradeMutationVariables
+>;
+export const UpdateSkillDocument = gql`
+  mutation UpdateSkill($data: SkillInput!, $updateSkillId: Int!) {
+    updateSkill(data: $data, id: $updateSkillId) {
+      id
+    }
+  }
+`;
+export type UpdateSkillMutationFn = Apollo.MutationFunction<
+  UpdateSkillMutation,
+  UpdateSkillMutationVariables
+>;
 
 /**
  * __useUpdateSkillMutation__
@@ -642,21 +914,38 @@ export type UpdateSkillMutationFn = Apollo.MutationFunction<UpdateSkillMutation,
  *   },
  * });
  */
-export function useUpdateSkillMutation(baseOptions?: Apollo.MutationHookOptions<UpdateSkillMutation, UpdateSkillMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateSkillMutation, UpdateSkillMutationVariables>(UpdateSkillDocument, options);
-      }
-export type UpdateSkillMutationHookResult = ReturnType<typeof useUpdateSkillMutation>;
-export type UpdateSkillMutationResult = Apollo.MutationResult<UpdateSkillMutation>;
-export type UpdateSkillMutationOptions = Apollo.BaseMutationOptions<UpdateSkillMutation, UpdateSkillMutationVariables>;
-export const UpdateWilderDocument = gql`
-    mutation UpdateWilder($data: WilderInput!, $updateWilderId: Int!) {
-  updateWilder(data: $data, id: $updateWilderId) {
-    id
-  }
+export function useUpdateSkillMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSkillMutation,
+    UpdateSkillMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateSkillMutation, UpdateSkillMutationVariables>(
+    UpdateSkillDocument,
+    options
+  );
 }
-    `;
-export type UpdateWilderMutationFn = Apollo.MutationFunction<UpdateWilderMutation, UpdateWilderMutationVariables>;
+export type UpdateSkillMutationHookResult = ReturnType<
+  typeof useUpdateSkillMutation
+>;
+export type UpdateSkillMutationResult =
+  Apollo.MutationResult<UpdateSkillMutation>;
+export type UpdateSkillMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSkillMutation,
+  UpdateSkillMutationVariables
+>;
+export const UpdateWilderDocument = gql`
+  mutation UpdateWilder($data: WilderInput!, $updateWilderId: Int!) {
+    updateWilder(data: $data, id: $updateWilderId) {
+      id
+    }
+  }
+`;
+export type UpdateWilderMutationFn = Apollo.MutationFunction<
+  UpdateWilderMutation,
+  UpdateWilderMutationVariables
+>;
 
 /**
  * __useUpdateWilderMutation__
@@ -676,10 +965,24 @@ export type UpdateWilderMutationFn = Apollo.MutationFunction<UpdateWilderMutatio
  *   },
  * });
  */
-export function useUpdateWilderMutation(baseOptions?: Apollo.MutationHookOptions<UpdateWilderMutation, UpdateWilderMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateWilderMutation, UpdateWilderMutationVariables>(UpdateWilderDocument, options);
-      }
-export type UpdateWilderMutationHookResult = ReturnType<typeof useUpdateWilderMutation>;
-export type UpdateWilderMutationResult = Apollo.MutationResult<UpdateWilderMutation>;
-export type UpdateWilderMutationOptions = Apollo.BaseMutationOptions<UpdateWilderMutation, UpdateWilderMutationVariables>;
+export function useUpdateWilderMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateWilderMutation,
+    UpdateWilderMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateWilderMutation,
+    UpdateWilderMutationVariables
+  >(UpdateWilderDocument, options);
+}
+export type UpdateWilderMutationHookResult = ReturnType<
+  typeof useUpdateWilderMutation
+>;
+export type UpdateWilderMutationResult =
+  Apollo.MutationResult<UpdateWilderMutation>;
+export type UpdateWilderMutationOptions = Apollo.BaseMutationOptions<
+  UpdateWilderMutation,
+  UpdateWilderMutationVariables
+>;
