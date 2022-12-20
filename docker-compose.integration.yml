@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./server
+    ports:
+      - 4000:4000
+    volumes:
+      - ./server/src:/app/src
+    healthcheck:
+      test: 'curl --fail --request GET -H ''content-type:application/json'' --url ''http://localhost:4000/graphql?query=%7B__typename%7D'''
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      db:
+        condition: service_healthy
+
+  testrunner:
+    build: ./tests
+    depends_on:
+      backend:
+        condition: service_healthy

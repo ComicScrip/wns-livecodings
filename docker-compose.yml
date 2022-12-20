@@ -16,7 +16,6 @@ services:
         condition: service_healthy
     build: './server'
     ports:
-      - 5001:5001
       - 4000:4000
     volumes:
       - ./server/src:/app/src
