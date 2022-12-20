@@ -1,4 +1,4 @@
-import db from "./src/dbClient";
+import db from "../server/src/db";
 
 // https://blog.tooljet.com/clearing-tables-before-each-test-nestjs-typeorm/
 // https://github.com/typeorm/typeorm/issues/2978#issuecomment-730596460

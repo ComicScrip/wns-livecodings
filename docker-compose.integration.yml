@@ -17,6 +17,8 @@ services:
       - 4000:4000
     volumes:
       - ./server/src:/app/src
+    environment:
+      DB_HOST: testDB
     healthcheck:
       test: 'curl --fail --request GET -H ''content-type:application/json'' --url ''http://localhost:4000/graphql?query=%7B__typename%7D'''
       interval: 5s
@@ -33,7 +35,9 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    environment:
+      DB_HOST: testDB
     volumes:
-      - ./server:/server
+      - ./server/entity:/server/entity
       - ./.git:/app/.git
       - ./tests/src:/app/src

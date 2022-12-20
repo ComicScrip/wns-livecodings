@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client/core";
 import Wilder from "../../server/src/entity/Wilder";
 import client from "./apolloClient";
-import dbClient from "./dbClient";
+import db from "../../server/src/db";
 
 const createWilderMutation = gql`
   mutation CreateWilder($data: WilderInput!) {
@@ -45,7 +45,7 @@ describe("Wilder resolver", () => {
 
   describe("read wilders", () => {
     it("should return an array", async () => {
-      await dbClient
+      await db
         .getRepository(Wilder)
         .insert([{ name: "jojo" }, { name: "jaja" }]);
 

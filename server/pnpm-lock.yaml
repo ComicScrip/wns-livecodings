@@ -17,6 +17,7 @@ specifiers:
   graphql: ^15.3.0
   pg: ^8.8.0
   reflect-metadata: ^0.1.13
+  ts-dotenv: ^0.9.0
   ts-node-dev: ^2.0.0
   type-graphql: ^1.1.1
   typeorm: ^0.3.9
@@ -31,6 +32,7 @@ dependencies:
   graphql: 15.8.0
   pg: 8.8.0
   reflect-metadata: 0.1.13
+  ts-dotenv: 0.9.0
   type-graphql: 1.1.1_v2revtygxcm7xrdg2oz3ssohfu
   typeorm: 0.3.11_pg@8.8.0
 
@@ -2935,6 +2937,10 @@ packages:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
     dev: true
+
+  /ts-dotenv/0.9.0:
+    resolution: {integrity: sha512-gFzNXERITCU36m0B5bPamsSol6ckdg224ht1E7wMsG41IvqJFSRSsUU17lqHbdGOGC+nplVxWCWBPypau/4x1g==}
+    dev: false
 
   /ts-node-dev/2.0.0_moeqx3xmzxqxagf2sz6mqkbb7m:
     resolution: {integrity: sha512-ywMrhCfH6M75yftYvrvNarLEY+SUXtUvU8/0Z6llrHQVBx12GiFk5sStF8UdfE/yfzk9IAq7O5EEbTQsxlBI8w==}
