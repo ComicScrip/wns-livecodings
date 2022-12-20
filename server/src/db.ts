@@ -1,17 +1,14 @@
 import { DataSource } from "typeorm";
-import Wilder from "./entity/Wilder";
-import Skill from "./entity/Skill";
-import Grade from "./entity/Grade";
-import User from "./entity/User";
+import { entities } from "./entity";
 
 export default new DataSource({
   type: "postgres",
-  host: "db",
+  host: "testDB",
   port: 5432,
   username: "postgres",
   password: "postgres",
   database: "postgres",
   synchronize: true,
-  entities: [Wilder, Skill, Grade, User],
+  entities,
   logging: ["query", "error"],
 });

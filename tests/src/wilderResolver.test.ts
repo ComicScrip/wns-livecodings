@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client/core";
+import Wilder from "../../server/src/entity/Wilder";
 import client from "./apolloClient";
+import dbClient from "./dbClient";
 
 const createWilderMutation = gql`
   mutation CreateWilder($data: WilderInput!) {
@@ -43,11 +45,16 @@ describe("Wilder resolver", () => {
 
   describe("read wilders", () => {
     it("should return an array", async () => {
+      await dbClient
+        .getRepository(Wilder)
+        .insert([{ name: "jojo" }, { name: "jaja" }]);
+
       const res = await client.query({
         query: readWildersQuery,
         fetchPolicy: "no-cache",
       });
 
+      expect(res.data.wilders.length).toBe(2);
       expect(res.data.wilders[0]).toHaveProperty("id");
       expect(res.data.wilders[0]).toHaveProperty("name");
     });
