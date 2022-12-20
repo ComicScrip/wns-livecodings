@@ -1,6 +1,6 @@
 import React from "react";
 import Loader from "../components/Loader";
-import SkillForm from "../components/SkillForm.";
+import SkillForm from "../components/SkillForm";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import {
   SkillsDocument,
