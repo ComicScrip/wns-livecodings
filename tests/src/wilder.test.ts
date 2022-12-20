@@ -14,58 +14,55 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const CREATE_USER = gql`
-  mutation Mutation($password: String!, $email: String!) {
-    createUser(password: $password, email: $email) {
-      email
+const createWilderMutation = gql`
+  mutation CreateWilder($data: WilderInput!) {
+    createWilder(data: $data) {
+      id
+      name
     }
   }
 `;
 
-describe("User resolver", () => {
-  it("create user", async () => {
-    const res = await client.mutate({
-      mutation: CREATE_USER,
-      variables: { email: "test", password: "test" },
+const readWildersQuery = gql`
+  query Wilders {
+    wilders {
+      id
+      name
+    }
+  }
+`;
+
+describe("Wilder resolver", () => {
+  describe("create wilder", () => {
+    it("should create wilder given valid attributes", async () => {
+      const res = await client.mutate({
+        mutation: createWilderMutation,
+        variables: { data: { name: "Dave" } },
+      });
+
+      expect(res.data?.createWilder).toHaveProperty("id");
+      expect(res.data?.createWilder).toHaveProperty("name", "Dave");
     });
 
-    expect(res.data?.createUser).toEqual({ __typename: "User", email: "test" });
+    it("should not create wilder given invalid attributes and return an error", async () => {
+      expect(() =>
+        client.mutate({
+          mutation: createWilderMutation,
+          variables: { data: { name: "" } },
+        })
+      ).rejects.toThrow();
+    });
   });
 
-  let token: string;
+  describe("read wilders", () => {
+    it("should return an array", async () => {
+      const res = await client.query({
+        query: readWildersQuery,
+        fetchPolicy: "no-cache",
+      });
 
-  it("gets token if user is valid", async () => {
-    const res = await client.query({
-      query: gql`
-        query Query($password: String!, $email: String!) {
-          getToken(password: $password, email: $email)
-        }
-      `,
-      variables: { password: "test", email: "test" },
-      fetchPolicy: "no-cache",
+      expect(res.data.wilders[0]).toHaveProperty("id");
+      expect(res.data.wilders[0]).toHaveProperty("name");
     });
-    expect(res.data?.getToken).toMatch(/^[\w-]*\.[\w-]*\.[\w-]*$/);
-
-    token = res.data?.getToken;
-  });
-
-  it("query wilder with the token", async () => {
-    const res = await client.query({
-      query: gql`
-        query Query {
-          getAllWilders {
-            name
-          }
-        }
-      `,
-      variables: { password: "test", email: "test" },
-      fetchPolicy: "no-cache",
-      context: {
-        headers: {
-          authorization: "Bearer " + token,
-        },
-      },
-    });
-    expect(res.data?.getAllWilders).toEqual([]);
   });
 });
