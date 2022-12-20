@@ -1,5 +1,5 @@
 services:
-  db:
+  testDB:
     image: postgres:15-alpine
     restart: always
     environment:
@@ -9,6 +9,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    tmpfs: /var/lib/postgresql
 
   backend:
     build: ./server
@@ -22,15 +23,17 @@ services:
       timeout: 5s
       retries: 10
     depends_on:
-      db:
+      testDB:
         condition: service_healthy
 
   testrunner:
-    build: ./tests
+    build: 
+      dockerfile: tests/Dockerfile
+      context: ./
     depends_on:
       backend:
         condition: service_healthy
     volumes:
-      - ./server:/app/server
+      - ./server:/server
       - ./.git:/app/.git
       - ./tests/src:/app/src

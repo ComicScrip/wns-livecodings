@@ -1,18 +1,5 @@
-import {
-  ApolloClient,
-  HttpLink,
-  InMemoryCache,
-  gql,
-} from "@apollo/client/core";
-import fetch from "cross-fetch";
-
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: "http://backend:4000/",
-    fetch,
-  }),
-  cache: new InMemoryCache(),
-});
+import { gql } from "@apollo/client/core";
+import client from "./apolloClient";
 
 const createWilderMutation = gql`
   mutation CreateWilder($data: WilderInput!) {

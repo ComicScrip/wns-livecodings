@@ -1,5 +1,5 @@
 import { Field, InputType, ObjectType } from "type-graphql";
-import { MaxLength, MinLength, minLength } from "class-validator";
+import { MaxLength, MinLength } from "class-validator";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Grade from "./Grade";
 
