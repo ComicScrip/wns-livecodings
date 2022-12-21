@@ -49,7 +49,7 @@ export class UserResolver {
     // https://stackoverflow.com/a/40135050
     ctx.res.cookie("token", token, {
       secure: env.NODE_ENV === "production",
-      domain: env.SERVER_HOST,
+      // domain: env.SERVER_HOST,
       httpOnly: true,
     });
 

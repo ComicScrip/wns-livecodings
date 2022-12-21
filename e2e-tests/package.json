@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test -c build --trace on",
+    "test": "npx playwright test -c dist/e2e-tests --trace on",
     "pretest": "tsc --incremental -p tsconfig.json"
   },
   "keywords": [],
