@@ -38,6 +38,5 @@ services:
     environment:
       DB_HOST: testDB
     volumes:
-      - ./server/entity:/server/entity
-      - ./.git:/app/.git
+      - ./server/src/entity:/server/src/entity
       - ./tests/src:/app/src
