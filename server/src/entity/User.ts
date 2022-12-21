@@ -52,7 +52,7 @@ export const verifyPassword = async (
 ): Promise<boolean> =>
   await verify(hashedPassword, plainPassword, hashingOptions);
 
-export const getSafeAttributes = (user: User) => ({
+export const getSafeAttributes = (user: User): User => ({
   ...user,
   hashedPassword: undefined,
 });
