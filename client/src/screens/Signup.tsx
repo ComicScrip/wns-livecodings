@@ -44,6 +44,7 @@ export default function Signup() {
         <label htmlFor="email" className="block mb-2">
           Email
           <input
+            data-testid="signup-email"
             type="email"
             id="email"
             name="email"
@@ -58,6 +59,7 @@ export default function Signup() {
         <label htmlFor="password" className="block mb-2">
           Password
           <input
+            data-testid="signup-password"
             type="password"
             id="password"
             name="password"

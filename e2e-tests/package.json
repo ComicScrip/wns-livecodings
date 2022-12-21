@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test -c dist/e2e-tests --trace on",
+    "test:watch": "chokidar 'src/**/*.spec.ts' -c 'npm run test'",
     "pretest": "tsc --incremental -p tsconfig.json"
   },
   "keywords": [],
@@ -18,6 +19,7 @@
     "apollo-server-core": "^3.10.3",
     "apollo-server-errors": "^3.3.1",
     "argon2": "^0.30.2",
+    "chokidar-cli": "^3.0.0",
     "class-validator": "^0.13.2",
     "graphql": "^15.3.0",
     "pg": "^8.8.0",
