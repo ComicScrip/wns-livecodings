@@ -19,7 +19,7 @@ export class UserResolver {
       .getRepository(User)
       .findOne({ where: { email: data.email } });
 
-    if (exisitingUser) throw new ApolloError("EMAIL_ALREADY_EXISTS");
+    if (exisitingUser !== null) throw new ApolloError("EMAIL_ALREADY_EXISTS");
 
     const hashedPassword = await hashPassword(data.password);
     return await datasource
@@ -57,7 +57,7 @@ export class UserResolver {
   }
 
   @Mutation(() => String)
-  async logout(@Ctx() ctx: ContextType) {
+  async logout(@Ctx() ctx: ContextType): Promise<string> {
     ctx.res.clearCookie("token");
     return "OK";
   }
