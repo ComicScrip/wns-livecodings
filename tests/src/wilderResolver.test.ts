@@ -1,18 +1,7 @@
-import {
-  ApolloClient,
-  HttpLink,
-  InMemoryCache,
-  gql,
-} from "@apollo/client/core";
-import fetch from "cross-fetch";
-
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: "http://backend:4000/",
-    fetch,
-  }),
-  cache: new InMemoryCache(),
-});
+import { gql } from "@apollo/client/core";
+import Wilder from "../../server/src/entity/Wilder";
+import client from "./apolloClient";
+import db from "../../server/src/db";
 
 const createWilderMutation = gql`
   mutation CreateWilder($data: WilderInput!) {
@@ -56,11 +45,16 @@ describe("Wilder resolver", () => {
 
   describe("read wilders", () => {
     it("should return an array", async () => {
+      await db
+        .getRepository(Wilder)
+        .insert([{ name: "jojo" }, { name: "jaja" }]);
+
       const res = await client.query({
         query: readWildersQuery,
         fetchPolicy: "no-cache",
       });
 
+      expect(res.data.wilders.length).toBe(2);
       expect(res.data.wilders[0]).toHaveProperty("id");
       expect(res.data.wilders[0]).toHaveProperty("name");
     });

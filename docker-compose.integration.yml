@@ -1,5 +1,5 @@
 services:
-  db:
+  testDB:
     image: postgres:15-alpine
     restart: always
     environment:
@@ -9,6 +9,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    tmpfs: /var/lib/postgresql
 
   backend:
     build: ./server
@@ -16,21 +17,26 @@ services:
       - 4000:4000
     volumes:
       - ./server/src:/app/src
+    environment:
+      DB_HOST: testDB
     healthcheck:
       test: 'curl --fail --request GET -H ''content-type:application/json'' --url ''http://localhost:4000/graphql?query=%7B__typename%7D'''
       interval: 5s
       timeout: 5s
       retries: 10
     depends_on:
-      db:
+      testDB:
         condition: service_healthy
 
   testrunner:
-    build: ./tests
+    build: 
+      dockerfile: tests/Dockerfile
+      context: ./
     depends_on:
       backend:
         condition: service_healthy
+    environment:
+      DB_HOST: testDB
     volumes:
-      - ./server:/app/server
-      - ./.git:/app/.git
+      - ./server/src/entity:/server/src/entity
       - ./tests/src:/app/src
