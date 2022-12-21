@@ -28,16 +28,32 @@ services:
       testDB:
         condition: service_healthy
 
-  testrunner:
-    build: 
-      dockerfile: tests/Dockerfile
-      context: ./
+  client:
+    build: './client'
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client/src:/app/src
+    healthcheck:
+      test: "curl --fail --request GET --url http://localhost:3000"
+      interval: 5s
+      timeout: 5s
+      retries: 30
     depends_on:
       backend:
         condition: service_healthy
+
+  testrunner:
+    build: 
+      dockerfile: e2e-tests/Dockerfile
+      context: ./
     environment:
       DB_HOST: testDB
     volumes:
-      - ./server/entity:/server/entity
-      - ./.git:/app/.git
-      - ./tests/src:/app/src
+      - ./server/src/:/server/src/
+      - ./e2e-tests/playwright-report:/app/playwright-report
+      - ./e2e-tests/test-results:/app/test-results
+      - ./e2e-tests/src:/app/src
+    depends_on:
+      client:
+        condition: service_healthy
