@@ -38,7 +38,7 @@ export class UserResolver {
 
     if (
       user === null ||
-      !user.hashedPassword ||
+      typeof user.hashedPassword !== "string" ||
       !(await verifyPassword(password, user.hashedPassword))
     )
       throw new ApolloError("invalid credentials");
