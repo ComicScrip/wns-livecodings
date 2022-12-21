@@ -39,4 +39,4 @@ services:
       DB_HOST: testDB
     volumes:
       - ./server/src/entity:/server/src/entity
-      - ./tests/src:/app/src
+      - ./integration-tests/src:/app/src

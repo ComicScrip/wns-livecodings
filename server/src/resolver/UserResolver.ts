@@ -9,7 +9,7 @@ import User, {
 } from "../entity/User";
 import { ContextType } from "../index";
 import jwt from "jsonwebtoken";
-import { env } from "../environment";
+import { env } from "../env";
 
 @Resolver(User)
 export class UserResolver {

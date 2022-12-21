@@ -1,5 +1,5 @@
 import { argon2id, hash, verify } from "argon2";
-import { IsEmail, Matches, Min, MinLength } from "class-validator";
+import { IsEmail, Matches, MinLength } from "class-validator";
 import { Field, InputType, ObjectType } from "type-graphql";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 

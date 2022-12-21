@@ -10,7 +10,7 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
 } from "apollo-server-core";
 import { buildSchema } from "type-graphql";
-import { env } from "./environment";
+import { env } from "./env";
 import datasource from "./db";
 import { WilderResolver } from "./resolver/WilderResolver";
 import { SkillResolver } from "./resolver/SkillResolver";
