@@ -8,6 +8,7 @@ RUN npm i
 RUN npx playwright install
 
 COPY e2e-tests/playwright.config.ts ./playwright.config.ts
+COPY e2e-tests/tsconfig.json ./tsconfig.json
 
 RUN mkdir /server
 WORKDIR /server
