@@ -1,5 +1,5 @@
 import { Field, InputType, ObjectType } from "type-graphql";
-import { MaxLength } from "class-validator";
+import { MaxLength, MinLength, minLength } from "class-validator";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Grade from "./Grade";
 
@@ -55,6 +55,7 @@ export class SkillId {
 export class WilderInput {
   @Field()
   @MaxLength(100)
+  @MinLength(1)
   name: string;
 
   @Field({ nullable: true })
