@@ -23,7 +23,6 @@ RUN npm i
 RUN npx playwright install
 
 COPY e2e-tests/playwright.config.ts ./
-COPY e2e-tests/global-setup.ts ./
 COPY e2e-tests/tsconfig.json ./
 COPY ./server/.env ./.env
 
