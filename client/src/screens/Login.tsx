@@ -10,11 +10,7 @@ export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [login] = useLoginMutation();
 
-  const {
-    data: currentUser,
-    client,
-    refetch,
-  } = useGetProfileQuery({
+  const { data: currentUser, client } = useGetProfileQuery({
     errorPolicy: "ignore",
   });
 
@@ -43,10 +39,7 @@ export default function Login() {
           onSubmit={(e) => {
             e.preventDefault();
             login({ variables: { data: credentials } })
-              .then(async () => {
-                await refetch();
-                await client.resetStore();
-              })
+              .then(client.resetStore)
               .catch(() => toast.error("Invalid credentials"));
           }}
         >
