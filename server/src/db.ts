@@ -4,7 +4,7 @@ import { entities } from "./entity";
 
 export default new DataSource({
   type: "postgres",
-  host: env.DB_HOST || "db",
+  host: typeof env.DB_HOST !== "undefined" ? env.DB_HOST : "db",
   port: 5432,
   username: "postgres",
   password: "postgres",

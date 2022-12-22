@@ -9,7 +9,7 @@ import User, {
 } from "../entity/User";
 import { ContextType } from "../index";
 import jwt from "jsonwebtoken";
-import { env } from "../environment";
+import { env } from "../env";
 
 @Resolver(User)
 export class UserResolver {
@@ -45,11 +45,12 @@ export class UserResolver {
 
     // https://www.npmjs.com/package/jsonwebtoken
     const token = jwt.sign({ userId: user.id }, env.JWT_PRIVATE_KEY);
-
+    const domain = env.SERVER_HOST;
+    console.log({ domain });
     // https://stackoverflow.com/a/40135050
     ctx.res.cookie("token", token, {
       secure: env.NODE_ENV === "production",
-      domain: env.SERVER_HOST,
+      // domain: env.SERVER_HOST,
       httpOnly: true,
     });
 

@@ -31,6 +31,7 @@ export default function WilderForm() {
       <label htmlFor="name" className="mr-2">
         <span className="mr-3">Name</span>
         <input
+          data-testid="newWilderName"
           ref={inputRef}
           type="text"
           maxLength={30}

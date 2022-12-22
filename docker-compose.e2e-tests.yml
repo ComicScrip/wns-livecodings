@@ -1,0 +1,71 @@
+services:
+  testDB:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    tmpfs: /var/lib/postgresql
+    ports:
+      - 5432:5432
+
+  backend:
+    build: ./server
+    ports:
+      - 4000:4000
+    volumes:
+      - ./server/src:/app/src
+    environment:
+      DB_HOST: host.docker.internal
+      CORS_ALLOWED_ORIGINS: http://host.docker.internal:3000
+      SERVER_HOST: backend
+    healthcheck:
+      test: 'curl --fail --request GET -H ''content-type:application/json'' --url ''http://localhost:4000/graphql?query=%7B__typename%7D'''
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      testDB:
+        condition: service_healthy
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+
+  client:
+    build: './client'
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client/src:/app/src
+    environment:
+      REACT_APP_GRAPHQL_API_URL: 'http://host.docker.internal:4000'
+    healthcheck:
+      test: "curl --fail --request GET --url http://host.docker.internal:3000"
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+
+  testrunner:
+    build: 
+      dockerfile: e2e-tests/Dockerfile
+      context: ./
+    environment:
+      DB_HOST: testDB
+      BASE_URL: http://host.docker.internal:3000
+    volumes:
+      - ./server/src/:/server/src/
+      - ./e2e-tests/playwright-report:/e2e-tests/playwright-report
+      - ./e2e-tests/test-results:/e2e-tests/test-results
+      - ./e2e-tests/src:/e2e-tests/src
+    depends_on:
+      client:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    extra_hosts:
+    - "host.docker.internal:host-gateway"

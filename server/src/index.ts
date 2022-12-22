@@ -10,7 +10,7 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
 } from "apollo-server-core";
 import { buildSchema } from "type-graphql";
-import { env } from "./environment";
+import { env } from "./env";
 import datasource from "./db";
 import { WilderResolver } from "./resolver/WilderResolver";
 import { SkillResolver } from "./resolver/SkillResolver";
@@ -51,7 +51,7 @@ const start = async (): Promise<void> => {
     // https://typegraphql.com/docs/authorization.html
     authChecker: async ({ context }: { context: ContextType }, roles) => {
       const tokenInHeaders = context.req.headers.authorization?.split(" ")[1];
-      const tokenInCookie = context.req.cookies?.["token"];
+      const tokenInCookie = context.req.cookies?.token;
       const token = tokenInHeaders || tokenInCookie;
 
       try {
