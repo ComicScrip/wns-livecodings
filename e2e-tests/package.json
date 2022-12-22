@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test -c dist/e2e-tests --trace on",
-    "test:watch": "chokidar 'src/**/*.spec.ts' -c 'npm run test'",
+    "test:gui": "npm run pretest && npx playwright test -c dist/e2e-tests --trace on --headed",
+    "test:watch": "npm run test && chokidar 'src/**/*.spec.ts' -c 'npm run test'",
+    "test:watch:gui": "npm run test:gui && chokidar 'src/**/*.spec.ts' -c 'npm run test:gui'",
     "pretest": "tsc --incremental -p tsconfig.json"
   },
   "keywords": [],
