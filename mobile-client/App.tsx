@@ -2,7 +2,7 @@ import { ApolloProvider } from "@apollo/client";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import LoginScreen from "./screens/Login";
+import LoginScreen from "./screens/LoginScreen";
 import WildersScreen from "./screens/WildersScreen";
 import client from "./gql/client";
 
