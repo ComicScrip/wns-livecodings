@@ -1,15 +1,16 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useWildersQuery } from "../gql/generated/schema";
-import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
 import { FlatList } from "react-native";
 import WilderListItem from "../components/WilderListItem";
+import { useEffect } from "react";
 
 export default function WildersScreen() {
   const { loading: loadingWilders, data, refetch } = useWildersQuery();
   const wilders = data?.wilders || [];
 
-  useFocusEffect(useCallback(() => refetch, []));
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <View style={style.container}>
