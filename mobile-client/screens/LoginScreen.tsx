@@ -7,7 +7,11 @@ import {
 } from "../gql/generated/schema";
 
 export default function LoginScreen() {
-  const { data, refetch } = useGetProfileQuery();
+  const [error, setError] = useState("");
+
+  const { data, client } = useGetProfileQuery({
+    errorPolicy: "ignore",
+  });
   const [login] = useLoginMutation();
   const [logout] = useLogoutMutation();
 
@@ -20,20 +24,13 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Button
-        onPress={async () => {
-          const res = await fetch("https://google.com");
-          console.log({ res });
-        }}
-        title="test"
-      />
       {data?.profile ? (
         <View>
           <Text>connecté en tant que {data.profile.email}</Text>
           <Button
             onPress={async () => {
               await logout();
-              refetch();
+              await client.resetStore();
             }}
             title="Log out"
           />
@@ -54,14 +51,14 @@ export default function LoginScreen() {
           />
           <Button
             onPress={async () => {
-              const loginResult = await login({
-                variables: { data: credentials },
-              });
-              refetch();
-              console.log({ loginResult });
+              setError("");
+              login({ variables: { data: credentials } })
+                .then(client.resetStore)
+                .catch(() => setError("Invalid credentials"));
             }}
             title="Log In"
           />
+          {error && <Text style={{ color: "red" }}>{error}</Text>}
         </View>
       )}
     </View>
