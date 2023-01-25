@@ -1,12 +1,8 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-import { WildersQueryResult } from "../gql/generated/schema";
+import { Wilder } from "../gql/generated/schema";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-type ArrayElement<ArrayType extends readonly unknown[]> =
-  ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
-
 interface WilderListItemProps {
-  wilder: ArrayElement<NonNullable<WildersQueryResult["data"]>["wilders"]>;
+  wilder: Wilder;
 }
 
 export default function WilderListItem({ wilder }: WilderListItemProps) {
