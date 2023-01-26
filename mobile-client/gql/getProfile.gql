@@ -1,4 +1,4 @@
-query GetProfile {
+query getProfile {
   profile {
     id
     email
