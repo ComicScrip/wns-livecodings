@@ -5,6 +5,7 @@ import {
   useLoginMutation,
   useLogoutMutation,
 } from "../gql/generated/schema";
+import * as SecureStore from "expo-secure-store";
 
 export default function LoginScreen() {
   const [error, setError] = useState("");
@@ -53,7 +54,11 @@ export default function LoginScreen() {
             onPress={async () => {
               setError("");
               login({ variables: { data: credentials } })
-                .then(client.resetStore)
+                .then((res) => {
+                  if (res.data?.login)
+                    SecureStore.setItemAsync("token", res.data?.login);
+                  client.resetStore();
+                })
                 .catch(() => setError("Invalid credentials"));
             }}
             title="Log In"
