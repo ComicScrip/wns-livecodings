@@ -166,7 +166,7 @@ export type LogoutMutation = { __typename?: 'Mutation', logout: string };
 
 
 export const GetProfileDocument = gql`
-    query GetProfile {
+    query getProfile {
   profile {
     id
     email
@@ -274,7 +274,7 @@ export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const LogoutDocument = gql`
-    mutation Logout {
+    mutation logout {
   logout
 }
     `;
