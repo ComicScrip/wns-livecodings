@@ -54,7 +54,7 @@ const start = async (): Promise<void> => {
       const tokenInCookie = context.req.cookies?.token;
       const token = tokenInHeaders ?? tokenInCookie;
 
-      console.log({ tokenInCookie, tokenInHeaders });
+      console.log({ tokenInCookie, tokenInHeaders, token });
 
       try {
         let decoded;

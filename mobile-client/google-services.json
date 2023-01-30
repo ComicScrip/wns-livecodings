@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "857160564188",
+    "project_id": "wildersbook",
+    "storage_bucket": "wildersbook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857160564188:android:4cfe55c1ad5d9312d46319",
+        "android_client_info": {
+          "package_name": "com.comicscrip.mobileclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857160564188-14rclrcpmshn336adv9qj0degim3u44b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIlioZ0_3hGjOs9P34A_vYvzRUwPjmXnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857160564188-14rclrcpmshn336adv9qj0degim3u44b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
