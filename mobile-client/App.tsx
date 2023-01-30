@@ -4,7 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LoginScreen from "./screens/LoginScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import NotifScreen from "./screens/NotifScreen";
 import { useEffect, useRef } from "react";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
@@ -23,9 +22,11 @@ export default function App() {
   const notificationListener = useRef<Subscription>();
   const responseListener = useRef<Subscription>();
 
-  const { data: currentUser } = useGetProfileQuery();
+  const { data: currentUser } = useGetProfileQuery({ errorPolicy: "ignore" });
 
   useEffect(() => {
+    console.log("profile id changed", currentUser?.profile);
+
     if (currentUser?.profile)
       registerForPushNotificationsAsync(currentUser?.profile?.id);
 
@@ -80,13 +81,14 @@ export default function App() {
       >
         <Tab.Screen name="Wilders" component={WildersScreen} />
         <Tab.Screen name="Login" component={LoginScreen} />
-        <Tab.Screen name="Notif" component={NotifScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
 async function registerForPushNotificationsAsync(userId: number) {
+  console.log("registering device...", { userId });
+
   let token;
 
   if (Platform.OS === "android") {
@@ -111,14 +113,17 @@ async function registerForPushNotificationsAsync(userId: number) {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    await client.mutate<UpdateUserMutation, UpdateUserMutationVariables>({
+    const { data, errors } = await client.mutate<
+      UpdateUserMutation,
+      UpdateUserMutationVariables
+    >({
       mutation: UpdateUserDocument,
       variables: {
         data: { expoNotificationToken: token },
         updateUserId: userId,
       },
     });
-    console.log({ token });
+    console.log("token sent to backend", { token, data, errors });
   } else {
     alert("Must use physical device for Push Notifications");
   }
