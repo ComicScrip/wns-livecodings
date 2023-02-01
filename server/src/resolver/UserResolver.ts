@@ -107,7 +107,7 @@ export class UserResolver {
   @Mutation(() => Boolean)
   async sendNotification(
     @Arg("userId", () => Int) id: number,
-    @Arg("data") data: NotificationInput
+    @Arg("data") params: NotificationInput
   ): Promise<Boolean> {
     const user = await datasource.getRepository(User).findOne({
       where: { id },
@@ -121,15 +121,13 @@ export class UserResolver {
     )
       throw new ApolloError("user has no registered token", "NO_EXPO_TOKEN");
 
-    console.log({ data });
-
     const res = await expo.sendPushNotificationsAsync([
       {
         to: user.expoNotificationToken,
         sound: "default",
-        title: data.title,
-        body: data.body,
-        data: data.data,
+        title: params.title,
+        body: params.body,
+        data: JSON.parse(params.data ?? ""),
       },
     ]);
 
