@@ -26,6 +26,7 @@ export default {
     android: {
       package: "com.comicscrip.mobileclient",
       googleServicesFile: "./google-services.json",
+      useNextNotificationsApi: true,
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#FFFFFF",

@@ -96,6 +96,8 @@ export class UserResolver {
 
     userToUpdate.expoNotificationToken = expoNotificationToken;
 
+    console.log({ expoNotificationToken });
+
     await datasource.getRepository(User).save(userToUpdate);
 
     return userToUpdate;

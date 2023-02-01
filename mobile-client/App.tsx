@@ -8,13 +8,14 @@ import { useEffect, useRef } from "react";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { Subscription } from "expo-modules-core";
-import { Platform } from "react-native";
+import { Platform, Text } from "react-native";
 import {
   UpdateUserDocument,
   UpdateUserMutation,
   UpdateUserMutationVariables,
   useGetProfileQuery,
 } from "./gql/generated/schema";
+import Constants from "expo-constants";
 
 const Tab = createBottomTabNavigator();
 
@@ -52,6 +53,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+      <Text>test</Text>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -112,7 +114,17 @@ async function registerForPushNotificationsAsync(userId: number) {
       alert("Failed to get push token for push notification!");
       return;
     }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
+    const config = {
+      experienceId: "@comicscrip/mobile-client",
+      projectId: Constants?.expoConfig?.extra?.eas?.projectId,
+    };
+    console.log({ config });
+
+    token = (
+      await Notifications.getExpoPushTokenAsync({
+        experienceId: "@comicscrip/mobile-client",
+      })
+    ).data;
     const { data, errors } = await client.mutate<
       UpdateUserMutation,
       UpdateUserMutationVariables
