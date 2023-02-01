@@ -121,12 +121,15 @@ export class UserResolver {
     )
       throw new ApolloError("user has no registered token", "NO_EXPO_TOKEN");
 
+    console.log({ data });
+
     const res = await expo.sendPushNotificationsAsync([
       {
         to: user.expoNotificationToken,
         sound: "default",
         title: data.title,
         body: data.body,
+        data: data.data,
       },
     ]);
 

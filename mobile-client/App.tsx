@@ -4,11 +4,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LoginScreen from "./screens/LoginScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { Subscription } from "expo-modules-core";
-import { Platform, Text } from "react-native";
+import { Platform, ScrollView, Text } from "react-native";
 import {
   UpdateUserDocument,
   UpdateUserMutation,
@@ -20,6 +20,8 @@ import Constants from "expo-constants";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const [notif, setNotif] = useState({});
+  const [notifInteraction, setNotifInteraction] = useState({});
   const notificationListener = useRef<Subscription>();
   const responseListener = useRef<Subscription>();
 
@@ -34,11 +36,13 @@ export default function App() {
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
         console.log("received", { notification });
+        setNotif(notification);
       });
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
         console.log("notif interaction", { response });
+        setNotifInteraction(response);
       });
 
     return () => {
@@ -53,7 +57,6 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Text>test</Text>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -83,6 +86,17 @@ export default function App() {
       >
         <Tab.Screen name="Wilders" component={WildersScreen} />
         <Tab.Screen name="Login" component={LoginScreen} />
+        <Tab.Screen
+          name="Notif"
+          component={function Test() {
+            return (
+              <ScrollView>
+                <Text>{JSON.stringify(notif, null, 2)}</Text>
+                <Text>{JSON.stringify(notifInteraction, null, 2)}</Text>
+              </ScrollView>
+            );
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
