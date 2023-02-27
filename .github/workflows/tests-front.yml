@@ -8,5 +8,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - name: "Install pnpm and deps"
+        run: npm i -g pnpm && cd client && pnpm i
       - name: Goto client and run tests
-        run: npm i -g pnpm && cd client && pnpm i && pnpm run test
+        run: cd client && pnpm run test
