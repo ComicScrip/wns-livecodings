@@ -1,0 +1,6 @@
+mutation UpdateUser($data: UpdateUserInput!, $updateUserId: Int!) {
+  updateUser(data: $data, id: $updateUserId) {
+    id
+    expoNotificationToken
+  }
+}
