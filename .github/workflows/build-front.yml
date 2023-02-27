@@ -34,4 +34,4 @@ jobs:
         with:
           push: true
           context: "{{defaultContext}}:client"
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/quete1902:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings:latest
