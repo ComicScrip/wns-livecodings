@@ -1,0 +1,12 @@
+name: tests-front
+
+on: pull_request
+
+jobs:
+  test-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Goto client and run tests
+        run: npm i -g pnpm && cd client && pnpm i && pnpm run test
