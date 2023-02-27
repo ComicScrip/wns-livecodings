@@ -101,9 +101,6 @@ test("renders Wilder with name and skills", () => {
               ✏️
             </button>
           </a>
-          <button>
-            x
-          </button>
         </div>
       </div>
     </div>
