@@ -32,7 +32,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         build-args: |
-          "REACT_APP_GRAPHQL_API_URL=${{ secrets.REACT_APP_GRAPHQL_API_URL }}"
+          "REACT_APP_GRAPHQL_API_URL=${{ variables.REACT_APP_GRAPHQL_API_URL }}"
         with:
           push: true
           context: "{{defaultContext}}:client"
