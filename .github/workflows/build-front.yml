@@ -36,4 +36,4 @@ jobs:
           context: "{{defaultContext}}:client"
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings:latest
           build-args: |
-            "REACT_APP_GRAPHQL_API_URL=${{ variables.REACT_APP_GRAPHQL_API_URL }}"
+            "REACT_APP_GRAPHQL_API_URL=${{ vars.REACT_APP_GRAPHQL_API_URL }}"
