@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
       - name: "Install pnpm and deps"
         run: npm i -g pnpm && cd client && pnpm i
       - name: Goto client and run tests
