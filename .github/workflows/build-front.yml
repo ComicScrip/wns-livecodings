@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: "Install pnpm and deps"
         run: npm i -g pnpm && cd client && pnpm i
       - name: Goto client and run tests
@@ -31,6 +31,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
         uses: docker/build-push-action@v4
+        build-args: |
+          "REACT_APP_GRAPHQL_API_URL=${{ secrets.REACT_APP_GRAPHQL_API_URL }}"
         with:
           push: true
           context: "{{defaultContext}}:client"

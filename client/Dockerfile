@@ -16,6 +16,5 @@ COPY tailwind.config.js tailwind.config.js
 COPY public public
 COPY codegen.yml codegen.yml
 COPY src src
-COPY .env .env
 
 CMD npm start
