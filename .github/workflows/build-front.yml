@@ -3,7 +3,7 @@ name: jest-and-docker-ci
 on:
   push:
     branches:
-      - ci-tests
+      - main
 
 jobs:
   test-front:
