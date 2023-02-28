@@ -16,6 +16,8 @@ COPY tailwind.config.js tailwind.config.js
 COPY public public
 COPY codegen.yml codegen.yml
 COPY src src
-COPY .env .env
+
+ARG REACT_APP_GRAPHQL_API_URL
+ENV REACT_APP_GRAPHQL_API_URL ${REACT_APP_GRAPHQL_API_URL}
 
 CMD npm start

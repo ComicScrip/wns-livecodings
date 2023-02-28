@@ -6,7 +6,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { BrowserRouter } from "react-router-dom";
 
 test("renders Wilder with name and skills", () => {
-  const tree = render(
+  const view = render(
     <MockedProvider mocks={[]} addTypename={false}>
       <Wilder
         wilder={{
@@ -26,7 +26,7 @@ test("renders Wilder with name and skills", () => {
   expect(screen.getByText(/JS/)).toBeInTheDocument();
   expect(screen.getByText(/3/)).toBeInTheDocument();
   expect(screen.getByText(/7/)).toBeInTheDocument();
-  expect(tree.baseElement).toMatchInlineSnapshot(`
+  expect(view.baseElement).toMatchInlineSnapshot(`
 <body>
   <div>
     <div
@@ -101,9 +101,6 @@ test("renders Wilder with name and skills", () => {
               ✏️
             </button>
           </a>
-          <button>
-            x
-          </button>
         </div>
       </div>
     </div>
