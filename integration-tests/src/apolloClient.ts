@@ -3,7 +3,7 @@ import fetch from "cross-fetch";
 
 export default new ApolloClient({
   link: new HttpLink({
-    uri: "http://backend:4000/",
+    uri: process.env.GRAPHQL_API_URL ?? "http://backend:4000/",
     fetch,
   }),
   cache: new InMemoryCache(),
