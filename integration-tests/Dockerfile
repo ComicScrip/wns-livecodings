@@ -23,8 +23,7 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY integration-tests/package*.json ./
-RUN npm i -g pnpm
-RUN pnpm i 
+RUN npm i 
 COPY integration-tests/jest.config.js ./
 COPY integration-tests/setupTests.ts ./
 

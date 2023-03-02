@@ -39,7 +39,9 @@ describe("Wilder resolver", () => {
           mutation: createWilderMutation,
           variables: { data: { name: "" } },
         })
-      ).rejects.toThrowErrorMatchingInlineSnapshot();
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"Argument Validation Error"`
+      );
     });
   });
 
