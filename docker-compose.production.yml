@@ -1,5 +1,5 @@
 services:
-  stagingDB:
+  prodDB:
     image: postgres:15-alpine
     environment:
       - POSTGRES_PASSWORD=postgres
@@ -12,7 +12,7 @@ services:
       - 5432:5432
   server:
     depends_on:
-      stagingDB:
+      prodDB:
         condition: service_healthy
     environment:
       DB_HOST: prodDB
