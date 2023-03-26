@@ -17,9 +17,8 @@ services:
     environment:
       DB_HOST: db
     image: scrip/wns-livecodings-server
+    ports:
       - 8081:4000
-    volumes:
-      - ./server/src:/app/src
   client:
     image: scrip/wns-livecodings-client
     ports:
