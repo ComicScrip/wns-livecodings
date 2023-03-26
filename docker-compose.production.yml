@@ -1,5 +1,5 @@
 services:
-  db:
+  prodDB:
     image: postgres:15-alpine
     environment:
       - POSTGRES_PASSWORD=postgres
@@ -15,7 +15,8 @@ services:
       db:
         condition: service_healthy
     environment:
-      DB_HOST: db
+      DB_HOST: prodDB
+      CORS_ALLOWED_ORIGINS: https://api.pierre.wns.wilders.dev,https://pierre.wns.wilders.dev
     image: scrip/wns-livecodings-server
     ports:
       - 8081:4000
