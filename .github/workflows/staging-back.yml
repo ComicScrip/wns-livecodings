@@ -24,4 +24,4 @@ jobs:
           push: true
           context: "{{defaultContext}}:server"
           file: "Dockerfile.production"
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings-server-staging:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings-server:staging

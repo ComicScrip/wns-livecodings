@@ -24,6 +24,6 @@ jobs:
           push: true
           context: "{{defaultContext}}:client"
           file: "Dockerfile.production"
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings-client-staging:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings-client:staging
           build-args: |
             "REACT_APP_GRAPHQL_API_URL=https://api.staging.pierre.wns.wilders.dev"
