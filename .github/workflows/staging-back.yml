@@ -1,4 +1,4 @@
-name: Compile and push production version of client image for staging env
+name: Compile and push production version of server image for staging env
 
 on:
   push:
@@ -22,8 +22,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context: "{{defaultContext}}:client"
+          context: "{{defaultContext}}:server"
           file: "Dockerfile.production"
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings-client-staging:latest
-          build-args: |
-            "REACT_APP_GRAPHQL_API_URL=https://api.staging.pierre.wns.wilders.dev"
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings-server-staging:latest
