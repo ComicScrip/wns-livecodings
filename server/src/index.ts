@@ -26,6 +26,7 @@ export interface ContextType {
 }
 
 const start = async (): Promise<void> => {
+  console.log({ env });
   await datasource.initialize();
 
   const app = express();
