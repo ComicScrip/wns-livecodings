@@ -1,4 +1,4 @@
-name: Compile and push production version of client image in staging env
+name: Compile and push production version of client image for staging env
 
 on:
   push:
