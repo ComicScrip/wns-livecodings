@@ -8,16 +8,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    ports:
-      - 5432:5432
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
-    ports:
-      - "5050:80"
   server:
     depends_on:
       prodDB:
@@ -27,10 +17,10 @@ services:
       CORS_ALLOWED_ORIGINS: https://api.pierre.wns.wilders.dev,https://pierre.wns.wilders.dev
     image: scrip/wns-livecodings-server
     ports:
-      - 8081:4000
+      - 7081:4000
   client:
     image: scrip/wns-livecodings-client
     ports:
-      - 8080:80
+      - 7080:80
 
 
