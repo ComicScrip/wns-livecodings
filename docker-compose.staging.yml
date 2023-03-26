@@ -12,9 +12,6 @@ services:
     depends_on:
       stagingDB:
         condition: service_healthy
-    environment:
-      DB_HOST: stagingDB
-      CORS_ALLOWED_ORIGINS: https://api.pierre.wns.wilders.dev,https://pierre.wns.wilders.dev
     image: scrip/wns-livecodings-server:staging
     ports:
       - 7081:4000
