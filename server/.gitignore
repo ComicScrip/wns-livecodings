@@ -1,4 +1,4 @@
 node_modules
 wildersdb.sqlite
-.env
+.env*
 build
