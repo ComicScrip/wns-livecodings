@@ -12,7 +12,7 @@ services:
       - 5432:5432
   server:
     depends_on:
-      db:
+      prodDB:
         condition: service_healthy
     environment:
       DB_HOST: prodDB
