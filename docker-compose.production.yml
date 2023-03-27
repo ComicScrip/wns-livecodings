@@ -10,6 +10,9 @@ services:
       retries: 5
     volumes:
       - prodDB:/var/lib/postgresql/data
+    networks:
+      - prodNetwork
+
   server:
     depends_on:
       prodDB:
@@ -24,12 +27,20 @@ services:
     image: scrip/wns-livecodings-server
     ports:
       - 8081:4000
+    networks:
+      - prodNetwork
+
   client:
     image: scrip/wns-livecodings-client
     ports:
       - 8080:80
+    networks:
+      - prodNetwork
 
 volumes:
   prodDB:
+
+networks:
+  prodNetwork:
 
 
