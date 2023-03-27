@@ -8,15 +8,19 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    ports:
-      - 5432:5432
+    volumes:
+      - prodDB:/var/lib/postgresql/data
   server:
     depends_on:
       prodDB:
         condition: service_healthy
     environment:
-      DB_HOST: prodDB
-      CORS_ALLOWED_ORIGINS: https://api.pierre.wns.wilders.dev,https://pierre.wns.wilders.dev
+      - NODE_ENV=${NODE_ENV:-production}
+      - DB_HOST=${DB_HOST:-prodDB}
+      - SERVER_HOST=${SERVER_HOST:-localhost}
+      - SERVER_PORT=${SERVER_PORT:-4000}
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://api.pierre.wns.wilders.dev,https://pierre.wns.wilders.dev}
     image: scrip/wns-livecodings-server
     ports:
       - 8081:4000
@@ -24,5 +28,8 @@ services:
     image: scrip/wns-livecodings-client
     ports:
       - 8080:80
+
+volumes:
+  prodDB:
 
 
