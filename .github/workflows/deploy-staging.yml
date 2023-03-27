@@ -46,3 +46,13 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings-client:staging
           build-args: |
             "REACT_APP_GRAPHQL_API_URL=https://api.staging.pierre.wns.wilders.dev"
+  notify:
+    needs:
+      - build-and-push-client
+      - build-and-push-server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call VPS webhook to update production
+        uses: wei/curl@master
+        with:
+          args: https://ops.pierre.wns.wilders.dev/hooks/update-production
