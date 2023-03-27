@@ -52,7 +52,7 @@ jobs:
       - build-and-push-server
     runs-on: ubuntu-latest
     steps:
-      - name: Call VPS webhook to update production
+      - name: Call VPS webhook to update staging
         uses: wei/curl@master
         with:
-          args: https://ops.pierre.wns.wilders.dev/hooks/update-production
+          args: https://ops.pierre.wns.wilders.dev/hooks/update-statging
