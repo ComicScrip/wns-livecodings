@@ -48,8 +48,8 @@ jobs:
             "REACT_APP_GRAPHQL_API_URL=https://api.staging.pierre.wns.wilders.dev"
   notify:
     needs:
-      - build-and-push-client
-      - build-and-push-server
+      - build-and-push-server-staging
+      - build-and-push-client-staging
     runs-on: ubuntu-latest
     steps:
       - name: Call VPS webhook to update staging
