@@ -8,6 +8,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - stagingDB:/var/lib/postgresql/data
   server:
     depends_on:
       stagingDB:
@@ -26,5 +28,7 @@ services:
     image: scrip/wns-livecodings-client:staging
     ports:
       - 7080:80
+volumes:
+  stagingDB:
 
 
