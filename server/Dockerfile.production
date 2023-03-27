@@ -1,4 +1,4 @@
-FROM keymetrics/pm2:18-alpine as build-stage
+FROM node:lts-alpine
 
 RUN apk --no-cache add curl
 RUN apk add make g++ python3 git
@@ -19,4 +19,4 @@ COPY src ./
 RUN ["npm", "run", "build"]
 
 # the command that starts our app
-CMD ["pm2-runtime", "--json", "build/index.js"]
+CMD ["npm", "run", "start:prod"]
