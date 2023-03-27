@@ -1,2 +1,5 @@
 .DS_Store
 .env*
+web-client-build
+web-client-build-staging
+logs
