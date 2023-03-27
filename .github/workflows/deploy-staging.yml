@@ -1,4 +1,4 @@
-name: Compile and push client and server staging
+name: Compile and push client and server to staging
 
 on:
   push:
