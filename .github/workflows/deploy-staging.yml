@@ -2,7 +2,7 @@ name: Compile and push client and server to staging
 
 on:
   push:
-    branches: ["staging"]
+    branches: ["dev"]
   workflow_dispatch:
 
 jobs:
@@ -55,4 +55,4 @@ jobs:
       - name: Call VPS webhook to update staging
         uses: wei/curl@master
         with:
-          args: https://ops.pierre.wns.wilders.dev/hooks/update-statging
+          args: https://ops.pierre.wns.wilders.dev/hooks/update-staging
