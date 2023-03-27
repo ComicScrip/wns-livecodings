@@ -10,6 +10,8 @@ services:
       retries: 5
     volumes:
       - stagingDB:/var/lib/postgresql/data
+    networks:
+      - stagingNetwork
   server-staging:
     depends_on:
       stagingDB:
@@ -24,11 +26,17 @@ services:
       - SERVER_PORT=${SERVER_PORT:-4000}
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdefghijkl}
       - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://api.staging.pierre.wns.wilders.dev,https://staging.pierre.wns.wilders.dev}
+    networks:
+      - stagingNetwork
   client-staging:
     image: scrip/wns-livecodings-client:staging
     ports:
       - 7080:80
+    networks:
+      - stagingNetwork
 volumes:
   stagingDB:
 
+networks:
+  stagingNetwork:
 
