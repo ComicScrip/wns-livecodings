@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY .npmrc .npmrc
 
-RUN npm i -g pnpm@7.30.5
+RUN npm i -g pnpm
 RUN pnpm i
 
 COPY postcss.config.js postcss.config.js 
