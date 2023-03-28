@@ -9,8 +9,7 @@
     "start": "docker compose -f docker-compose.yml up --build",
     "start:prod": "docker compose -f docker-compose.production.yml pull && docker compose -f docker-compose.production.yml up --build",
     "publish:server": "cd server && docker build -f Dockerfile.production . -t scrip/wns-livecodings-server && docker push scrip/wns-livecodings-server && cd ..",
-    "publish:client": "cd client && docker build -f Dockerfile.production --build-arg REACT_APP_GRAPHQL_API_URL=https://api.pierre.wns.wilders.dev -t scrip/wns-livecodings-client . && docker push scrip/wns-livecodings-client && cd ..",
-    "pgadmin": "docker run --name pgadmin -p 5050:80 --env PGADMIN_DEFAULT_EMAIL=admin@admin.com --env PGADMIN_DEFAULT_PASSWORD=root dpage/pgadmin4"
+    "publish:client": "cd client && docker build -f Dockerfile.production -t scrip/wns-livecodings-client . && docker push scrip/wns-livecodings-client && cd .."
   },
   "repository": {
     "type": "git",
