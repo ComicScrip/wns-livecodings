@@ -58,7 +58,6 @@ services:
 
 volumes:
   prodDB:
-  web-client-build:
 
 networks:
   prodNetwork:
