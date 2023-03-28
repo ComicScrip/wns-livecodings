@@ -37,8 +37,6 @@ services:
     image: scrip/wns-livecodings-client
     networks:
       - prodNetwork
-    volumes:
-      - web-client-build:/app/build
 
   nginx:
     image: nginx:1.21.3
