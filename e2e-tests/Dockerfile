@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.16.2-focal
+FROM mcr.microsoft.com/playwright:v1.30.0-focal
 
 RUN mkdir /server
 WORKDIR /server
