@@ -1,21 +1,11 @@
-encode zstd gzip
-
 pierre.wns.wilders.dev {
-reverse_proxy localhost:8080
-}
-
-api.pierre.wns.wilders.dev {
-reverse_proxy localhost:8081
+    reverse_proxy localhost:8000
 }
 
 staging.pierre.wns.wilders.dev {
-reverse_proxy localhost:7080
-}
-
-api.staging.pierre.wns.wilders.dev {
-reverse_proxy localhost:7081
+    reverse_proxy localhost:8001
 }
 
 ops.pierre.wns.wilders.dev {
-reverse_proxy localhost:9000
+    reverse_proxy localhost:9000
 }
