@@ -93,6 +93,7 @@ const start = async (): Promise<void> => {
     context: ({ req, res }) => {
       return { req, res };
     },
+    introspection: true,
   });
 
   await server.start();
