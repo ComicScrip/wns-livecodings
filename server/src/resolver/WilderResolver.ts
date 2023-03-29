@@ -1,5 +1,4 @@
 import { Arg, Authorized, Int, Mutation, Query, Resolver } from "type-graphql";
-import { ApolloError } from "apollo-server-errors";
 import Wilder, { SkillId, WilderInput } from "../entity/Wilder";
 import datasource from "../db";
 import Grade from "../entity/Grade";
@@ -29,7 +28,7 @@ export class WilderResolver {
       .getRepository(Wilder)
       .findOne({ where: { id }, relations: { grades: { skill: true } } });
 
-    if (wilder === null) throw new ApolloError("wilder not found", "NOT_FOUND");
+    if (wilder === null) throw new Error("wilder not found");
 
     return {
       ...wilder,
@@ -50,7 +49,7 @@ export class WilderResolver {
   @Mutation(() => Boolean)
   async deleteWilder(@Arg("id", () => Int) id: number): Promise<boolean> {
     const { affected } = await datasource.getRepository(Wilder).delete(id);
-    if (affected === 0) throw new ApolloError("wilder not found", "NOT_FOUND");
+    if (affected === 0) throw new Error("wilder not found");
     return true;
   }
 
@@ -65,8 +64,7 @@ export class WilderResolver {
       relations: { grades: { skill: true } },
     });
 
-    if (wilderToUpdate === null)
-      throw new ApolloError("wilder not found", "NOT_FOUND");
+    if (wilderToUpdate === null) throw new Error("NOT_FOUND");
 
     wilderToUpdate.name = name;
     wilderToUpdate.bio = bio;
