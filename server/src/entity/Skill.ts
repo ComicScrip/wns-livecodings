@@ -1,4 +1,4 @@
-import { Min, MinLength } from "class-validator";
+import { MinLength } from "class-validator";
 import { Field, InputType, ObjectType } from "type-graphql";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Grade from "./Grade";
