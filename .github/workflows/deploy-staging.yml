@@ -2,7 +2,7 @@ name: Compile and push client and server to staging
 
 on:
   push:
-    branches: ["CD-lc3"]
+    branches: ["dev"]
   workflow_dispatch:
 
 jobs:

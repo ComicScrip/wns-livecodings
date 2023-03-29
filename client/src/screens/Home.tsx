@@ -14,7 +14,6 @@ export default function Home() {
 
   return (
     <div>
-      update staging
       <WilderForm />
       <div
         data-testid="wilder-list"
