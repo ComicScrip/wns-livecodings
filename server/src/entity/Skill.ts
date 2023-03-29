@@ -1,3 +1,4 @@
+import { Min, MinLength } from "class-validator";
 import { Field, InputType, ObjectType } from "type-graphql";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Grade from "./Grade";
@@ -5,6 +6,7 @@ import Grade from "./Grade";
 @InputType()
 export class SkillInput {
   @Field()
+  @MinLength(1)
   name: string;
 }
 
