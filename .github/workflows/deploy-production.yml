@@ -1,0 +1,110 @@
+name: Test, compile and push client and server to production
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  client-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: "Install pnpm and deps"
+        run: npm i -g pnpm && cd client && pnpm i
+      - name: Goto client and run tests
+        run: cd client && pnpm run test
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_JWT_PRIVATE_KEY: zeyfgzeigfyzegfyuzegf
+          envkey_NODE_ENV: "development"
+          envkey_CORS_ALLOWED_ORIGINS: "http://localhost:3000,http://localhost:4000,http://192.168.1.7:4000"
+          envkey_SERVER_HOST: "localhost"
+          envkey_SERVER_PORT: "4000"
+          envkey_DB_HOST: localhost
+          directory: server
+          file_name: .env
+      - name: Run integration test
+        run: npm run integration-tests
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_JWT_PRIVATE_KEY: zeyfgzeigfyzegfyuzegf
+          envkey_NODE_ENV: "development"
+          envkey_CORS_ALLOWED_ORIGINS: "http://localhost:3000,http://localhost:4000,http://192.168.1.7:4000"
+          envkey_SERVER_HOST: "localhost"
+          envkey_SERVER_PORT: "4000"
+          envkey_DB_HOST: localhost
+          directory: server
+          file_name: .env
+      - name: Run e2e tests
+        run: npm run e2e-tests
+
+  build-and-push-server:
+    needs:
+      - integration-tests
+      - e2e-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          context: "{{defaultContext}}:server"
+          file: "Dockerfile.production"
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings-server
+  build-and-push-client:
+    needs:
+      - client-tests
+      - e2e-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          context: "{{defaultContext}}:client"
+          file: "Dockerfile.production"
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wns-livecodings-client
+  notify:
+    needs:
+      - build-and-push-client
+      - build-and-push-server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call VPS webhook to update production
+        uses: wei/curl@master
+        with:
+          args: https://ops.pierre.wns.wilders.dev/hooks/update-production
