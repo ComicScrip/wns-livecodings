@@ -1,7 +1,7 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 
 //https://www.apollographql.com/docs/react/networking/authentication/#cookie
-export default new ApolloClient({
+const client = new ApolloClient({
   cache: new InMemoryCache(),
   defaultOptions: {
     query: {
@@ -13,3 +13,5 @@ export default new ApolloClient({
     credentials: "include",
   }),
 });
+
+export default client;

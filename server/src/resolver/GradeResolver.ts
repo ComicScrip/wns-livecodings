@@ -1,7 +1,6 @@
 import { Arg, Int, Mutation, Resolver } from "type-graphql";
 import Grade from "../entity/Grade";
 import datasource from "../db";
-import { ApolloError } from "apollo-server-errors";
 
 @Resolver()
 export class GradeResolver {
@@ -14,7 +13,7 @@ export class GradeResolver {
     const grade = await datasource.getRepository(Grade).findOne({
       where: { wilderId, skillId },
     });
-    if (grade === null) throw new ApolloError("grade not found", "NOT_FOUND");
+    if (grade === null) throw new Error("grade not found");
     grade.votes = votes;
     await datasource.getRepository(Grade).save(grade);
     return true;

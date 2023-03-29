@@ -1,4 +1,3 @@
-import { ApolloError } from "apollo-server-errors";
 import {
   Arg,
   Authorized,
@@ -33,7 +32,7 @@ export class UserResolver {
       .getRepository(User)
       .findOne({ where: { email: data.email } });
 
-    if (exisitingUser !== null) throw new ApolloError("EMAIL_ALREADY_EXISTS");
+    if (exisitingUser !== null) throw new Error("EMAIL_ALREADY_EXISTS");
 
     const hashedPassword = await hashPassword(data.password);
     return await datasource
@@ -55,7 +54,7 @@ export class UserResolver {
       typeof user.hashedPassword !== "string" ||
       !(await verifyPassword(password, user.hashedPassword))
     )
-      throw new ApolloError("invalid credentials");
+      throw new Error("invalid credentials");
 
     // https://www.npmjs.com/package/jsonwebtoken
     const token = jwt.sign({ userId: user.id }, env.JWT_PRIVATE_KEY);
@@ -91,8 +90,7 @@ export class UserResolver {
       where: { id },
     });
 
-    if (userToUpdate === null)
-      throw new ApolloError("user not found", "NOT_FOUND");
+    if (userToUpdate === null) throw new Error("user not found");
 
     userToUpdate.expoNotificationToken = expoNotificationToken;
 
@@ -111,13 +109,13 @@ export class UserResolver {
       where: { id },
     });
 
-    if (user === null) throw new ApolloError("user not found", "NOT_FOUND");
+    if (user === null) throw new Error("NOT_FOUND");
 
     if (
       user.expoNotificationToken === null ||
       typeof user.expoNotificationToken === "undefined"
     )
-      throw new ApolloError("user has no registered token", "NO_EXPO_TOKEN");
+      throw new Error("user has no registered token");
 
     const res = await expo.sendPushNotificationsAsync([
       {

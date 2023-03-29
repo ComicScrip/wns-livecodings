@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ApolloProvider } from "@apollo/client";
 import client from "./gql/client";
 
@@ -23,9 +23,9 @@ root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <App />
-        </MuiThemeProvider>
+        </ThemeProvider>
       </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>
