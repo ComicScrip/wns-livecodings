@@ -4,8 +4,6 @@ import { ApolloServer } from "@apollo/server";
 import { buildSchema } from "type-graphql";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { expressMiddleware } from "@apollo/server/express4";
-
-import { join } from "path";
 import express from "express";
 import jwt from "jsonwebtoken";
 import { env } from "./env";
@@ -13,6 +11,10 @@ import User from "./entity/User";
 import cors from "cors";
 import http from "http";
 import cookie from "cookie";
+import { SkillResolver } from "./resolver/SkillResolver";
+import { WilderResolver } from "./resolver/WilderResolver";
+import { GradeResolver } from "./resolver/GradeResolver";
+import { UserResolver } from "./resolver/UserResolver";
 
 export interface ContextType {
   req: any;
@@ -27,7 +29,7 @@ async function start(): Promise<void> {
   const httpServer = http.createServer(app);
 
   const schema = await buildSchema({
-    resolvers: [join(__dirname, "/resolver/*.ts")],
+    resolvers: [SkillResolver, WilderResolver, GradeResolver, UserResolver],
     authChecker: async ({ context }: { context: ContextType }, roles = []) => {
       const { req } = context;
       const tokenInAuthHeaders = req.headers.authorization?.split(" ")[1];
