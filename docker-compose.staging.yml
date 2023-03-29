@@ -1,3 +1,4 @@
+name: staging
 services:
   stagingDB:
     image: postgres:15-alpine
@@ -14,7 +15,6 @@ services:
       - stagingNetwork
 
   server:
-    container_name: server-staging
     depends_on:
       stagingDB:
         condition: service_healthy
@@ -35,13 +35,11 @@ services:
       retries: 10
 
   client:
-    container_name: client-staging
     image: scrip/wns-livecodings-client:staging
     networks:
       - stagingNetwork
 
   nginx:
-    container_name: nginx-staging
     image: nginx:1.21.3
     depends_on:
       client:
