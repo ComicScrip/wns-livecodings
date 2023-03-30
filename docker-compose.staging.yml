@@ -21,6 +21,7 @@ services:
     environment:
       - NODE_ENV=${NODE_ENV:-production}
       - DB_HOST=${DB_HOST:-stagingDB}
+      - DB_PASS=${DB_PASS:-postgres}
       - SERVER_HOST=${SERVER_HOST:-localhost}
       - SERVER_PORT=${SERVER_PORT:-4000}
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
