@@ -14,7 +14,6 @@ export default function Home() {
 
   return (
     <div>
-      update
       <WilderForm />
       <div
         data-testid="wilder-list"

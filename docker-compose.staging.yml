@@ -4,11 +4,15 @@ services:
     image: postgres:15-alpine
     environment:
       - POSTGRES_PASSWORD=${DB_PASS:-postgres}
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_DB=${DB_NAME:-postgres}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
+    ports:
+      - 5433:5432
     volumes:
       - stagingDB:/var/lib/postgresql/data
 
@@ -19,6 +23,9 @@ services:
     environment:
       - NODE_ENV=${NODE_ENV:-production}
       - DB_HOST=${DB_HOST:-stagingDB}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASS=${DB_PASS:-postgres}
+      - DB_NAME=${DB_NAME:-postgres}
       - SERVER_HOST=${SERVER_HOST:-localhost}
       - SERVER_PORT=${SERVER_PORT:-4000}
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}

@@ -8,4 +8,8 @@ export const env = load({
   SERVER_HOST: String,
   SERVER_PORT: Number,
   DB_HOST: { type: String, optional: true },
+  DB_PORT: { type: Number, optional: true },
+  DB_USER: { type: String, optional: true },
+  DB_PASS: { type: String, optional: true },
+  DB_NAME: { type: String, optional: true },
 });
