@@ -2,7 +2,9 @@ services:
   prodDB:
     image: postgres:15-alpine
     environment:
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=${DB_PASS:-postgres}
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_DB=${DB_NAME:-postgres}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
       interval: 10s
@@ -19,7 +21,10 @@ services:
         condition: service_healthy
     environment:
       - NODE_ENV=${NODE_ENV:-production}
-      - DB_HOST=${DB_HOST:-prodDB}
+      - DB_HOST=${DB_HOST:-stagingDB}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASS=${DB_PASS:-postgres}
+      - DB_NAME=${DB_NAME:-postgres}
       - SERVER_HOST=${SERVER_HOST:-localhost}
       - SERVER_PORT=${SERVER_PORT:-4000}
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}

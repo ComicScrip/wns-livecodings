@@ -8,7 +8,7 @@ export default new DataSource({
   port: env.DB_PORT || 5432,
   username: env.DB_USER || "postgres",
   password: env.DB_PASS || "postgres",
-  database: "postgres",
+  database: env.DB_NAME || "postgres",
   synchronize: true,
   entities,
   logging: ["error"],

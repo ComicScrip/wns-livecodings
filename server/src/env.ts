@@ -11,4 +11,5 @@ export const env = load({
   DB_PORT: { type: Number, optional: true },
   DB_USER: { type: String, optional: true },
   DB_PASS: { type: String, optional: true },
+  DB_NAME: { type: String, optional: true },
 });
