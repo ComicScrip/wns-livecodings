@@ -53,5 +53,12 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./logs:/var/log/nginx
 
+  discord-notifier:
+    build: './discord-notifier'
+    command: npm run notify-deploy:staging
+    depends_on: 
+      nginx:
+        condition: service_started
+
 volumes:
   prodDB:

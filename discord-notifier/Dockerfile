@@ -10,8 +10,7 @@ COPY /pnpm-lock.yaml ./
 RUN npm i -g pnpm
 RUN pnpm i
 
-COPY src src
-COPY tsconfig.json tsconfig.json
+COPY sendMessage.ts .
 COPY .env .env
 
-CMD npm start
+CMD npm run test-message
