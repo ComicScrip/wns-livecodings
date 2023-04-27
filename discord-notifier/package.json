@@ -1,0 +1,28 @@
+{
+  "name": "wilders-book-livecoding",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test-message": "ts-node-dev sendMessage.ts 'this is a test message'",
+    "notify-deploy:staging": "ts-node-dev sendMessage.ts 'staging env has been updated : https://staging.pierre.wns.wilders.dev'",
+    "notify-deploy:prod": "ts-node-dev sendMessage.ts 'production env has been updated : https://pierre.wns.wilders.dev'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karimmakhloufi/wilders-book-livecoding.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karimmakhloufi/wilders-book-livecoding/issues"
+  },
+  "homepage": "https://github.com/karimmakhloufi/wilders-book-livecoding#readme",
+  "dependencies": {
+    "@discordjs/core": "^0.5.2",
+    "@discordjs/rest": "^1.7.0",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0"
+  }
+}
