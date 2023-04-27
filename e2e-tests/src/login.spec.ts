@@ -21,6 +21,6 @@ test("can log in with correct credentials", async ({ page }) => {
   await page.getByTestId("login-password").type(password);
   await page.getByRole("button", { name: "Login" }).click();
   await expect(page.getByTestId("logged-in-message")).toContainText(
-    `Logged in a ${email}`
+    `Logged in as ${email}`
   );
 });
