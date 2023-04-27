@@ -11,6 +11,5 @@ RUN npm i -g pnpm
 RUN pnpm i
 
 COPY sendMessage.ts .
-COPY .env .env
 
 CMD npm run test-message
