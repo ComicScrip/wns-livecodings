@@ -58,10 +58,13 @@ services:
   
   discord-notifier:
     build: './discord-notifier'
-    command: npm run notify-deploy:staging
     depends_on: 
       nginx:
         condition: service_started
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN:-}
+      - CHANNEL_ID=${CHANNEL_ID:-}
+    command: npm run notify-deploy:staging
 
 volumes:
   stagingDB:
