@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "send-message": "ts-node-dev sendMessage.ts",
     "test-message": "ts-node-dev sendMessage.ts 'this is a test message'",
     "notify-deploy:staging": "ts-node-dev sendMessage.ts 'staging env has been updated : https://staging.pierre.wns.wilders.dev'",
     "notify-deploy:prod": "ts-node-dev sendMessage.ts 'production env has been updated : https://pierre.wns.wilders.dev'"
