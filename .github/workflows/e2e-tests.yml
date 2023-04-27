@@ -20,4 +20,6 @@ jobs:
           directory: server
           file_name: .env
       - name: Run e2e tests
+        env:
+          CI: true
         run: npm run e2e-tests
