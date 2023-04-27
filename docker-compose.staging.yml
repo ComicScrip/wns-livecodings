@@ -57,14 +57,14 @@ services:
       - ./logs:/var/log/nginx
   
   discord-notifier:
-    build: './discord-notifier'
+    image: scrip/discord-notifier
     depends_on: 
       nginx:
         condition: service_started
     environment:
       - BOT_TOKEN=${BOT_TOKEN:-}
       - CHANNEL_ID=${CHANNEL_ID:-}
-    command: npm run notify-deploy:staging
+    command: "npm run send-message 'staging env has been updated : https://staging.pierre.wns.wilders.dev'"
 
 volumes:
   stagingDB:
