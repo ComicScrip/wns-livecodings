@@ -55,9 +55,9 @@ services:
       dockerfile: e2e-tests/Dockerfile
       context: ./
     environment:
-      - DB_HOST=testDB
-      - BASE_URL=http://host.docker.internal:3000
-      - CI=${CI:-}
+      DB_HOST: testDB
+      BASE_URL: http://host.docker.internal:3000
+      CI: ${CI:-}
     volumes:
       - ./server/src/:/server/src/
       - ./e2e-tests/playwright-report:/e2e-tests/playwright-report
