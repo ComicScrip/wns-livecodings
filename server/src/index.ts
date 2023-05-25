@@ -72,9 +72,9 @@ async function start(): Promise<void> {
   );
 
   const port = env.SERVER_PORT ?? 4000;
-  httpServer.listen({ port }, () =>
-    console.log(`🚀 Server ready at http://localhost:${port}`)
-  );
+  httpServer.listen({ port }, () => {
+    console.log(`🚀 Server ready at http://localhost:${port}`);
+  });
 }
 
 start().catch(console.error);
