@@ -5,6 +5,6 @@ import jwt from "jsonwebtoken";
 import { env } from "../../server/src/env";
 
 export async function getJWTFor(user: Partial<User>) {
-  if (!user.id) await db.getRepository(User).save(user);
+  await db.getRepository(User).save(user);
   return jwt.sign({ userId: user.id }, env.JWT_PRIVATE_KEY);
 }
