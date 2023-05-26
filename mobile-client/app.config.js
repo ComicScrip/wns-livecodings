@@ -36,5 +36,6 @@ export default {
         projectId: "22b9a97d-2ae7-4d91-a9d7-06f555dbe01d",
       },
     },
+    jsEngine: "jsc",
   },
 };
