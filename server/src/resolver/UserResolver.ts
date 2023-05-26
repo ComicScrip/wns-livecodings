@@ -15,8 +15,8 @@ import User, {
   UpdateUserInput,
   UserInput,
   verifyPassword,
-  Role,
 } from "../entity/User";
+import type { Role } from "../entity/User";
 import { ContextType } from "../index";
 import jwt from "jsonwebtoken";
 import { env } from "../env";
