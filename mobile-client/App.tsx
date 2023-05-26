@@ -14,8 +14,10 @@ import {
   UpdateUserMutation,
   UpdateUserMutationVariables,
   useGetProfileQuery,
+  useUpdateProfileMutation,
 } from "./gql/generated/schema";
 import NotificationsScreen from "./screens/NotificationsScreen";
+import { registerForPushNotificationsAsync } from "./utils/notifications";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,11 +27,16 @@ export default function App() {
 
   const { data: currentUser } = useGetProfileQuery({ errorPolicy: "ignore" });
 
+  const [updateProfile] = useUpdateProfileMutation();
+
   useEffect(() => {
     console.log("profile id changed", currentUser?.profile);
 
-    if (currentUser?.profile)
-      registerForPushNotificationsAsync(currentUser?.profile?.id);
+    if (currentUser?.profile) {
+      registerForPushNotificationsAsync().then((expoNotificationToken) => {
+        updateProfile({ variables: { data: { expoNotificationToken } } });
+      });
+    }
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -94,49 +101,4 @@ export default function App() {
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
-
-async function registerForPushNotificationsAsync(userId: number) {
-  console.log("registering device...", { userId });
-
-  let token;
-
-  if (Platform.OS === "android") {
-    await Notifications.setNotificationChannelAsync("default", {
-      name: "default",
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#FF231F7C",
-    });
-  }
-
-  if (Device.isDevice) {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== "granted") {
-      alert("Failed to get push token for push notification!");
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    const { data, errors } = await client.mutate<
-      UpdateUserMutation,
-      UpdateUserMutationVariables
-    >({
-      mutation: UpdateUserDocument,
-      variables: {
-        data: { expoNotificationToken: token },
-        updateUserId: userId,
-      },
-    });
-    console.log("token sent to backend", { token, data, errors });
-  } else {
-    alert("Must use physical device for Push Notifications");
-  }
-
-  return token;
 }

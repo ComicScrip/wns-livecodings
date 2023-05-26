@@ -1,0 +1,5 @@
+mutation UpdateProfile($data: UpdateUserInput!) {
+  updateProfile(data: $data) {
+    expoNotificationToken
+  }
+}

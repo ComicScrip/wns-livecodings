@@ -49,6 +49,9 @@ export class NotificationInput {
 
   @Field()
   body: string;
+
+  @Field({ nullable: true })
+  JSONPayload?: string;
 }
 
 @InputType()

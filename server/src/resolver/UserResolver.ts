@@ -80,23 +80,16 @@ export class UserResolver {
     return getSafeAttributes(ctx.currentUser as User);
   }
 
+  @Authorized()
   @Mutation(() => User)
-  async updateUser(
-    @Arg("id", () => Int) id: number,
-    @Arg("data") data: UpdateUserInput
+  async updateProfile(
+    @Arg("data") data: UpdateUserInput,
+    @Ctx() { currentUser }: ContextType
   ): Promise<User> {
-    const { expoNotificationToken } = data;
-    const userToUpdate = await datasource.getRepository(User).findOne({
-      where: { id },
-    });
-
-    if (userToUpdate === null) throw new Error("user not found");
-
-    userToUpdate.expoNotificationToken = expoNotificationToken;
-
-    await datasource.getRepository(User).save(userToUpdate);
-
-    return userToUpdate;
+    if (typeof currentUser === "undefined") throw new Error("no current user");
+    return await datasource
+      .getRepository(User)
+      .save({ ...currentUser, ...data });
   }
 
   @Authorized<Role>(["admin"])
@@ -123,6 +116,10 @@ export class UserResolver {
         sound: "default",
         title: data.title,
         body: data.body,
+        data:
+          typeof data.JSONPayload === "string"
+            ? JSON.parse(data.JSONPayload)
+            : undefined,
       },
     ]);
 
