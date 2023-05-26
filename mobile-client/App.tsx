@@ -5,14 +5,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LoginScreen from "./screens/LoginScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect, useRef } from "react";
-import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { Subscription } from "expo-modules-core";
-import { Platform } from "react-native";
 import {
-  UpdateUserDocument,
-  UpdateUserMutation,
-  UpdateUserMutationVariables,
   useGetProfileQuery,
   useUpdateProfileMutation,
 } from "./gql/generated/schema";
