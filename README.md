@@ -10,58 +10,55 @@ That's all folks !
 
 # Mobile client
 
-```sh
-cd mobile-client
-```
+## Android
 
-## create a dev build
+### DEBUG build
 
-### Android
-
-## DEBUG build
-
-create an .APK locally for later use :
-
-```sh
-eas build --profile development --platform android --local
-```
-
-install a build
-
-```sh
-adb install build.apk
-```
-
-uninstall a build
-
-```sh
-adb uninstall com.comicscrip.
-```
-
-create a build and run it direcltly :
+#### create a build and run it direcltly :
 
 ```sh
 npx expo run:android -d
 ```
 
-## RELEASE build
+#### create an .APK locally for later use :
+
+```sh
+eas build --profile development --platform android --local
+```
+
+### RELEASE build
+
+#### create an .APK locally for later use :
 
 ```sh
 eas build --profile preview --platform android --local
 ```
 
-### iOS
+### Install a build
 
-create an .APP locally for later use :
+#### install
 
 ```sh
-eas build --profile development-simulator --platform ios --local
+adb install build-xxxxxxx.apk
 ```
+
+#### uninstall (sometimes you need to uninstall first to install another build)
+
+```sh
+adb uninstall com.comicscrip.mobileclient
+```
+
+### Build APK in CI
+
+```sh
+git add . && git commit -m "tmp" && git tag <version>
+git push --tags
+```
+
+## iOS
 
 create a build and run it direcltly :
 
 ```sh
 npx expo run:ios -d
 ```
-
-## create a relase build
