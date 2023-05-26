@@ -32,6 +32,9 @@ export default {
     },
     extra: {
       GRAPHQL_API_URL: process.env.GRAPHQL_API_URL || "http://localhost:4000",
+      eas: {
+        projectId: "311f37ba-d966-4de2-9cb6-385902a828d5",
+      },
     },
   },
 };
