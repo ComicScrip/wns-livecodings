@@ -22,7 +22,7 @@
     "apollo-server-errors": "^3.3.1",
     "argon2": "^0.30.2",
     "chokidar-cli": "^3.0.0",
-    "class-validator": "^0.13.2",
+    "class-validator": "^0.14.0",
     "graphql": "^15.3.0",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
