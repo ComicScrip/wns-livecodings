@@ -15,6 +15,7 @@ import {
   UpdateUserMutationVariables,
   useGetProfileQuery,
 } from "./gql/generated/schema";
+import NotificationsScreen from "./screens/NotificationsScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -71,6 +72,14 @@ export default function App() {
                   color={color}
                 />
               );
+            } else if (route.name === "Notifs") {
+              return (
+                <Ionicons
+                  name={focused ? "send" : "send-outline"}
+                  size={size}
+                  color={color}
+                />
+              );
             }
             return <Ionicons name={"alert-circle"} size={size} color={color} />;
           },
@@ -81,6 +90,7 @@ export default function App() {
       >
         <Tab.Screen name="Wilders" component={WildersScreen} />
         <Tab.Screen name="Login" component={LoginScreen} />
+        <Tab.Screen name="Notifs" component={NotificationsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

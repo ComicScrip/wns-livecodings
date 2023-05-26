@@ -39,7 +39,7 @@ export class UserInput {
   password: string;
 
   @Field({ nullable: true })
-  expoNotificationToken: string;
+  expoNotificationToken?: string;
 }
 
 @InputType()

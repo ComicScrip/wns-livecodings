@@ -24,6 +24,7 @@ export type Mutation = {
   deleteWilder: Scalars['Boolean'];
   login: Scalars['String'];
   logout: Scalars['String'];
+  sendNotification: Scalars['Boolean'];
   updateGrade: Scalars['Boolean'];
   updateSkill: Skill;
   updateUser: User;
@@ -61,6 +62,12 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationSendNotificationArgs = {
+  data: NotificationInput;
+  userId: Scalars['Int'];
+};
+
+
 export type MutationUpdateGradeArgs = {
   skillId: Scalars['Int'];
   votes: Scalars['Int'];
@@ -83,6 +90,11 @@ export type MutationUpdateUserArgs = {
 export type MutationUpdateWilderArgs = {
   data: WilderInput;
   id: Scalars['Int'];
+};
+
+export type NotificationInput = {
+  body: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type Query = {
@@ -127,14 +139,14 @@ export type UpdateUserInput = {
 export type User = {
   __typename?: 'User';
   email: Scalars['String'];
-  expoNotificationToken: Scalars['String'];
+  expoNotificationToken?: Maybe<Scalars['String']>;
   id: Scalars['Float'];
   role: Scalars['String'];
 };
 
 export type UserInput = {
   email: Scalars['String'];
-  expoNotificationToken: Scalars['String'];
+  expoNotificationToken?: InputMaybe<Scalars['String']>;
   password: Scalars['String'];
 };
 
@@ -184,7 +196,7 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: number, expoNotificationToken: string } };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: number, expoNotificationToken?: string | null } };
 
 
 export const GetProfileDocument = gql`

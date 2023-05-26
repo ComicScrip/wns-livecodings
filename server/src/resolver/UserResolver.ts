@@ -103,8 +103,8 @@ export class UserResolver {
   @Mutation(() => Boolean)
   async sendNotification(
     @Arg("userId", () => Int) id: number,
-    @Arg("data") data: NotificationInput
-  ): Promise<Boolean> {
+    @Arg("data", { validate: false }) data: NotificationInput
+  ): Promise<boolean> {
     const user = await datasource.getRepository(User).findOne({
       where: { id },
     });
