@@ -61,4 +61,5 @@ create a build and run it direcltly :
 
 ```sh
 npx expo run:ios -d
+
 ```
