@@ -51,7 +51,7 @@ adb uninstall com.comicscrip.mobileclient
 ### Build APK in CI
 
 ```sh
-git add . && git commit -m "tmp" && git tag <version>
+git add . && git commit -m "mycommit" && git tag <version>
 git push --tags
 ```
 
