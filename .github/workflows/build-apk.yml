@@ -1,0 +1,45 @@
+name: Build Android App
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y-%m-%dT%H%M%S')" >> $GITHUB_ENV
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v2
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-version: latest
+          eas-version: latest
+
+      - name: 🏗 Setup EAS local builds
+        run: cd mobile-client && npm i -g eas-cli-local-build-plugin
+
+      - name: 📦 Install dependencies
+        run: cd mobile-client && npm i
+
+      - name: 👷 Build app
+        run: |
+          cd mobile-client && eas build --local \
+            --non-interactive \
+            --output=./app-build-${{ env.NOW }}.apk \
+            --platform=android \
+            --profile=preview
+      - name: 📱 Upload APK
+        uses: softprops/action-gh-release@v1
+        with:
+          files: mobile-client/app-build-${{ env.NOW }}.apk
+          if: startsWith(github.ref, 'refs/tags/')
+      - name: 📢 Notify on discord
+        run: "docker run -e BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }} -e CHANNEL_ID=${{ secrets.DISCORD_CHANNEL_ID }} scrip/discord-notifier npm run send-message 'a new release for android is available: https://github.com/ComicScrip/wns-livecodings-nov22/releases/download/${{ github.ref_name }}/app-build-${{ env.NOW }}.apk'"
