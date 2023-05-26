@@ -25,8 +25,6 @@ export default function App() {
   const [updateProfile] = useUpdateProfileMutation();
 
   useEffect(() => {
-    console.log("profile id changed", currentUser?.profile);
-
     if (currentUser?.profile) {
       registerForPushNotificationsAsync().then((expoNotificationToken) => {
         updateProfile({ variables: { data: { expoNotificationToken } } });
