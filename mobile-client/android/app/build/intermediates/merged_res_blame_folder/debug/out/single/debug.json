@@ -1,0 +1,98 @@
+[
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/drawable_splashscreen.xml.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/drawable/splashscreen.xml"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/drawable-hdpi_splashscreen_image.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/drawable-hdpi/splashscreen_image.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/drawable-mdpi_splashscreen_image.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/drawable-mdpi/splashscreen_image.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/drawable-xxhdpi_splashscreen_image.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/drawable-xxhdpi/splashscreen_image.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/drawable-xxxhdpi_splashscreen_image.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/drawable-xxxhdpi/splashscreen_image.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/drawable-xhdpi_splashscreen_image.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/drawable-xhdpi/splashscreen_image.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/drawable_rn_edit_text_material.xml.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/drawable/rn_edit_text_material.xml"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.comicscrip.mobileclient.app-merged_res-38:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.comicscrip.mobileclient.app-main-40:/mipmap-xxxhdpi/ic_launcher_round.png"
+    }
+]
