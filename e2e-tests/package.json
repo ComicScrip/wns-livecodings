@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "apollo-server": "^3.10.3",
-    "apollo-server-core": "^3.10.3",
+    "apollo-server-core": "^3.12.1",
     "apollo-server-errors": "^3.3.1",
     "argon2": "^0.30.2",
     "chokidar-cli": "^3.0.0",
