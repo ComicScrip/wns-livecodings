@@ -21,7 +21,7 @@
   "homepage": "https://github.com/ComicScrip/wns-livecodings#readme",
   "dependencies": {
     "@apollo/server": "^4.5.0",
-    "argon2": "^0.30.3",
+    "argon2": "^0.40.1",
     "class-validator": "^0.14.0",
     "cookie": "^0.5.0",
     "cors": "^2.8.5",
